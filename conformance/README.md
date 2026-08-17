@@ -27,12 +27,14 @@ Declared -> Parsed -> Negotiated -> Tested -> Observed -> Attested
 
 **当前 runner（`conformance/tests/run.js`，suite `community-v0.15`）已覆盖：**
 
-- Manifest：缺字段、类型错误、未注册契约坐标（group/kind）、非法 namespace、重复 contribution ID、禁止 service 声明（`requires.services` 与 `provides`）、optional 引用缺 fallback、client/worker facet 拒绝；
-- 坐标解析：group+kind 已知但 apiVersion 未注册 → 合法 manifest、协商返回 `unknown`；group/kind 未知 → `INVALID_MANIFEST`；
-- Negotiation：`compatible`、`waiting_authorization`、授权后通过、`rejected`（required 契约缺失）、`compatible_degraded`（optional 缺失 + 已声明 fallback）、`unknown`（契约版本未注册）；
-- Contract profile：registry hash 漂移检查 + SPEC-WRITING-RULES §5 十点完整性检查 + profile/registry 坐标一致性；
-- Event envelope：合法消息、未知 privacyClass 拒绝、ContentBlock payload 拒绝（缺字段的 block）；
-- Ledger / claim / Host Descriptor：合法 fixture 通过；Host Descriptor 坐标与 schemaHash 必须与 registry 一致（fail closed）。
+- Manifest：缺字段、类型错误、未注册契约坐标（group/kind）、非法 namespace、重复 contribution ID、禁止 service 声明（`requires.services` 与 `provides`）、optional 引用缺 fallback（含未注册版本分支）、client/worker facet 拒绝、未注册 facet apiVersion、重复坐标引用（required+optional 并存）；
+- 坐标解析：group+kind 已知但 apiVersion 未注册 → 合法 manifest、协商返回 `unknown`；group/kind 未知 → `INVALID_MANIFEST`；subscription 指向 capability 而非 event → `INVALID_MANIFEST`；
+- Negotiation：`compatible`、`waiting_authorization`、授权后通过、`rejected`（required 契约缺失）、`compatible_degraded`（optional 缺失 + 已声明 fallback）、`unknown`（契约版本未注册）、复合优先级（未注册版本 + required 缺失 → `unknown` 胜出）、facet 版本不匹配 → `rejected`（`FACET_API_VERSION_UNAVAILABLE`）；
+- Contract profile：registry hash 漂移检查 + SPEC-WRITING-RULES §5 十点完整性检查 + profile/registry 坐标与权限一致性；
+- Event envelope：合法消息、未知 privacyClass 拒绝、ContentBlock payload 拒绝（缺字段 / text+image 字段混合）；
+- Ledger / claim / Host Descriptor：合法 fixture 通过；Host Descriptor 坐标与 schemaHash 必须与 registry 一致、权限必须已注册、坐标不得重复（fail closed）。
+
+**已知局限（`unknown` 触发条件 (b)）**：runner 与 registry 静态绑定在同一发布物，"registry 版本高于协商器支持版本"分支无机器路径；可插拔 registry 版本的实现必须自行实现该分支（C-030）。
 
 **目标清单（当前 runner 未覆盖，`requirements-v0.15.json` 中标记 `evidence: "review"`）：**
 

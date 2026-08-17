@@ -1,11 +1,11 @@
 # RFC 0005 — Decision Events（决策事件 / before-* 拦截）
 
 **Status:** Experimental
-**Scope:** Deferred from Community v0.1（认领 §10 的 "`before-*` 修改/取消事件"）；TUI 决策接缝契约研究
+**Scope:** Deferred from Community v0.15（认领 §11 的 "`before-*` 修改/取消事件"）；TUI 决策接缝契约研究
 
 ## 背景与动机
 
-Community v0.1 唯一的事件 contract 是 `messages.observe`——只读、不得修改或阻断。但宿主的实际插件需求里存在大量**决策点**：用户输入投递前改写或否决、会话切换前否决、压缩前否决、回退前提供额外模式。这类事件要求监听器返回一个**决定**（decision），宿主按决定改变后续流程。
+Community v0.15 唯一的事件 contract 是 `messages.observe`（坐标 `messages.dsh/v1alpha1` + `MessageObserver`）——只读、不得修改或阻断。但宿主的实际插件需求里存在大量**决策点**：用户输入投递前改写或否决、会话切换前否决、压缩前否决、回退前提供额外模式。这类事件要求监听器返回一个**决定**（decision），宿主按决定改变后续流程。
 
 这类"veto 链"的语义是跨宿主不一致风险最高的地方：链按什么顺序执行、一个监听器崩溃或返回畸形值是否截断后续监听器、"第一个返回生效"还是"第一个**合法**决定生效、决策等待期间世界已变化（会话被切换）时陈旧决定如何处理。每个宿主各自发明一套，插件就只能锁定单个宿主。本 RFC 把这套语义定义为可移植 contract。
 
@@ -86,4 +86,4 @@ payload: contract 自定（决策点上下文，如被拦截的文本、目标�
 
 实验性 capability name：`x-ccch1mneyyy.tui.decision-events`。
 
-TUI profile 已按本 RFC 语义实现的决策点：用户输入（改写/接管/否决）、回退前（否决/提供额外模式）与回退完成、会话切换前否决与切换后通知、压缩前否决。这些在 TUI Admission 中标为 `experimental-contract`，不作为 Community v0.1 兼容的必要条件。
+TUI profile 已按本 RFC 语义实现的决策点：用户输入（改写/接管/否决）、回退前（否决/提供额外模式）与回退完成、会话切换前否决与切换后通知、压缩前否决。这些在 TUI Admission 中标为 `experimental-contract`，不作为 Community v0.15 兼容的必要条件。

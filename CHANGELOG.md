@@ -5,7 +5,7 @@
 ### Breaking（Draft 阶段，迁移自 Community Consensus v0.1）
 
 - **Manifest 结构升级到 v0.15**：顶层 `entry` / `apiVersion` 移除，改为 `facets.host.{entry, apiVersion}`（当前唯一注册值 `v1alpha1`）；`client` / `worker` 为保留名，出现即 `INVALID_MANIFEST`（契约归 RFC 0002）。
-- **契约坐标化（元协议内核）**：`requires.capabilities.required/optional[]` 改为 `requires.contracts[]`，引用类 K8s 坐标 `apiVersion + kind`；registry 与契约 profile 增加坐标（`storage.dsh/v1alpha1`+LocalStorage、`commands.dsh/v1alpha1`+Command、`messages.dsh/v1alpha1`+MessageObserver），v0.1 平面名保留为 legacy 别名。
+- **契约坐标化（元协议内核）**：`requires.capabilities.required/optional[]` 改为 `requires.contracts[]`，引用类 K8s 坐标 `apiVersion + kind`；registry 与契约 profile 增加坐标（`storage.dsh/v1alpha1`+LocalStorage、`commands.dsh/v1alpha1`+Command、`messages.dsh/v1alpha1`+MessageObserver），v0.1 平面名保留为 legacy 别名（当前用于 subscriptions 字符串形式解析）。
 - **协商器改为坐标匹配**：group+kind 未知 → `INVALID_MANIFEST`（rejected）；group+kind 已知但 apiVersion 未注册 → `unknown`；决策优先级不变。
 - **Host Descriptor 坐标化**：`apiVersions` 改为 `facetApiVersions`（`v1alpha1` 风格）；`contracts[]` 以坐标 + schemaHash 声明，且必须与 registry 一致（fail closed）。
 - **messages.observe payload 对齐 MCP ContentBlock**：`textPreview` 移除，改为 `payload.content[]`（text / image 子集，边界待社区 §9 Q3 定案）；envelope 头字段不变。
@@ -23,7 +23,27 @@
 - fallback 的承载机制（上游 v0.15 未定，本地按 TUI 收紧执行）；
 - subscriptions 引用格式（上游示例为扁平字符串，本文同时接受坐标对象与 legacy 字符串）；
 - ContentBlock 字段边界（§9 Q3）、privacyClass 分级（§9 Q4）；
-- RFC 0004 证据等级术语（declared/resolved/decided vs 本库 Declared/Parsed/Negotiated...）待上游定案后对齐。
+- RFC 0004 证据等级术语（declared/resolved/decided vs 本库 Declared/Parsed/Negotiated...）待上游定案后对齐；
+- 权限不支持语义（manifest 请求宿主未声明权限 → waiting_authorization 的歧义）待社区五态模型定案。
+
+## 2026-08-17（红队验收修复，commit 29b9b72 之后）
+
+### Fixed（红队 PASS WITH FINDINGS 的 3 个 Medium + 边界完善）
+
+- **F1** runner `additionalProperties` 不再把 `$defs` 键当合法附加属性（对齐 draft-2020-12，未知顶层键彻底 fail-closed）；
+- **F2** `facets.host.apiVersion` 必须 ∈ registry 的 `facetApiVersions`（当前 `["v1alpha1"]`）；协商新增 facet 版本交叉校验，不匹配 → `rejected`/`FACET_API_VERSION_UNAVAILABLE`；
+- **F3** optional 引用缺 fallback 的拒绝提前到未注册版本分支之前（无版本例外）；
+- **F5** Host Descriptor 权限必须 ∈ permissions registry，未知权限即无效；坐标不得重复；
+- **F7** oneOf 改为"恰好一个匹配"（JSON Schema 语义）；profile/registry 权限一致性纳入 verifyContractProfiles；
+- **F4** 新增 12 个 fixture（unknown kind、subscription→capability、重复坐标、未注册 facet 版本、worker facet、混合 ContentBlock、host 未知契约/hash 不匹配/未知权限/重复坐标/facet 版本、复合 unknown+rejected）并接入断言；协商新增 `compoundUnknown`（unknown 胜出）与 `facetMismatch` 场景；
+- **F9** 文档残留：SECURITY.md、governance/rules.md、rfc/0005 版本号对齐 v0.15；
+- **F10** ledger 字符串字段加长度/格式约束（pluginId/activationInstance/resource.id/errorCode/replaces）；
+- **F11** `.pi-subagents/` 加入 .gitignore。
+
+### 已知局限（文档化）
+
+- `unknown` 触发条件 (b)（registry 版本高于协商器支持）因静态绑定不可达，已在 C-030 与 conformance README 注明；
+- 权限不支持语义歧义（等待授权 vs 不支持）已在 C-030 注明。
 
 ## 2026-08-17（实验增补，issue #266）
 

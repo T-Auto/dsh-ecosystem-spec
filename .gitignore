@@ -116,3 +116,5 @@ htmlcov/
 
 # ===== loop session state =====
 .pi/
+# ===== subagent artifacts =====
+.pi-subagents/

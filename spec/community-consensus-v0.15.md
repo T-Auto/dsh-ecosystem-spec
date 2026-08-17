@@ -43,7 +43,7 @@ Manifest MUST 符合 `schemas/dsh-plugin.schema.json`，并包含：
 - 稳定、全局唯一的 `id`；
 - 插件 `version`；
 - `manifestVersion = 0.15`；
-- `facets` 结构：v0.15 只规范 `facets.host`（`entry` + `apiVersion`，当前唯一已注册值为 `v1alpha1`）；`client` / `worker` 是保留名，出现即拒绝（契约归 RFC 0002）；
+- `facets` 结构：v0.15 只规范 `facets.host`（`entry` + `apiVersion`）。`apiVersion` MUST 是 registry 已注册的 facet API 版本（当前唯一注册值为 `v1alpha1`，以 `registry/registry-0.15.json` 的 `facetApiVersions` 为准）；`client` / `worker` 是保留名，出现即拒绝（契约归 RFC 0002）；
 - license 和 source repository。
 
 artifact 若被用于任何 conformance claim，MUST 使用 SHA-256 digest，并绑定被验证的发布产物字节范围。digest 不证明发布者身份；签名或 attestation 是独立能力。
@@ -58,7 +58,7 @@ artifact 若被用于任何 conformance claim，MUST 使用 SHA-256 digest，并
 
 宿主 MUST 发布符合 `schemas/host-descriptor.schema.json` 的机器可读 Host Descriptor，至少包含 host identity/version、`facetApiVersions`、每个 contract 的坐标（apiVersion/kind）/schemaHash/permissions、runtime location、runtime generation、headless 条件、trust level 和平台。
 
-宿主 MUST 精确声明 contract，不能只写“支持 commands”。未知坐标或未知 contract MUST fail closed：宿主声明的契约必须存在于 Registry 且 schemaHash 与 Registry 一致，否则 Host Descriptor 无效。
+宿主 MUST 精确声明 contract，不能只写“支持 commands”。未知坐标或未知 contract MUST fail closed：宿主声明的契约必须存在于 Registry 且 schemaHash 与 Registry 一致，否则 Host Descriptor 无效；Host Descriptor 声明的权限 MUST 存在于权限 registry，未知权限即无效。协商时 manifest 请求的 `facets.host.apiVersion` 必须在宿主的 `facetApiVersions` 内，否则 `rejected`（`FACET_API_VERSION_UNAVAILABLE`）。
 
 `runtimeGenerationId` 是 v0.15 的基础 scope 标识：宿主创建新的独立插件运行环境时生成新的 ID；同一 generation 内的 activation instance 不得因 Presentation attach/detach 自动改变。Runtime/Presentation 的完整分层仍归 RFC 0002。
 
@@ -96,7 +96,11 @@ required 缺失或 schemaHash 不匹配 MUST `rejected`，不得静默降级。o
 
 一个 manifest 同时命中多种情况时，决策优先级为：`unknown` > `rejected` > `waiting_authorization` > `compatible_degraded` > `compatible`——无法判断优先于拒绝，拒绝优先于待授权，不得用较低优先级的结果掩盖较高优先级的问题。
 
-标准错误码至少包括 `REQUIRED_CONTRACT_UNAVAILABLE`、`PERMISSION_NOT_GRANTED`、`UNKNOWN_CONTRACT`、`DUPLICATE_CONTRIBUTION_ID`、`INVALID_MANIFEST`。
+标准错误码至少包括 `REQUIRED_CONTRACT_UNAVAILABLE`、`FACET_API_VERSION_UNAVAILABLE`、`PERMISSION_NOT_GRANTED`、`UNKNOWN_CONTRACT`、`DUPLICATE_CONTRIBUTION_ID`、`INVALID_MANIFEST`。
+
+**已知歧义（方向性 fail-closed）**：manifest 请求了宿主完全未声明的权限时返回 `waiting_authorization`——这暗示“以后可能授权”，但宿主永远无法授予该权限；五态模型没有“权限不支持”槽位。当前方向偏 fail-closed（不会伪装成 compatible），待社区五态模型定案后再对齐。
+
+**已知局限（静态绑定）**：`unknown` 触发条件 (b)（registry 版本高于协商器支持版本）在本仓库不可达——runner 与 registry 静态绑定在同一发布物中；实现上的协商器若支持可插拔 registry 版本，必须实现该分支。
 
 ## 6. v0.15 Core Contracts
 

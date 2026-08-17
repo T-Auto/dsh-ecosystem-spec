@@ -8,7 +8,7 @@ Community Consensus 定义跨宿主最低公共 contract；dsh-TUI Admission 定
 
 ## 2. 正式状态
 
-正式状态只有：`Draft`、`Experimental`、`Candidate`、`Stable`、`Deprecated`。`Community Draft`、`Deferred from v0.1` 可作为说明，不是独立规范状态。
+正式状态只有：`Draft`、`Experimental`、`Candidate`、`Stable`、`Deprecated`。`Community Draft`、`Deferred from v0.15` 可作为说明，不是独立规范状态。
 
 - Draft：未冻结，不能作为长期依赖；
 - Experimental：可实现，可能 breaking；
