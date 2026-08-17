@@ -1,34 +1,9 @@
-# RFC 0002 — Runtime / Presentation / Invocation / Transport
+# RFC 0002 — Runtime Presentation Invocation
 
-**Status:** Experimental  
-**Scope:** Deferred from Community v0.15; TUI remote profile research
+**Status:** Superseded
 
-## 背景
+Runtime invocation 使用 `@dsh-std/presentation` 定义的 `PresentationDescriptor`、`PresentationClients` 与各项 Presentation protocol。本 profile 不定义 `PresentationSnapshot` protocol。
 
-Remote SSH 证明“Host = 运行地点 + UI 客户端”是错误抽象。Community v0.15 只保留最小 `runtimeGenerationId` scope，不冻结完整远程控制 contract。
+Host 必须从当前 active agreements 构造 invocation-scoped typed clients。Facet 不得在 activation state 中缓存 descriptor 或 client，也不得根据 local、remote、headless 或 UI 类型推断 Presentation 能力。
 
-## 五个概念
-
-- **Runtime**：插件实际运行位置；
-- **Transport**：runtime 与 client 之间的连接方式；
-- **Presentation**：用户看到和操作的界面能力；
-- **Invocation**：一次具体调用携带的能力、授权、deadline 和 cancellation 快照；
-- **Control**：attach、授权、session 和生命周期控制面。
-
-## 待冻结不变量
-
-同一个 Runtime 可以被多个 Presentation attach；一个 Presentation 可以切换多个 Runtime；插件不能通过 activation 时的全局状态猜测当前调用者的 Presentation 能力。
-
-## TUI 实验扩展
-
-实验性 capability name：`x-ccch1mneyyy.tui.presentation-snapshot`。它可携带：
-
-```text
-presentation capabilities
-runtime capabilities
-authorization context
-deadline
-cancellation
-```
-
-进入 Community contract 前必须补 invocation schema、attach/detach fixture、多客户端测试、权限撤销和 rollback 规则。
+`text` 是 Command result 或其他领域内容，不是 Presentation protocol；device-code 是认证流程的 fallback，不是 Presentation capability。打开认证页面使用 `presentation.dsh/v1alpha1` `OpenExternal`。

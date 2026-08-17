@@ -1,35 +1,30 @@
-# RFC 0001 — Manifest / Host / Broker Contract
+# RFC 0001 — dsh-std Baseline Profile
 
 **Status:** Experimental  
-**Scope:** Community v0.15 core contract source
+**Scope:** dsh-TUI admission profile dependency
 
-## 目的
+## Baseline
 
-定义插件与宿主之间的最小静态交互面：
+dsh-TUI admission 使用 `vendor/dsh-std` 固定 revision 所定义的：
 
-`Manifest -> Registry -> Host Descriptor -> Negotiation -> Broker -> Lifecycle`
+- Community v0.15 `dsh-plugin.json` 解析与投影；
+- `apiVersion + kind` 元协议及 definition negotiation；
+- composition、permission policy 接缝和 lifecycle scope；
+- `commands.dsh/v1alpha1` `Command`；
+- `storage.dsh/v1alpha1` `LocalStorage`；
+- `messages.dsh/v1alpha1` `MessageObserver`。
 
-## v0.15 决定（对齐社区 RFC v0.15）
+对应规范与机器资产从 [`spec/community-consensus-v0.15.md`](../spec/community-consensus-v0.15.md) 进入。本 RFC 不重新规定这些对象。
 
-- 唯一发现入口是包根目录 `dsh-plugin.json`；
-- Manifest 采用 Facet 对象模型：`facets.host.{entry, apiVersion}`；client / worker 是保留名（RFC 0002），v0.15 拒绝出现；
-- 契约引用采用元协议坐标 `apiVersion + kind`（如 `commands.dsh/v1alpha1` + `Command`），按 `requires.contracts` 声明；v0.1 平面名保留为 registry legacy 别名；
-- Manifest、Host Descriptor、event envelope、ledger 和 claim 使用 `schemas/` 中的 JSON Schema；
-- capability/event/permission 必须来自真实 registry（`registry-0.15.json`）；
-- contract compatibility 通过坐标 + schemaHash 判断；Host Descriptor 声明的坐标与 hash 必须与 registry 一致（fail closed）；
-- negotiation 是无副作用纯函数，结果必须包含稳定 decision/reasonCode；决策优先级 `unknown > rejected > waiting_authorization > compatible_degraded > compatible`；
-- required 缺失或 hash 不匹配必须 fail closed；optional 缺失必须有 fallback 才能降级；
-- messages.observe payload 与 MCP ContentBlock 对齐（text/image 子集，边界待社区 §9 Q3 定案）；
-- effect 必须归属到 plugin ID、activation instance 和 runtime generation；
-- trusted-in-process 不是 sandbox，权限声明不构成技术安全边界。
+## TUI profile
 
-## 交付物
+[`registry/registry-0.15.json`](../registry/registry-0.15.json) 分为两类条目：
 
-- `schemas/dsh-plugin.schema.json`；
-- `schemas/host-descriptor.schema.json`；
-- `registry/registry-0.15.json`；
-- `registry/permissions-0.1.json`；
-- `registry/contracts/`；
-- `conformance/fixtures/` 和 `conformance/tests/run.js`。
+- `imports` 引用 dsh-std 已有定义；
+- `definitions` 收录本 profile 的 TUI 私有定义，并绑定本地 contract profile digest。
 
-本 RFC 不把插件间 service、可修改事件或 UI adapter 纳入 v0.15；这些内容分别由 RFC 0002-0005 或 TUI proposal 处理。
+Host Descriptor 只能声明上述 definition 集合中可由当前 `ProtocolCatalog` 解析的 support。Manifest requirement、Host support 和 TUI 私有协议由同一个 dsh-std evaluator 协商。
+
+## Product decisions
+
+dsh-TUI 额外规定 Host Descriptor、授权状态到 admission decision 的映射、artifact evidence 和市场展示。这些是 TUI product policy，不改变 dsh-std 协议语义。

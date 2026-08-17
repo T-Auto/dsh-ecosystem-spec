@@ -1,31 +1,25 @@
 # Governance Boundary
 
-## 1. 权威来源
+## 1. Sources
 
-Community Consensus 定义跨宿主最低公共 contract；dsh-TUI Admission 定义 TUI 市场准入；RFC 是提案或延期主题；Adapter note 只记录适配细节。TUI 规则不得倒灌 Community Consensus。
+dsh-std 固定 submodule 是公共协议基线；dsh-TUI Admission 是产品准入 profile；本仓库 RFC 只定义 TUI 增量或保留历史引用路径。TUI policy 不修改 dsh-std 的协议含义，也不要求其他 Host 采用。
 
-当前仓库所有规范均为社区侧 Draft/Experimental，不代表 dsh 官方接受、认证或背书。
+当前所有内容均为 Draft/Experimental，不代表 dsh 官方接受、认证或背书。
 
-## 2. 正式状态
+## 2. Status
 
-正式状态只有：`Draft`、`Experimental`、`Candidate`、`Stable`、`Deprecated`。`Community Draft`、`Deferred from v0.15` 可作为说明，不是独立规范状态。
+正式状态为 `Draft`、`Experimental`、`Candidate`、`Stable` 和 `Deprecated`。进入 Candidate 前必须具有确定的协议坐标、definition、fixtures、失败语义和多实现证据。
 
-- Draft：未冻结，不能作为长期依赖；
-- Experimental：可实现，可能 breaking；
-- Candidate：schema、registry、fixtures、tests 齐全，并等待独立实现证据；
-- Stable：治理批准且有多实现 conformance evidence；
-- Deprecated：有迁移窗口，不鼓励新实现。
+## 3. Baseline updates
 
-## 3. Community 变更
+更新 `vendor/dsh-std` revision 必须记录受影响的 Manifest version、protocol definitions、admission decision 和迁移要求，并完整运行 conformance suite。不得在本仓库复制旧的 std schema 后继续以同一名称维护。
 
-修改 Community contract MUST：引用 RFC、写清问题/证据/兼容影响、更新 schema/registry、增加 fixtures 和 conformance test、提供迁移窗口、更新 CHANGELOG。Breaking change MUST 新建版本，禁止用 minor bump 掩盖。
+## 4. TUI-owned definitions
 
-v0.15 起契约按坐标（`apiVersion + kind`）独立版本化：单个领域契约的升级只允许影响该契约与依赖它的插件，不得要求协商内核、无关插件或宿主重新发版。契约 profile 的 schemaHash 不可变，修改 profile 必须新建契约版本或走治理迁移，不能原地重定义。新契约坐标必须先进入 `registry/registry-0.15.json` 并被 conformance runner 覆盖，才可被 manifest 引用。
+TUI 自有协议使用 `x-ccch1mneyyy.tui/*` namespace。新 definition 必须提供 `apiVersion + kind`、协议专属校验与协商器、contract profile、immutable digest 和 fixtures，并注册进 dsh-std `ProtocolCatalog`。目录或 package 的存在不等于 live support。
 
-## 4. TUI 变更
+TUI-only 要求使用稳定的 `TUI-*` ID，并说明适用 profile、影响范围和兼容变化。
 
-TUI-only 规则 MUST 使用稳定 `TUI-*` requirement ID，并在变更材料中标注适用 profile、影响插件范围、兼容变化和迁移内容。TUI policy 不能要求其他宿主兼容。
+## 5. Evidence
 
-## 5. 证据边界
-
-参考实现和 TUI Host 只能提供 evidence，不能自我认证。claim 必须绑定不可变 spec/Host/artifact/suite digest，并区分 Declared、Parsed、Negotiated、Tested、Observed、Attested。任何证据都不得表述为安全保证。
+参考实现和 TUI Host 只能提供 evidence，不能自我认证。claim 必须绑定 std revision、profile、Host、artifact 和 suite，并区分 declared、parsed、negotiated、tested、observed 与 attested。任何 evidence 都不是安全保证。

@@ -2,13 +2,16 @@
   "name": "dsh-ecosystem-spec",
   "version": "0.1.0-experimental",
   "private": true,
-  "description": "Executable contract, registry, fixtures, and conformance checks for the DSH community plugin draft.",
+  "type": "module",
+  "description": "dsh-TUI admission profile, private protocols, and conformance checks built on dsh-std.",
   "scripts": {
-    "test": "node conformance/tests/run.js",
+    "build:std": "git submodule update --init --recursive vendor/dsh-std && pnpm --dir vendor/dsh-std install --frozen-lockfile && pnpm --dir vendor/dsh-std build",
+    "test": "pnpm run build:std && node conformance/tests/run.js",
     "validate": "node conformance/tests/run.js"
   },
   "engines": {
-    "node": ">=18"
+    "node": "^22.19 || >=24"
   },
+  "packageManager": "pnpm@11.21.0",
   "license": "MIT"
 }

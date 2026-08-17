@@ -1,0 +1,3 @@
+[submodule "vendor/dsh-std"]
+	path = vendor/dsh-std
+	url = https://github.com/Yan-Zero/dsh-std.git

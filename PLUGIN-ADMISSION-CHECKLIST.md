@@ -5,7 +5,7 @@
 ## A. 包与身份
 
 - [ ] `TUI-PKG-001`：根目录唯一 `dsh-plugin.json`
-- [ ] `$schema` 可解析，manifest schema 通过（v0.15）
+- [ ] `$schema` 是绝对 URI，且固定 revision 的 `@dsh-std/manifest` 接受 manifestVersion 0.15（不要求联网获取 schema）
 - [ ] plugin `id` 稳定且唯一，version 合法
 - [ ] manifestVersion = 0.15；`facets.host` 的 entry / apiVersion 明确（client/worker 不出现）
 - [ ] source repository、license 可定位
@@ -14,9 +14,9 @@
 ## B. 声明完整性
 
 - [ ] `TUI-PKG-002`：required/optional 契约坐标、permissions、subscriptions、contributes 全部声明
-- [ ] 契约坐标（apiVersion+kind）与 permission 均存在于 registry 且 hash 一致
+- [ ] protocol definition 可从固定的 dsh-std imports 或本 profile 提供的 definitions 取得；本地 profile digest 一致
 - [ ] 不声明 `provides` 或 `requires.services`
-- [ ] command contribution ID 无冲突
+- [ ] `@dsh-std/command` extension 与 composition 检查无冲突
 
 ## C. TUI 兼容性
 

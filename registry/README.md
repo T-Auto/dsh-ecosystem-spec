@@ -1,36 +1,14 @@
-# Capability / Event Registry
+# dsh-TUI Admission Protocol Profile
 
-Registry 是 Community v0.15 contract 的一部分，不是 wiki 列表。真实条目位于 `registry-0.15.json`，权限位于 `permissions-0.1.json`，完整能力 profile 位于 `contracts/`。
+[`registry-0.15.json`](registry-0.15.json) 不是全局协议注册表。它描述本 TUI admission profile 使用的 definition 集合：
 
-## 条目要求
+- `imports` 引用固定 dsh-std revision 已提供的 definitions；
+- `definitions` 只收录 dsh-TUI 私有 definitions。
 
-每个条目 MUST 包含：
+导入条目不复制 dsh-std 的 schema 或 contract 正文。Community v0.15 的 `Command`、`LocalStorage`、`MessageObserver` 与 `OpenExternal` 分别由 `@dsh-std/command`、`@dsh-std/storage`、`@dsh-std/messages` 与 `@dsh-std/presentation` 注册。
 
-```json
-{
-  "name": "messages.observe",
-  "coordinates": {"apiVersion": "messages.dsh/v1alpha1", "kind": "MessageObserver"},
-  "kind": "event",
-  "version": "0.15",
-  "schema": "registry/contracts/messages.observe-0.15.json",
-  "schemaHash": "sha256:<64 lowercase hex chars>",
-  "permissions": [],
-  "requiredHostBehavior": []
-}
-```
+本地 definition 的 contract profile 使用 SHA-256 固定。修改 profile 内容必须更新 digest，并按兼容性决定保留坐标或发布新 `apiVersion`。digest 只证明字节一致，不证明发布者身份。
 
-`schemaHash` 是对应 contract profile UTF-8 字节的 SHA-256，不是随意填写的摘要。测试 runner 会验证 hash 漂移；修改 profile 必须新建版本或走治理迁移，不能原地重定义。
+`x-ccch1mneyyy.tui/*` 是 dsh-TUI 私有 namespace。私有 definition 与公共 definition 一样注册到 dsh-std `ProtocolCatalog`；目录收录本身不产生 live support。
 
-## 坐标与命名
-
-v0.15 起契约以类 Kubernetes 坐标标识：`<group>/<version>` + `kind`（如 `commands.dsh/v1alpha1` + `Command`）。`v1alpha1` 标明实验期，可能 breaking。`name` 字段保留为 v0.1 平面名 legacy 别名（`storage.local` / `commands` / `messages.observe`），只用于迁移期解析，不作为新声明的主要形式。
-
-标准坐标 group 为 `*.dsh`（Registry 为官方保留命名空间）；组织私有扩展使用 `x-org.example.*` 命名空间。禁止自造等价标准能力，禁止 `provides` 和 `requires.services`。
-
-## 权限
-
-权限必须在 `permissions-0.1.json` 注册，包含默认策略、scope 和可撤销性。Host Descriptor 表示宿主支持的权限；用户 grant 属于 authorize 阶段，不应被伪装成静态宿主能力。
-
-## 变更
-
-schema breaking change 必须产生新契约版本（新 `apiVersion`），并提供 affected contract、old/new behavior、migration path、compatibility window 和 removal date。deprecated 条目仍必须保留迁移窗口。Registry 的新增、变更和删除必须同步 fixtures、requirement matrix、CHANGELOG 和 conformance tests。
+权限目录仍是 TUI authorization policy 的输入。permission grant 与 protocol support 分开判断，安装 definition 不自动授权操作。

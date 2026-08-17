@@ -1,85 +1,47 @@
 # dsh-TUI Ecosystem Plugin Admission v0.15
 
 **Status:** Experimental / Product Policy  
-**Authority:** dsh-TUI 生态维护团队  
-**Scope:** 进入 dsh-TUI 插件市场、生态目录或推荐集合的插件
+**Authority:** dsh-TUI ecosystem maintainers
+**Baseline:** [`dsh-std` pinned submodule](community-consensus-v0.15.md)
 
-> 本文不是 dsh 官方标准。它是在 Community Consensus v0.15 基础上的 TUI 产品准入规则。生效日期保持由 TUI 发布流程管理，本文件不规定日期。
+本文件只规定进入 dsh-TUI 插件目录、市场或推荐集合的额外条件。Manifest、协议协商、composition、lifecycle 以及 Community v0.15 的 Command、LocalStorage、MessageObserver 和 Presentation 语义来自 dsh-std。
 
-## 1. 规范性要求
+## TUI-PKG-001 Package identity
 
-本文件中的要求 ID 是稳定引用。硬要求使用 **MUST / 必须**，建议使用 **SHOULD / 应**，可选项使用 **MAY / 可以**。完整检查表见 `PLUGIN-ADMISSION-CHECKLIST.md`，公共 contract 追踪见 `conformance/requirements-v0.15.json`。
+插件必须在包根目录提供唯一 `dsh-plugin.json`，并通过固定 revision 的 `@dsh-std/manifest` Community v0.15 parser。用于 Verified claim 的 artifact 必须绑定 SHA-256 digest。
 
-### TUI-PKG-001 包身份
+## TUI-PKG-002 Declaration closure
 
-插件进入 TUI 目录前 MUST 在包根目录提供唯一 `dsh-plugin.json`，且通过 community v0.15 manifest schema（含 `facets.host` 结构与 `manifestVersion = 0.15`）。必须有稳定 id、合法版本、license、source repository；用于 Verified 的产物 MUST 有 SHA-256 artifact digest。
+Manifest 中的 required/optional protocol、permission、subscription 和 contribution 必须全部静态声明。每项 protocol 必须能由本 profile 导入或拥有的 definition 解析；optional requirement 必须说明 TUI 可展示的 fallback。
 
-### TUI-PKG-002 声明完整
+私有 protocol 可以使用 `x-` namespace，但必须经过同一 Manifest projection、`ProtocolCatalog` negotiation、composition 和 lifecycle publication，不能由 TUI loader 旁路注入。
 
-required/optional 契约坐标、permission、subscription 和 contribution MUST 全部静态声明并可在 registry 中解析。v0.15 MUST NOT 声明 `provides` 或 `requires.services`。contributes command ID 冲突 MUST 被拒绝。
+## TUI-HOST-001 Host descriptor
 
-### TUI-HOST-001 宿主描述
+每个参与验证的 TUI Host 必须提供符合 `schemas/host-descriptor.schema.json` 的 descriptor。Descriptor 精确列出 facet API、protocol supports、definition source、权限、runtime generation、运行位置、headless 条件、trust level 和平台。
 
-每个 TUI 发布版本 MUST 提供符合 `schemas/host-descriptor.schema.json` 的 Host Descriptor，精确列出 facet API 版本、contract 坐标与 hash、permission、runtime location、generation、headless、trust level 和平台条件。不得用 `hostType = tui` 代替这些字段。
+导入的 dsh-std definition 记录 package identity；本 profile 自有 definition 记录 immutable contract profile digest。Host 不得仅凭 package 已安装宣称 live support。
 
-### TUI-RUN-001 远程确定性
+## TUI-RUN-001 Remote determinism
 
-插件 MUST NOT 假定运行机器有浏览器、GUI 或等同于用户交互机器；MUST NOT 将 Remote/local 或 Presentation 存成激活时的单一全局状态。一次 command invocation 的 Presentation capability 若被使用，必须随调用上下文传递。
+插件不得假定运行机器具有浏览器或 GUI，也不得把 remote/local 或 Presentation 保存为 activation 全局状态。需要用户交互的 command 或 operation 应从 invocation context 取得 `@dsh-std/presentation` 定义的类型化 client，或明确拒绝当前无法呈现的操作。
 
-remote attach 是当前 TUI profile 的测试场景，不是 Community v0.15 core 的自动承诺。声明支持 remote attach 的插件 MUST 通过 local runtime + TUI、remote runtime + TUI、attach/detach 和多 Presentation 场景测试。
+声明 remote attach 兼容的插件必须覆盖 local runtime、remote runtime、attach/detach 和多 Presentation 场景。remote attach 不是基础 Manifest 的隐式承诺。
 
-### TUI-RUN-002 受信任进程提示
+## TUI-OBS-001 Ownership and cleanup
 
-TUI 市场、安装和授权界面 MUST 显著展示：当前插件运行在 trusted-in-process 模式；permission grant 是兼容性/治理/审计记录，不是 OS 级技术隔离；插件可能继承宿主进程权限。拒绝某项声明权限不能承诺阻止恶意同进程代码访问系统资源。
+运行时 effect 必须归属到 component、facet activation instance 和 runtime generation。deactivate 后不得遗留可调用 handler、订阅、timer 或 connection attachment；cleanup failure 必须保留可诊断、可重试状态。
 
-### TUI-OBS-001 溯源
+## TUI-DEP-001 Dependency closure
 
-TUI Verified MUST 能从 command、subscription、ledger resource 和异常反查到 plugin ID、activation instance 和 runtime generation。Ledger MUST 遵守公共 schema，禁止记录 secret/credential/token/消息正文。
+验证必须覆盖实际安装 artifact、依赖闭包、native/build step、override/patch 声明和固定的 dsh-std revision。只验证源码仓库或只执行参考实现测试，不足以产生 artifact claim。
 
-### TUI-OBS-002 清理
+## TUI-TRUST-001 Trust disclosure
 
-TUI Verified MUST 对 deactivate、uninstall、purge 区分结果：
+当前 profile 为 `trusted-in-process`。Manifest permission 用于兼容性、授权提示和审计，不构成 OS、进程或 realm 安全边界。市场与安装界面必须明确展示这一点。
 
-- `deactivate`：停止本次 activation、订阅和 Broker 资源；
-- `uninstall`：阻止再次激活并释放注册资源，保留策略明确的数据；
-- `purge`：在用户确认后删除插件私有数据和可删除缓存。
+## Admission results
 
-cleanup 失败 MUST 进入可重试状态并展示残留资源；未完成清理不得显示“完全卸载”。grant、subscription、Broker resource 必须由宿主撤销；插件数据删除策略必须明确。
+TUI admission evaluator 可以展示 `compatible`、`compatible_degraded`、`waiting_authorization`、`rejected` 和 `unknown`。这些状态是 product policy 对 dsh-std validation、composition、negotiation 和 authorization 报告的投影，不是另一套 core negotiation result。
 
-### TUI-DEP-001 依赖闭包
-
-进入 `Reproducible` 前，插件依赖闭包 MUST 可计算，且每个发布产物、native binary、生成产物和锁定依赖都有 digest 或明确不可复现原因。digest 只证明字节完整性，不证明发布者身份。
-
-### TUI-CLAIM-001 验证声明
-
-任何 TUI claim MUST 绑定 `conformance-claim.schema.json` 所需的 community spec version、Host Descriptor digest、artifact digest、suite version、evidence level、result 和测试时间。不得将 Declared、Verified 或 Reproducible 表述为 Secure、官方认证或无漏洞。
-
-## 2. 分级模型
-
-兼容性、验证和限制是三个独立维度，不是一个互斥枚举：
-
-- `compatibilityDecision`：`compatible` / `compatible_degraded` / `waiting_authorization` / `rejected` / `unknown`；
-- `verificationLevel`：`Declared` / `Parsed` / `Negotiated` / `Tested` / `Observed` / `Attested`（与 `conformance/README.md` 的 evidence ladder 一致，claim 中机器可读）；
-- `restrictions[]`：例如 `headless-only`、`remote-unsupported`、`experimental-contract`。
-
-与社区 v0.15 市场五态的映射（展示层，不互相升级）：`compatible` / `compatible_degraded` → 声明兼容；`waiting_authorization` → 等待授权；`rejected` → 不兼容；`unknown` → 未知；`verificationLevel ≥ Tested` 且 claim 有效 → 已实测。声明兼容永远不等于已实测，更不等于安全。
-
-**"TUI Verified"** 在本文中是市场展示标签，不是独立 evidence level：它表示 `verificationLevel ≥ Tested` 且绑定的 claim 未过期、未撤销。本文 TUI-PKG-001、TUI-OBS-001、TUI-OBS-002 和 §4 中的 "Verified" 均按此定义解读。
-
-市场可以为用户显示组合状态，但不得把 `Declared` 自动升级为 `Verified`，也不得把任何等级升级为 `Secure`。
-
-## 3. v0.15 Command 和交互边界
-
-Community v0.15 仅支持 flat action leaf，不提供 command tree、交互式 prompt 或流式输出。TUI 可在独立实验 profile 中定义 command tree 和 ephemeral presentation channel，但必须标为 `experimental-contract`，不能作为 community v0.15 兼容的必要条件。
-
-登录、授权、device code、URL、QR 和临时确认等交互不得在 activation 时绑定某个客户端。未来的标准化 invocation contract 应按调用传递 Presentation capability；在该 contract 稳定前，TUI 实现必须提供明确的显式入口或拒绝无法呈现的操作。
-
-## 4. 影响与溯源展示
-
-TUI 的 Verified 展示 SHOULD 让用户在安装前看到新增 command、订阅、依赖、申请权限、native/build step、patch/override 声明和 artifact digest；运行中看到 activation instance、资源所有者、异常来源和 cleanup 状态；卸载后看到残留、回滚和复原结果。
-
-这些展示不能把“声明”冒充“观察到的事实”。证据等级定义以 `conformance/README.md` 为准。
-
-## 5. 社区边界
-
-TUI 规则变化 MUST 使用 `TUI-*` ID，不覆盖 Community Consensus；必须在变更记录中说明影响的 TUI profile、兼容性变化和迁移内容。TUI policy 不能自动成为其他宿主强制要求。
+私有协议的兼容性只能在 Host 和插件都声明相同 coordinate、definition 可解析且协议 evaluator 成功时成立。
