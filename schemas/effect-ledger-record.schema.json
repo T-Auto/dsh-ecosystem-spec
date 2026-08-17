@@ -1,11 +1,11 @@
 {
   "$schema":"https://json-schema.org/draft/2020-12/schema",
-  "$id":"https://dsh.community/schemas/effect-ledger-record-0.1.json",
-  "title":"DSH Effect Ledger Record v0.1",
+  "$id":"https://dsh.community/schemas/effect-ledger-record-0.15.json",
+  "title":"DSH Effect Ledger Record v0.15",
   "type":"object","additionalProperties":false,
   "required":["ledgerVersion","sequence","timestamp","pluginId","activationInstance","runtimeGenerationId","operation","resource","result"],
   "properties":{
-    "ledgerVersion":{"const":"0.1"},"sequence":{"type":"integer","minimum":0},"timestamp":{"type":"string","format":"date-time"},
+    "ledgerVersion":{"const":"0.15"},"sequence":{"type":"integer","minimum":0},"timestamp":{"type":"string","format":"date-time"},
     "pluginId":{"type":"string"},"activationInstance":{"type":"string"},"runtimeGenerationId":{"type":"string"},
     "operation":{"enum":["create","bind","replace","release","cleanup-failed"]},
     "resource":{"type":"object","additionalProperties":false,"required":["kind","id"],"properties":{"kind":{"type":"string"},"id":{"type":"string"}}},

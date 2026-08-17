@@ -1,20 +1,20 @@
 # dsh-TUI Plugin Admission Checklist
 
-这是 TUI 团队进行插件生态准入的机器/人工联合检查表。逐项要求 ID 见 `spec/tui-admission-v0.1.md`。
+这是 TUI 团队进行插件生态准入的机器/人工联合检查表。逐项要求 ID 见 `spec/tui-admission-v0.15.md`。
 
 ## A. 包与身份
 
 - [ ] `TUI-PKG-001`：根目录唯一 `dsh-plugin.json`
-- [ ] `$schema` 可解析，manifest schema 通过
+- [ ] `$schema` 可解析，manifest schema 通过（v0.15）
 - [ ] plugin `id` 稳定且唯一，version 合法
-- [ ] manifestVersion / apiVersion 明确
+- [ ] manifestVersion = 0.15；`facets.host` 的 entry / apiVersion 明确（client/worker 不出现）
 - [ ] source repository、license 可定位
 - [ ] Verified artifact digest 可验证，依赖/产物 digest 与 claim 绑定
 
 ## B. 声明完整性
 
-- [ ] `TUI-PKG-002`：required/optional capability、permissions、subscriptions、contributes 全部声明
-- [ ] capability/event/permission 均存在于 registry 且 hash 一致
+- [ ] `TUI-PKG-002`：required/optional 契约坐标、permissions、subscriptions、contributes 全部声明
+- [ ] 契约坐标（apiVersion+kind）与 permission 均存在于 registry 且 hash 一致
 - [ ] 不声明 `provides` 或 `requires.services`
 - [ ] command contribution ID 无冲突
 

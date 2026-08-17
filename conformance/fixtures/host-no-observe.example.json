@@ -1,11 +1,11 @@
 {
-  "$schema":"https://dsh.community/schemas/host-descriptor-0.1.json",
+  "$schema":"https://dsh.community/schemas/host-descriptor-0.15.json",
   "hostId":"dsh-tui",
   "hostVersion":"0.1.0-experimental",
-  "apiVersions":["0.1"],
+  "facetApiVersions":["v1alpha1"],
   "contracts":[
-    {"name":"storage.local","version":"0.1","schemaHash":"sha256:0825964a6fa23ce8a536c3c4c649c58a174c2984f27cabda9fea9d72fe88bf2f","permissions":["storage.local.read","storage.local.write"]},
-    {"name":"commands","version":"0.1","schemaHash":"sha256:44fd09e55246deef61dae0f4d07b84ec88160201226d414b29d46fc759be75b1","permissions":["commands.invoke"]}
+    {"apiVersion":"storage.dsh/v1alpha1","kind":"LocalStorage","version":"0.15","schemaHash":"sha256:a43bd499060013f599496e70b03cedde34739bc299ee83304ffcc42675fcf35b","permissions":["storage.local.read","storage.local.write"]},
+    {"apiVersion":"commands.dsh/v1alpha1","kind":"Command","version":"0.15","schemaHash":"sha256:9a67c445c0442e9797f953413c03f582a004276271fd6ab14a86c830f54e3152","permissions":["commands.invoke"]}
   ],
   "runtime":{"location":"remote","generationId":"example-generation-1","headless":true,"remoteAttach":true},
   "trustLevel":"trusted-in-process",

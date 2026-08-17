@@ -1,32 +1,32 @@
-# dsh-TUI Ecosystem Plugin Admission v0.1
+# dsh-TUI Ecosystem Plugin Admission v0.15
 
 **Status:** Experimental / Product Policy  
 **Authority:** dsh-TUI 生态维护团队  
 **Scope:** 进入 dsh-TUI 插件市场、生态目录或推荐集合的插件
 
-> 本文不是 dsh 官方标准。它是在 Community Consensus 基础上的 TUI 产品准入规则。生效日期保持由 TUI 发布流程管理，本文件不规定日期。
+> 本文不是 dsh 官方标准。它是在 Community Consensus v0.15 基础上的 TUI 产品准入规则。生效日期保持由 TUI 发布流程管理，本文件不规定日期。
 
 ## 1. 规范性要求
 
-本文件中的要求 ID 是稳定引用。硬要求使用 **MUST / 必须**，建议使用 **SHOULD / 应**，可选项使用 **MAY / 可以**。完整检查表见 `PLUGIN-ADMISSION-CHECKLIST.md`，公共 contract 追踪见 `conformance/requirements-v0.1.json`。
+本文件中的要求 ID 是稳定引用。硬要求使用 **MUST / 必须**，建议使用 **SHOULD / 应**，可选项使用 **MAY / 可以**。完整检查表见 `PLUGIN-ADMISSION-CHECKLIST.md`，公共 contract 追踪见 `conformance/requirements-v0.15.json`。
 
 ### TUI-PKG-001 包身份
 
-插件进入 TUI 目录前 MUST 在包根目录提供唯一 `dsh-plugin.json`，且通过 community v0.1 manifest schema。必须有稳定 id、合法版本、license、source repository；用于 Verified 的产物 MUST 有 SHA-256 artifact digest。
+插件进入 TUI 目录前 MUST 在包根目录提供唯一 `dsh-plugin.json`，且通过 community v0.15 manifest schema（含 `facets.host` 结构与 `manifestVersion = 0.15`）。必须有稳定 id、合法版本、license、source repository；用于 Verified 的产物 MUST 有 SHA-256 artifact digest。
 
 ### TUI-PKG-002 声明完整
 
-required/optional capability、permission、subscription 和 contribution MUST 全部静态声明并可在 registry 中解析。v0.1 MUST NOT 声明 `provides` 或 `requires.services`。contributes command ID 冲突 MUST 被拒绝。
+required/optional 契约坐标、permission、subscription 和 contribution MUST 全部静态声明并可在 registry 中解析。v0.15 MUST NOT 声明 `provides` 或 `requires.services`。contributes command ID 冲突 MUST 被拒绝。
 
 ### TUI-HOST-001 宿主描述
 
-每个 TUI 发布版本 MUST 提供符合 `schemas/host-descriptor.schema.json` 的 Host Descriptor，精确列出 API、contract hash、permission、runtime location、generation、headless、trust level 和平台条件。不得用 `hostType = tui` 代替这些字段。
+每个 TUI 发布版本 MUST 提供符合 `schemas/host-descriptor.schema.json` 的 Host Descriptor，精确列出 facet API 版本、contract 坐标与 hash、permission、runtime location、generation、headless、trust level 和平台条件。不得用 `hostType = tui` 代替这些字段。
 
 ### TUI-RUN-001 远程确定性
 
 插件 MUST NOT 假定运行机器有浏览器、GUI 或等同于用户交互机器；MUST NOT 将 Remote/local 或 Presentation 存成激活时的单一全局状态。一次 command invocation 的 Presentation capability 若被使用，必须随调用上下文传递。
 
-remote attach 是当前 TUI profile 的测试场景，不是 Community v0.1 core 的自动承诺。声明支持 remote attach 的插件 MUST 通过 local runtime + TUI、remote runtime + TUI、attach/detach 和多 Presentation 场景测试。
+remote attach 是当前 TUI profile 的测试场景，不是 Community v0.15 core 的自动承诺。声明支持 remote attach 的插件 MUST 通过 local runtime + TUI、remote runtime + TUI、attach/detach 和多 Presentation 场景测试。
 
 ### TUI-RUN-002 受信任进程提示
 
@@ -62,13 +62,15 @@ cleanup 失败 MUST 进入可重试状态并展示残留资源；未完成清理
 - `verificationLevel`：`Declared` / `Parsed` / `Negotiated` / `Tested` / `Observed` / `Attested`（与 `conformance/README.md` 的 evidence ladder 一致，claim 中机器可读）；
 - `restrictions[]`：例如 `headless-only`、`remote-unsupported`、`experimental-contract`。
 
+与社区 v0.15 市场五态的映射（展示层，不互相升级）：`compatible` / `compatible_degraded` → 声明兼容；`waiting_authorization` → 等待授权；`rejected` → 不兼容；`unknown` → 未知；`verificationLevel ≥ Tested` 且 claim 有效 → 已实测。声明兼容永远不等于已实测，更不等于安全。
+
 **"TUI Verified"** 在本文中是市场展示标签，不是独立 evidence level：它表示 `verificationLevel ≥ Tested` 且绑定的 claim 未过期、未撤销。本文 TUI-PKG-001、TUI-OBS-001、TUI-OBS-002 和 §4 中的 "Verified" 均按此定义解读。
 
 市场可以为用户显示组合状态，但不得把 `Declared` 自动升级为 `Verified`，也不得把任何等级升级为 `Secure`。
 
-## 3. v0.1 Command 和交互边界
+## 3. v0.15 Command 和交互边界
 
-Community v0.1 仅支持 flat action leaf，不提供 command tree、交互式 prompt 或流式输出。TUI 可在独立实验 profile 中定义 command tree 和 ephemeral presentation channel，但必须标为 `experimental-contract`，不能作为 community v0.1 兼容的必要条件。
+Community v0.15 仅支持 flat action leaf，不提供 command tree、交互式 prompt 或流式输出。TUI 可在独立实验 profile 中定义 command tree 和 ephemeral presentation channel，但必须标为 `experimental-contract`，不能作为 community v0.15 兼容的必要条件。
 
 登录、授权、device code、URL、QR 和临时确认等交互不得在 activation 时绑定某个客户端。未来的标准化 invocation contract 应按调用传递 Presentation capability；在该 contract 稳定前，TUI 实现必须提供明确的显式入口或拒绝无法呈现的操作。
 

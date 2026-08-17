@@ -87,6 +87,8 @@ Community Consensus 与 TUI Admission 使用以下术语：
 9. privacyClass；
 10. 是否构成安全边界。
 
+v0.15 起每项能力/事件还必须携带与 registry 一致的坐标身份（`coordinates.apiVersion` + `coordinates.kind`），且 `securityBoundary` 在 trusted-in-process 档位下必须为 `false`。contract profile 与 registry 条目的坐标不一致视为 CONTRACT_INVALID。
+
 ## 6. 不允许把实现细节冒充 contract
 
 以下内容属于实现层，不能直接成为公共规范：

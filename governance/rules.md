@@ -20,6 +20,8 @@ Community Consensus 定义跨宿主最低公共 contract；dsh-TUI Admission 定
 
 修改 Community contract MUST：引用 RFC、写清问题/证据/兼容影响、更新 schema/registry、增加 fixtures 和 conformance test、提供迁移窗口、更新 CHANGELOG。Breaking change MUST 新建版本，禁止用 minor bump 掩盖。
 
+v0.15 起契约按坐标（`apiVersion + kind`）独立版本化：单个领域契约的升级只允许影响该契约与依赖它的插件，不得要求协商内核、无关插件或宿主重新发版。契约 profile 的 schemaHash 不可变，修改 profile 必须新建契约版本或走治理迁移，不能原地重定义。新契约坐标必须先进入 `registry/registry-0.15.json` 并被 conformance runner 覆盖，才可被 manifest 引用。
+
 ## 4. TUI 变更
 
 TUI-only 规则 MUST 使用稳定 `TUI-*` requirement ID，并在变更材料中标注适用 profile、影响插件范围、兼容变化和迁移内容。TUI policy 不能要求其他宿主兼容。

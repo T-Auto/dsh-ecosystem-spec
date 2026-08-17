@@ -113,3 +113,6 @@ coverage/
 htmlcov/
 .nyc_output/
 *.profraw
+
+# ===== loop session state =====
+.pi/

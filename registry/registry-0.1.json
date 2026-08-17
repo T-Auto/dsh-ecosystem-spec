@@ -1,9 +1,0 @@
-{
-  "$schema":"https://json-schema.org/draft/2020-12/schema",
-  "registryVersion":"0.1",
-  "entries":[
-    {"name":"storage.local","kind":"capability","version":"0.1","schema":"registry/contracts/storage.local-0.1.json","schemaHash":"sha256:0825964a6fa23ce8a536c3c4c649c58a174c2984f27cabda9fea9d72fe88bf2f","permissions":["storage.local.read","storage.local.write"],"requiredHostBehavior":["namespace-by-plugin-id","repeatable-cleanup"]},
-    {"name":"commands","kind":"capability","version":"0.1","schema":"registry/contracts/commands-0.1.json","schemaHash":"sha256:44fd09e55246deef61dae0f4d07b84ec88160201226d414b29d46fc759be75b1","permissions":["commands.invoke"],"requiredHostBehavior":["flat-action-leaf","reject-duplicate-id"]},
-    {"name":"messages.observe","kind":"event","version":"0.1","schema":"registry/contracts/messages.observe-0.1.json","schemaHash":"sha256:666030568d12b319d159a7c1d3b60df883ac2142fe4699d60b3e780c8a3f9286","permissions":["messages.observe.read"],"eventEnvelope":"schemas/messages-observe-envelope.schema.json","requiredHostBehavior":["monotonic-sequence-per-scope","redact-sensitive-fields","fail-closed-unknown-privacy"]}
-  ]
-}
