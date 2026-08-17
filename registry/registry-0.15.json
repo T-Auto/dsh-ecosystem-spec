@@ -1,5 +1,4 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
   "profileVersion": "tui-admission/0.15",
   "std": {
     "repository": "https://github.com/Yan-Zero/dsh-std",
@@ -9,29 +8,68 @@
   "imports": [
     {
       "name": "commands",
-      "coordinates": {"apiVersion": "commands.dsh/v1alpha1", "kind": "Command"},
+      "coordinates": {
+        "apiVersion": "commands.dsh/v1alpha1",
+        "kind": "Command"
+      },
       "package": "@dsh-std/command",
       "kind": "capability",
-      "permissions": ["commands.invoke"]
+      "permissions": [
+        "commands.invoke"
+      ]
     },
     {
       "name": "storage.local",
-      "coordinates": {"apiVersion": "storage.dsh/v1alpha1", "kind": "LocalStorage"},
+      "coordinates": {
+        "apiVersion": "storage.dsh/v1alpha1",
+        "kind": "LocalStorage"
+      },
       "package": "@dsh-std/storage",
       "kind": "capability",
-      "permissions": ["storage.local.read", "storage.local.write"]
+      "permissions": [
+        "storage.local.read",
+        "storage.local.write"
+      ]
     },
     {
       "name": "messages.observe",
-      "coordinates": {"apiVersion": "messages.dsh/v1alpha1", "kind": "MessageObserver"},
+      "coordinates": {
+        "apiVersion": "messages.dsh/v1alpha1",
+        "kind": "MessageObserver"
+      },
       "package": "@dsh-std/messages",
       "kind": "event",
-      "permissions": ["messages.observe.read"],
+      "permissions": [
+        "messages.observe.read"
+      ],
       "eventEnvelope": "@dsh-std/messages/schema/message-observer-envelope-0.15.json"
     },
     {
       "name": "presentation.open-external",
-      "coordinates": {"apiVersion": "presentation.dsh/v1alpha1", "kind": "OpenExternal"},
+      "coordinates": {
+        "apiVersion": "presentation.dsh/v1alpha1",
+        "kind": "OpenExternal"
+      },
+      "package": "@dsh-std/presentation",
+      "kind": "capability",
+      "permissions": []
+    },
+    {
+      "name": "presentation.user-interaction",
+      "coordinates": {
+        "apiVersion": "presentation.dsh/v1alpha1",
+        "kind": "UserInteraction"
+      },
+      "package": "@dsh-std/presentation",
+      "kind": "capability",
+      "permissions": []
+    },
+    {
+      "name": "presentation.external-redirect",
+      "coordinates": {
+        "apiVersion": "presentation.dsh/v1alpha1",
+        "kind": "ExternalRedirect"
+      },
       "package": "@dsh-std/presentation",
       "kind": "capability",
       "permissions": []
@@ -41,7 +79,10 @@
     {
       "name": "tui.decision-events",
       "authority": "dsh-tui",
-      "coordinates": {"apiVersion": "x-ccch1mneyyy.tui/v1alpha1", "kind": "DecisionEvents"},
+      "coordinates": {
+        "apiVersion": "x-ccch1mneyyy.tui/v1alpha1",
+        "kind": "DecisionEvents"
+      },
       "kind": "capability",
       "profile": "registry/contracts/decision-events-v1alpha1.json",
       "profileHash": "sha256:a9fe0a94efafa2e3890c4b1c36f7a6b902ab1f001b94647b5ce95c1e792d90cd",
@@ -51,7 +92,58 @@
         "session.switch.intercept",
         "session.compact.intercept"
       ]
+    },
+    {
+      "name": "tui.channel",
+      "authority": "dsh-tui",
+      "coordinates": {
+        "apiVersion": "x-ccch1mneyyy.tui/v1alpha1",
+        "kind": "Channel"
+      },
+      "kind": "capability",
+      "profile": "registry/contracts/tui-channel-v1alpha1.json",
+      "profileHash": "sha256:b5e062bc8a5ed95c462e64524cc9692a16e3dd3b75cf8c1e4a0af40cc3c3df02",
+      "permissions": []
     }
   ],
-  "facetApiVersions": ["v1alpha1"]
+  "extensions": [
+    {
+      "name": "workspace.provider",
+      "authority": "dsh-std",
+      "coordinates": {
+        "apiVersion": "workspace.dsh/v1alpha1",
+        "kind": "WorkspaceProvider"
+      },
+      "kind": "extension",
+      "package": "@dsh-std/workspace",
+      "permissions": []
+    },
+    {
+      "name": "tui.settings-section",
+      "authority": "dsh-tui",
+      "coordinates": {
+        "apiVersion": "x-ccch1mneyyy.tui/v1alpha1",
+        "kind": "SettingsSection"
+      },
+      "kind": "extension",
+      "profile": "registry/contracts/settings-section-v1alpha1.json",
+      "profileHash": "sha256:d2b1256c9a49404b0498165ed2adf5950b1e95c06deecb207e08ded209d8fa09",
+      "permissions": []
+    },
+    {
+      "name": "tui.scene",
+      "authority": "dsh-tui",
+      "coordinates": {
+        "apiVersion": "x-ccch1mneyyy.tui/v1alpha1",
+        "kind": "Scene"
+      },
+      "kind": "extension",
+      "profile": "registry/contracts/scene-v1alpha1.json",
+      "profileHash": "sha256:ddf4c4ca68bfc549ae723a2025e9fe9b067db0c0b2a76381a65b29dba7a9eb59",
+      "permissions": []
+    }
+  ],
+  "facetApiVersions": [
+    "v1alpha1"
+  ]
 }

@@ -19,8 +19,15 @@ import {
   validateMessageEvent,
 } from '../../vendor/dsh-std/packages/messages/lib/index.js'
 import { register as registerPresentation } from '../../vendor/dsh-std/packages/presentation/lib/index.js'
+import { register as registerWorkspace } from '../../vendor/dsh-std/packages/workspace/lib/index.js'
 import { facetModuleActivationDefinition } from '../../vendor/dsh-std/packages/lifecycle/lib/index.js'
-import { registerProfileProtocols } from '../../protocols/profile-definitions.js'
+import { registerProfileProtocols, registerTuiContributionExtensions } from '../../protocols/profile-definitions.js'
+import {
+  validateTuiChannelInput,
+  validateTuiChannelRequirement,
+  validateTuiChannelSnapshot,
+  validateTuiChannelSupport,
+} from '../../protocols/tui-channel.js'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..')
 const load = relative => JSON.parse(fs.readFileSync(path.join(root, relative), 'utf8'))
@@ -47,7 +54,9 @@ registerCommand(protocols, manifestDefinitions)
 registerStorage(protocols)
 registerMessages(protocols)
 registerPresentation(protocols)
+registerWorkspace(protocols, manifestDefinitions)
 registerProfileProtocols(protocols)
+registerTuiContributionExtensions(manifestDefinitions)
 
 function resolveRef(rootSchema, ref) {
   if (!ref.startsWith('#/')) throw new Error(`external ref is not supported by the profile runner: ${ref}`)
@@ -181,6 +190,7 @@ function verifyProfileDefinitions() {
   assert.equal(fs.existsSync(path.join(root, 'registry/contracts/storage.local-0.15.json')), false, 'LocalStorage must come from @dsh-std/storage')
   assert.equal(fs.existsSync(path.join(root, 'registry/contracts/messages.observe-0.15.json')), false, 'MessageObserver must come from @dsh-std/messages')
   assert.equal(fs.existsSync(path.join(root, 'schemas/messages-observe-envelope.schema.json')), false, 'MessageObserver schema must come from @dsh-std/messages')
+  assert.equal(fs.existsSync(path.join(root, 'registry/contracts/workspace-provider-v1alpha1.json')), true, 'legacy WorkspaceProvider reference path must remain available')
   for (const entry of profile.definitions) {
     assert.equal(digestFile(entry.profile), entry.profileHash, `${entry.name}: profile hash drifted`)
     assert.equal(protocols.understands(entry.coordinates), true, `${entry.name}: no dsh-std ProtocolDefinition is registered`)
@@ -192,6 +202,22 @@ function verifyProfileDefinitions() {
     assert.deepEqual([...contract.permissions].sort(), [...entry.permissions].sort(), `${entry.name}: permissions differ`)
     assert.equal(entry.authority, 'dsh-tui', `${entry.name}: local definition must belong to dsh-TUI`)
     assert.match(entry.coordinates.apiVersion, /^x-ccch1mneyyy\.tui\//u, `${entry.name}: private definition must use the TUI namespace`)
+  }
+  for (const entry of profile.extensions ?? []) {
+    if (entry.authority === 'dsh-std') {
+      assert.notEqual(manifestDefinitions.extension(entry.coordinates), undefined, `${entry.name}: imported manifest extension definition is unavailable`)
+      continue
+    }
+    assert.equal(digestFile(entry.profile), entry.profileHash, `${entry.name}: profile hash drifted`)
+    assert.notEqual(manifestDefinitions.extension(entry.coordinates), undefined, `${entry.name}: no manifest extension definition is registered`)
+    const contract = load(entry.profile)
+    for (const key of ['name', 'version', 'kind', 'coordinates', 'caller', 'permissions', 'errors', 'concurrency', 'timeout', 'cleanup', 'privacyClass', 'securityBoundary']) {
+      assert.ok(key in contract, `${entry.name}: profile missing ${key}`)
+    }
+    assert.equal(contract.kind, 'extension', `${entry.name}: contract kind must be extension`)
+    assert.deepEqual(contract.coordinates, entry.coordinates, `${entry.name}: profile coordinates differ`)
+    assert.deepEqual([...contract.permissions].sort(), [...entry.permissions].sort(), `${entry.name}: permissions differ`)
+    assert.equal(entry.authority, 'dsh-tui', `${entry.name}: local extension must belong to dsh-TUI`)
   }
   for (const entry of profile.imports) {
     assert.equal(protocols.understands(entry.coordinates), true, `${entry.package}: imported dsh-std definition is unavailable`)
@@ -259,6 +285,7 @@ verifyProfileDefinitions()
 
 const manifestCases = [
   ['valid plugin', 'conformance/fixtures/valid-plugin.json', true],
+  ['valid TUI contributions', 'conformance/fixtures/valid-tui-contributions.json', true],
   ['valid plugin coordinate subscriptions', 'conformance/fixtures/valid-plugin-object-subs.json', true],
   ['valid private protocol plugin', 'conformance/fixtures/valid-private-protocol-plugin.json', true],
   ['invalid service rejected', 'conformance/fixtures/invalid-plugin-unknown-service.json', false],
@@ -290,6 +317,17 @@ for (const [name, relative, schema, semanticCheck, expected] of [
 ]) {
   const result = validate(name, load(relative), schema, semanticCheck)
   assert.equal(result.pass, expected, `${name}: ${result.error ?? `expected pass=${expected}`}`)
+  cases.push(result)
+}
+{
+  const fixture = load('conformance/fixtures/valid-tui-channel.json')
+  const result = validate('valid TUI channel envelopes', fixture, undefined, value => {
+    validateTuiChannelRequirement(value.requirement)
+    validateTuiChannelSupport(value.support)
+    validateTuiChannelInput('open', value.open)
+    validateTuiChannelSnapshot(value.snapshot)
+  })
+  assert.equal(result.pass, true, result.error)
   cases.push(result)
 }
 for (const [name, relative, expected] of [

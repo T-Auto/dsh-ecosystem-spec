@@ -5,7 +5,7 @@
 - `imports` 引用固定 dsh-std revision 已提供的 definitions；
 - `definitions` 只收录 dsh-TUI 私有 definitions。
 
-导入条目不复制 dsh-std 的 schema 或 contract 正文。Community v0.15 的 `Command`、`LocalStorage`、`MessageObserver` 与 `OpenExternal` 分别由 `@dsh-std/command`、`@dsh-std/storage`、`@dsh-std/messages` 与 `@dsh-std/presentation` 注册。
+导入条目不复制 dsh-std 的 schema 或 contract 正文。Community v0.15 的 `Command`、`LocalStorage`、`MessageObserver`、Presentation 与 Workspace 定义分别由 `@dsh-std/command`、`@dsh-std/storage`、`@dsh-std/messages`、`@dsh-std/presentation` 与 `@dsh-std/workspace` 注册。
 
 本地 definition 的 contract profile 使用 SHA-256 固定。修改 profile 内容必须更新 digest，并按兼容性决定保留坐标或发布新 `apiVersion`。digest 只证明字节一致，不证明发布者身份。
 

@@ -88,11 +88,11 @@ Invocation-scoped Presentation 的声明、协商、类型化调用、失效条�
 
 Track B 仍假设插件与宿主同进程同渲染器（trusted-in-process 的直接推论），不解决跨端问题——跨端声明式 UI 仍是 PROP-006 的领地。三档耦合度递增：数据（A）< 进程内组件（B）< 跨端 vnode（PROP-006）。
 **Community dependency:** v0.1 static contribution 和 effect ownership；与 PROP-006 互补（轻量两档先落地，vnode 档服务跨端场景）。
-**Proposal identifiers（尚非 protocol coordinates）:** `x-ccch1mneyyy.tui.host-rendered-ui`（Track A）、`x-ccch1mneyyy.tui.scene-components`（Track B）
+**Protocol coordinates:** RFC 0006 定义 `x-ccch1mneyyy.tui/v1alpha1` `SettingsSection` 与 `Scene`；definition、contract profile 与 conformance fixture 由该 RFC 管理。
 **Entry criteria:** Track A——消毒契约写成规范性文本：C0/C1 控制字符剥离、按终端 cell（而非字符数）限宽并带省略号、每类贡献的条目数/行数上限、非标量字段的丢弃或强转规则、非法输入警告拒绝而非抛异常；每类贡献（dialog/status/entry renderer）定义数据 schema 与宿主渲染所有权声明。Track B——注入 props 的稳定 contract（React/ui kit/channel/close）、场景注册-打开-关闭-释放生命周期、宿主 React 版本兼容规则（同大版本要求、hooks 与元素必须来自宿主 React）。
 **Exit criteria:** Track A——同一贡献数据在两个 presentation adapter 上渲染结果一致且不破坏布局；消毒规则有共享 fixture（含敌意输入：控制字符、全宽字符、超长文本、非字符串字段）。Track B——同一插件场景在两个宿主 React 小版本间行为一致；违反注入契约（插件自带 React）有确定性报错而非渲染时崩溃。
 **Rollback plan:** 停止加载对应 track 的 contributions，释放其 ledger 资源；flat commands 不受影响。
 
 ## 边界
 
-上述提案在 definition、profile 和 fixtures 完成前不构成 protocol support，也不能成为 dsh-std 或其他 Host 的隐式依赖。
+除已经由 RFC 0006 定义的 contribution 外，上述提案在 definition、profile 和 fixtures 完成前不构成 protocol support，也不能成为 dsh-std 或其他 Host 的隐式依赖。

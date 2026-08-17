@@ -4,6 +4,45 @@
   "private": true,
   "type": "module",
   "description": "dsh-TUI admission profile, private protocols, and conformance checks built on dsh-std.",
+  "exports": {
+    "./protocols": {
+      "types": "./protocols/profile-definitions.d.ts",
+      "default": "./protocols/profile-definitions.js"
+    },
+    "./tui-contributions": {
+      "types": "./protocols/tui-contributions.d.ts",
+      "default": "./protocols/tui-contributions.js"
+    },
+    "./tui-channel": {
+      "types": "./protocols/tui-channel.d.ts",
+      "default": "./protocols/tui-channel.js"
+    },
+    "./tui-channel-http": {
+      "types": "./protocols/tui-channel-http.d.ts",
+      "default": "./protocols/tui-channel-http.js"
+    },
+    "./registry/registry-0.15.json": "./registry/registry-0.15.json",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "adapters",
+    "conformance",
+    "governance",
+    "proposals",
+    "protocols",
+    "registry",
+    "rfc",
+    "schemas",
+    "spec",
+    "CHANGELOG.md",
+    "PLUGIN-ADMISSION-CHECKLIST.md"
+  ],
+  "peerDependencies": {
+    "@dsh-std/connection": "workspace:*",
+    "@dsh-std/core": "workspace:*",
+    "@dsh-std/manifest": "workspace:*",
+    "@dsh-std/workspace": "workspace:*"
+  },
   "scripts": {
     "build:std": "git submodule update --init --recursive vendor/dsh-std && pnpm --dir vendor/dsh-std install --frozen-lockfile && pnpm --dir vendor/dsh-std build",
     "test": "pnpm run build:std && node conformance/tests/run.js",

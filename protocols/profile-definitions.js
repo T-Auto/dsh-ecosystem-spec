@@ -1,5 +1,9 @@
 /** dsh-TUI private protocol definitions evaluated by @dsh-std/core. */
 
+export { registerTuiContributionExtensions } from './tui-contributions.js'
+export * from './tui-channel.js'
+import { tuiChannelDefinition } from './tui-channel.js'
+
 export const DECISION_EVENTS = Object.freeze({
   apiVersion: 'x-ccch1mneyyy.tui/v1alpha1',
   kind: 'DecisionEvents',
@@ -46,6 +50,7 @@ export const decisionEventsDefinition = providerDefinition(DECISION_EVENTS, 'Dec
 
 export const profileDefinitions = Object.freeze([
   decisionEventsDefinition,
+  tuiChannelDefinition,
 ])
 
 export function registerProfileProtocols(catalog) {
