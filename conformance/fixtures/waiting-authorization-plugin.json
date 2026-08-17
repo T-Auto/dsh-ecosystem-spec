@@ -1,0 +1,5 @@
+{
+  "$schema":"https://dsh.community/schemas/dsh-plugin-0.1.json","id":"com.example.observer","name":"Observer","version":"0.1.0","manifestVersion":"0.1","apiVersion":"0.1","entry":"dist/main.js",
+  "requires":{"capabilities":{"required":[{"name":"messages.observe","version":"0.1","schemaHash":"sha256:666030568d12b319d159a7c1d3b60df883ac2142fe4699d60b3e780c8a3f9286"}],"optional":[]},"services":[]},
+  "permissions":[{"name":"messages.observe.read","scope":"session:*","reason":"observe message metadata"}],"contributes":{"commands":[]},"subscriptions":[{"event":"messages.observe","version":"0.1","schemaHash":"sha256:666030568d12b319d159a7c1d3b60df883ac2142fe4699d60b3e780c8a3f9286","scope":"session:*"}],"license":"MIT","source":{"repository":"https://example.com/observer"}
+}

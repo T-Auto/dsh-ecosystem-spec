@@ -1,0 +1,13 @@
+{
+  "$schema":"https://dsh.community/schemas/host-descriptor-0.1.json",
+  "hostId":"dsh-tui",
+  "hostVersion":"0.1.0-experimental",
+  "apiVersions":["0.1"],
+  "contracts":[
+    {"name":"storage.local","version":"0.1","schemaHash":"sha256:0825964a6fa23ce8a536c3c4c649c58a174c2984f27cabda9fea9d72fe88bf2f","permissions":["storage.local.read","storage.local.write"]},
+    {"name":"commands","version":"0.1","schemaHash":"sha256:44fd09e55246deef61dae0f4d07b84ec88160201226d414b29d46fc759be75b1","permissions":["commands.invoke"]}
+  ],
+  "runtime":{"location":"remote","generationId":"example-generation-1","headless":true,"remoteAttach":true},
+  "trustLevel":"trusted-in-process",
+  "platform":{"os":"linux","arch":"x64","node":">=18"}
+}

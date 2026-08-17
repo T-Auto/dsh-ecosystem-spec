@@ -1,0 +1,15 @@
+{
+  "$schema":"https://dsh.community/schemas/dsh-plugin-0.1.json",
+  "id":"com.example.future",
+  "name":"Future Contract Plugin",
+  "version":"0.1.0",
+  "manifestVersion":"0.1",
+  "apiVersion":"0.1",
+  "entry":"dist/main.js",
+  "requires":{"capabilities":{"required":[{"name":"commands","version":"0.2","schemaHash":"sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"}],"optional":[]},"services":[]},
+  "permissions":[{"name":"commands.invoke","scope":"com.example.future.ping","reason":"invoke the declared action"}],
+  "contributes":{"commands":[{"id":"com.example.future.ping","title":"Ping"}]},
+  "subscriptions":[],
+  "license":"MIT",
+  "source":{"repository":"https://example.com/future"}
+}

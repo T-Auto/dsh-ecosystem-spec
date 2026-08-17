@@ -1,0 +1,16 @@
+{
+  "$schema":"https://dsh.community/schemas/dsh-plugin-0.1.json",
+  "id":"com.example.echo",
+  "name":"Echo Plugin",
+  "version":"0.1.0",
+  "manifestVersion":"0.1",
+  "apiVersion":"0.1",
+  "entry":"dist/main.js",
+  "requires":{"capabilities":{"required":[{"name":"commands","version":"0.1","schemaHash":"sha256:44fd09e55246deef61dae0f4d07b84ec88160201226d414b29d46fc759be75b1"}],"optional":[{"name":"messages.observe","version":"0.1","schemaHash":"sha256:666030568d12b319d159a7c1d3b60df883ac2142fe4699d60b3e780c8a3f9286","fallback":"run without message observation"}]},"services":[]},
+  "permissions":[{"name":"commands.invoke","scope":"com.example.echo.ping","reason":"invoke the declared action"}],
+  "contributes":{"commands":[{"id":"com.example.echo.ping","title":"Ping"}]},
+  "subscriptions":[],
+  "license":"MIT",
+  "source":{"repository":"https://example.com/echo","revision":"abc123"},
+  "artifact":{"digest":"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","algorithm":"sha256","path":"dist/plugin.tgz"}
+}

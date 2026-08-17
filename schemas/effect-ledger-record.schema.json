@@ -1,0 +1,16 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://dsh.community/schemas/effect-ledger-record-0.1.json",
+  "title":"DSH Effect Ledger Record v0.1",
+  "type":"object","additionalProperties":false,
+  "required":["ledgerVersion","sequence","timestamp","pluginId","activationInstance","runtimeGenerationId","operation","resource","result"],
+  "properties":{
+    "ledgerVersion":{"const":"0.1"},"sequence":{"type":"integer","minimum":0},"timestamp":{"type":"string","format":"date-time"},
+    "pluginId":{"type":"string"},"activationInstance":{"type":"string"},"runtimeGenerationId":{"type":"string"},
+    "operation":{"enum":["create","bind","replace","release","cleanup-failed"]},
+    "resource":{"type":"object","additionalProperties":false,"required":["kind","id"],"properties":{"kind":{"type":"string"},"id":{"type":"string"}}},
+    "replaces":{"type":"object","additionalProperties":false,"properties":{"resourceId":{"type":"string"},"activationInstance":{"type":"string"}}},
+    "result":{"enum":["applied","pending","failed"]},"errorCode":{"type":"string"},
+    "valueDigest":{"type":"string","pattern":"^sha256:[a-f0-9]{64}$"}
+  }
+}

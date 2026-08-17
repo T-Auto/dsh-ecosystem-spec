@@ -1,0 +1,14 @@
+{
+  "name": "dsh-ecosystem-spec",
+  "version": "0.1.0-experimental",
+  "private": true,
+  "description": "Executable contract, registry, fixtures, and conformance checks for the DSH community plugin draft.",
+  "scripts": {
+    "test": "node conformance/tests/run.js",
+    "validate": "node conformance/tests/run.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT"
+}
