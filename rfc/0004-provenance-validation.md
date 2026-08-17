@@ -1,7 +1,7 @@
 # RFC 0004 — Provenance / Validation / Diagnostics
 
 **Status:** Experimental  
-**Scope:** Deferred from Community v0.1; TUI evidence and diagnostics research
+**Scope:** Deferred from Community v0.15; TUI evidence and diagnostics research
 
 ## 目标
 

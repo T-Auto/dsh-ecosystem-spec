@@ -1,11 +1,11 @@
 # RFC 0002 — Runtime / Presentation / Invocation / Transport
 
 **Status:** Experimental  
-**Scope:** Deferred from Community v0.1; TUI remote profile research
+**Scope:** Deferred from Community v0.15; TUI remote profile research
 
 ## 背景
 
-Remote SSH 证明“Host = 运行地点 + UI 客户端”是错误抽象。Community v0.1 只保留最小 `runtimeGenerationId` scope，不冻结完整远程控制 contract。
+Remote SSH 证明“Host = 运行地点 + UI 客户端”是错误抽象。Community v0.15 只保留最小 `runtimeGenerationId` scope，不冻结完整远程控制 contract。
 
 ## 五个概念
 

@@ -8,7 +8,7 @@
 
 **Status:** Experimental  
 **Reason for TUI-specific scope:** TUI 希望提供第一个真实 Host conformance evidence，但不能自我认证。  
-**Community dependency:** Community v0.1 schemas、registry、fixtures、claim。  
+**Community dependency:** Community v0.15 schemas、registry、fixtures、claim。  
 **Experimental capability name:** `x-ccch1mneyyy.tui.conformance-host`  
 **Entry criteria:** Host Descriptor schema、测试 runner、至少一组合法/非法 fixture 可运行。  
 **Exit criteria:** 两个独立 integration 和三个示例插件通过同一 headless suite，结果绑定 Host Descriptor/artifact digest。  
@@ -50,7 +50,7 @@
 
 **Status:** Experimental  
 **Reason for TUI-specific scope:** Runtime 与 Presentation 的调用快照属于尚未稳定的远程控制 contract。  
-**Community dependency:** Community v0.1 flat command 和 TUI remote-first admission。  
+**Community dependency:** Community v0.15 flat command 和 TUI remote-first admission。  
 **Experimental capability name:** `x-ccch1mneyyy.tui.presentation-snapshot`  
 **Entry criteria:** invocation 数据结构包含 presentation capabilities、runtime capabilities、authorization context、deadline、cancellation。  
 **Exit criteria:** 多 Presentation attach、detach、切换 Runtime 和授权撤销场景行为确定，并有 headless fixture。  
@@ -79,7 +79,7 @@
 ## TUI-PROP-008 Experimental Admission Profile
 
 **Status:** Experimental  
-**Reason for TUI-specific scope:** TUI 市场等级是产品 policy，不应修改 Community v0.1。  
+**Reason for TUI-specific scope:** TUI 市场等级是产品 policy，不应修改 Community v0.15。  
 **Community dependency:** schemas、registry、conformance claim。  
 **Experimental capability name:** `x-ccch1mneyyy.tui.admission-profile`  
 **Entry criteria:** `compatibilityDecision`、`verificationLevel`、`restrictions[]` 三维状态和 claim schema 可消费。  
@@ -103,4 +103,4 @@ Track B 仍假设插件与宿主同进程同渲染器（trusted-in-process 的�
 
 ## 边界
 
-上述提案不能把 `provides`、command tree、cross-platform UI、sandbox 或远程 Presentation 快照变成 Community v0.1 的隐式依赖。
+上述提案不能把 `provides`、command tree、cross-platform UI、sandbox 或远程 Presentation 快照变成 Community v0.15 的隐式依赖。
