@@ -16,6 +16,16 @@
 - TUI 的额外要求必须明确标记为 `TUI-*`，不会倒灌进通用的 Community Consensus；
 - 私有协议使用标准的 `apiVersion + kind` 契约坐标，统一注册到 dsh-std 的 `ProtocolCatalog`。`x-ccch1mneyyy.tui/*` 命名空间仅表示其兼容性由 dsh-TUI 维护，不会获得另一套私有的发现、协商或生命周期机制。
 
+## 生态扩展
+
+使用dsh-ecosystem-spec规范的相关的tui扩展插件：
+
+| 扩展                                                         | 说明                            | 扩展                                                         | 说明                                     |
+| ------------------------------------------------------------ | ------------------------------- | ------------------------------------------------------------ | ---------------------------------------- |
+| [dsh-tui-vscode](https://github.com/baobaolaodie/dsh-tui-vscode) | 以 VS Code 扩展形式启动 dsh-TUI | [dsh-tui-market](https://github.com/FUSU123fusu/dsh-tui-market) | 在 TUI 内浏览、搜索、安装、移除 dsh 插件 |
+| [dsh-tui-subagents](https://github.com/FUSU123fusu/dsh-tui-subagents) | 子 agent 会话视图               | [dsh-tui-jobs](https://github.com/FUSU123fusu/dsh-tui-jobs)  | 后台任务面板                             |
+| [dsh-tui-checkpoints](https://github.com/FUSU123fusu/dsh-tui-checkpoints) | 使用独立git的文件更改撤销与恢复 |                                                              |                                          |
+
 ## 边界
 
 - `vendor/dsh-std/`：通过 git submodule 固定的 dsh-std 公共契约基线与核心资产。
