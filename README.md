@@ -5,7 +5,7 @@
 
 ## 项目定位
 
-`dsh-ecosystem-spec` 是建立在 `dsh-std` 公共基线之上的 `dsh-TUI` 插件生态准入 profile，为 dsh-TUI 的插件生态建立强制遵守的规则，以及作为社区侧、实验性的 dsh 插件互操作规范与可执行测试资产库。
+`dsh-ecosystem-spec` 是[dsh-TUI](https://github.com/ccch1mneyyy/dsh-TUI)子插件及兼容插件的生态准入 profile，使用[dsh-std](https://github.com/Yan-Zero/dsh-std)的协议兼容标准，承担社区RFC共识落地验证与实现作用。本仓库为 dsh-TUI 的插件生态建立强制遵守的规则，以及作为社区侧、实验性的 dsh 插件互操作规范与可执行测试资产库。
 
 本仓库不是 dsh 官方标准，不代表 dsh 官方立场，不要求官方立即采纳，也不授予官方认证。当前规范与测试均为 Draft / Experimental；在 Candidate/Stable 条件满足前，使用者只能声明“实验适配”。
 
