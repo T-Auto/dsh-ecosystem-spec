@@ -5,7 +5,7 @@ export * from './tui-channel.js'
 import { tuiChannelDefinition } from './tui-channel.js'
 
 export const DECISION_EVENTS = Object.freeze({
-  apiVersion: 'x-ccch1mneyyy.tui/v1alpha1',
+  apiVersion: 'tui.dsh/v1alpha1',
   kind: 'DecisionEvents',
 })
 

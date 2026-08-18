@@ -9,6 +9,6 @@
 
 本地 definition 的 contract profile 使用 SHA-256 固定。修改 profile 内容必须更新 digest，并按兼容性决定保留坐标或发布新 `apiVersion`。digest 只证明字节一致，不证明发布者身份。
 
-`x-ccch1mneyyy.tui/*` 是 dsh-TUI 私有 namespace。私有 definition 与公共 definition 一样注册到 dsh-std `ProtocolCatalog`；目录收录本身不产生 live support。
+`tui.dsh/*` 是 dsh-TUI 私有 namespace。私有 definition 与公共 definition 一样注册到 dsh-std `ProtocolCatalog`；目录收录本身不产生 live support。
 
 权限目录仍是 TUI authorization policy 的输入。permission grant 与 protocol support 分开判断，安装 definition 不自动授权操作。

@@ -11,8 +11,8 @@
     "commands":[],
     "x-dsh-tui":[
       {"apiVersion":"workspace.dsh/v1alpha1","kind":"WorkspaceProvider","id":"com.example.workspace","name":"example-workspace","spec":{"title":"Example","workspaceDomain":"example.workspaces","operations":["list","get","resolve"],"locatorKinds":["example"],"mutationConcurrency":"serialized"}},
-      {"apiVersion":"x-ccch1mneyyy.tui/v1alpha1","kind":"SettingsSection","id":"com.example.settings","name":"example_settings","spec":{"namespace":"example","title":"Example","fields":[{"path":["enabled"],"label":"Enabled","kind":"boolean"}]}},
-      {"apiVersion":"x-ccch1mneyyy.tui/v1alpha1","kind":"Scene","id":"com.example.scene","name":"example_scene","spec":{"title":"Example"}}
+      {"apiVersion":"tui.dsh/v1alpha1","kind":"SettingsSection","id":"com.example.settings","name":"example_settings","spec":{"namespace":"example","title":"Example","fields":[{"path":["enabled"],"label":"Enabled","kind":"boolean"}]}},
+      {"apiVersion":"tui.dsh/v1alpha1","kind":"Scene","id":"com.example.scene","name":"example_scene","spec":{"title":"Example"}}
     ]
   },
   "subscriptions":[],

@@ -1,6 +1,6 @@
 {
   "name":"tui.scene","version":"v1alpha1","kind":"extension",
-  "coordinates":{"apiVersion":"x-ccch1mneyyy.tui/v1alpha1","kind":"Scene"},
+  "coordinates":{"apiVersion":"tui.dsh/v1alpha1","kind":"Scene"},
   "caller":"trusted in-process dsh-TUI scene shell",
   "permissions":[],
   "operations":["open","close","render"],

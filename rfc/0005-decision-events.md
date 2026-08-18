@@ -1,7 +1,7 @@
 # RFC 0005 — TUI Decision Events
 
 **Status:** Experimental
-**Coordinate:** `x-ccch1mneyyy.tui/v1alpha1` `DecisionEvents`
+**Coordinate:** `tui.dsh/v1alpha1` `DecisionEvents`
 
 ## Scope
 

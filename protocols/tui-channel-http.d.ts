@@ -1,4 +1,4 @@
-export const TUI_CHANNEL_HTTP_API_VERSION: 'x-ccch1mneyyy.tui/v1alpha1'
+export const TUI_CHANNEL_HTTP_API_VERSION: 'tui.dsh/v1alpha1'
 export const TUI_CHANNEL_HTTP_KIND: 'ChannelEndpoint'
 export const TUI_CHANNEL_HTTP_HEALTH_PATH: '/dsh-tui/v1/health'
 export const TUI_CHANNEL_HTTP_DESCRIPTOR_PATH: '/dsh-tui/v1/endpoint'

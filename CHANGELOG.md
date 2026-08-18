@@ -58,7 +58,7 @@
 
 ### Added
 
-- RFC 0005（Decision Events）：认领 `before-*` 延期主题——envelope（`expectsDecision`）、决定词汇表、链语义 D-1~D-5、D-6 陈旧决策按身份/代际丢弃（禁 id 比较）、D-7 拦截订阅显式授权默认拒绝、D-8 parked 同步性；TUI 实验能力名 `x-ccch1mneyyy.tui.decision-events`。
+- RFC 0005（Decision Events）：认领 `before-*` 延期主题——envelope（`expectsDecision`）、决定词汇表、链语义 D-1~D-5、D-6 陈旧决策按身份/代际丢弃（禁 id 比较）、D-7 拦截订阅显式授权默认拒绝、D-8 parked 同步性；TUI 实验能力名 `tui.dsh.decision-events`。
 - TUI-PROP-009（Lightweight UI Contributions）：两档轻量 UI 契约——Track A 宿主拥有渲染、插件供消毒数据；Track B 插件组件在宿主渲染器内渲染。
 - `adapters/` 目录与 Adapter Note 模板；SPEC-WRITING-RULES §2 同步分区。
 

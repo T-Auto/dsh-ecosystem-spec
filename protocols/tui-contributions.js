@@ -1,6 +1,6 @@
 /** dsh-TUI private, lifecycle-owned manifest contribution definitions. */
 
-export const API_VERSION = 'x-ccch1mneyyy.tui/v1alpha1'
+export const API_VERSION = 'tui.dsh/v1alpha1'
 
 export const SETTINGS_SECTION = Object.freeze({
   apiVersion: API_VERSION,
