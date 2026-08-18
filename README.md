@@ -18,13 +18,21 @@
 
 ## 生态扩展
 
-使用dsh-ecosystem-spec规范的相关的tui扩展插件：
+使用dsh-ecosystem-spec规范的dsh-tui功能扩展插件：
 
 | 扩展                                                         | 说明                            | 扩展                                                         | 说明                                     |
 | ------------------------------------------------------------ | ------------------------------- | ------------------------------------------------------------ | ---------------------------------------- |
 | [dsh-tui-vscode](https://github.com/baobaolaodie/dsh-tui-vscode) | 以 VS Code 扩展形式启动 dsh-TUI | [dsh-tui-market](https://github.com/FUSU123fusu/dsh-tui-market) | 在 TUI 内浏览、搜索、安装、移除 dsh 插件 |
 | [dsh-tui-subagents](https://github.com/FUSU123fusu/dsh-tui-subagents) | 子 agent 会话视图               | [dsh-tui-jobs](https://github.com/FUSU123fusu/dsh-tui-jobs)  | 后台任务面板                             |
 | [dsh-tui-checkpoints](https://github.com/FUSU123fusu/dsh-tui-checkpoints) | 使用独立git的文件更改撤销与恢复 |                                                              |                                          |
+
+使用dsh-ecosystem-spec规范，明确兼容dsh-tui的社区插件：
+
+| 扩展                                                        | 说明                                    | 扩展 | 说明 |
+| ----------------------------------------------------------- | --------------------------------------- | ---- | ---- |
+| [Yan-Zero/dsh-codex](https://github.com/Yan-Zero/dsh-codex) | 在 DeepSeek Harness 中使用 ChatGPT 订阅 |      |      |
+
+
 
 ## 边界
 
