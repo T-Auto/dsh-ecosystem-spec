@@ -6,21 +6,22 @@ import { fileURLToPath } from 'node:url'
 import {
   ProtocolCatalog,
   defineProtocolDeclaration,
-} from '../../vendor/dsh-std/packages/core/lib/index.js'
+} from './std-modules.js'
 import {
   ManifestDefinitionCatalog,
   parseManifest,
   projectManifest,
-} from '../../vendor/dsh-std/packages/manifest/lib/index.js'
-import { register as registerCommand } from '../../vendor/dsh-std/packages/command/lib/index.js'
-import { register as registerStorage } from '../../vendor/dsh-std/packages/storage/lib/index.js'
+} from './std-modules.js'
+import { registerCommand, registerStorage } from './std-modules.js'
 import {
-  register as registerMessages,
+  registerMessages,
   validateMessageEvent,
-} from '../../vendor/dsh-std/packages/messages/lib/index.js'
-import { register as registerPresentation } from '../../vendor/dsh-std/packages/presentation/lib/index.js'
-import { register as registerWorkspace } from '../../vendor/dsh-std/packages/workspace/lib/index.js'
-import { facetModuleActivationDefinition } from '../../vendor/dsh-std/packages/lifecycle/lib/index.js'
+} from './std-modules.js'
+import {
+  facetModuleActivationDefinition,
+  registerPresentation,
+  registerWorkspace,
+} from './std-modules.js'
 import { registerProfileProtocols, registerTuiContributionExtensions } from '../../protocols/profile-definitions.js'
 import {
   validateTuiChannelInput,

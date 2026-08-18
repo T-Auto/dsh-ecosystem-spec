@@ -5,11 +5,10 @@
 运行：
 
 ```sh
-git submodule update --init
 pnpm test
 ```
 
-测试会构建 `vendor/dsh-std`，随后：
+测试优先装载当前 workspace 已安装的 `@dsh-std/*`。没有可用 workspace 依赖时，runner 会初始化并构建 `vendor/dsh-std`；`pnpm test:standalone` 可强制执行该路径。两种路径运行同一组检查：
 
 - 使用 `@dsh-std/manifest` 解析并投影 Community v0.15 Manifest；
 - 使用 `@dsh-std/command`、`@dsh-std/storage`、`@dsh-std/messages` 和 `@dsh-std/presentation` 注册 Community v0.15 公共 definitions；

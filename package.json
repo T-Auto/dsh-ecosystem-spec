@@ -38,15 +38,21 @@
     "PLUGIN-ADMISSION-CHECKLIST.md"
   ],
   "peerDependencies": {
+    "@dsh-std/command": "workspace:*",
     "@dsh-std/connection": "workspace:*",
     "@dsh-std/core": "workspace:*",
+    "@dsh-std/lifecycle": "workspace:*",
     "@dsh-std/manifest": "workspace:*",
+    "@dsh-std/messages": "workspace:*",
+    "@dsh-std/presentation": "workspace:*",
+    "@dsh-std/storage": "workspace:*",
     "@dsh-std/workspace": "workspace:*"
   },
   "scripts": {
-    "build:std": "git submodule update --init --recursive vendor/dsh-std && pnpm --dir vendor/dsh-std install --frozen-lockfile && pnpm --dir vendor/dsh-std build",
-    "test": "pnpm run build:std && node conformance/tests/run.js",
-    "validate": "node conformance/tests/run.js"
+    "build:std": "node scripts/conformance.mjs --prepare-standalone",
+    "test": "node scripts/conformance.mjs",
+    "test:standalone": "node scripts/conformance.mjs --standalone",
+    "validate": "node scripts/conformance.mjs --no-build"
   },
   "engines": {
     "node": "^22.19 || >=24"
