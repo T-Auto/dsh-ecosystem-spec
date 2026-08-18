@@ -33,12 +33,13 @@
 环境要求：Node.js 18 或更高版本，启用 `corepack`。
 
 ```sh
-git submodule update --init
-corepack enable
-pnpm test
+pnpm test          # 在 dsh-TUI workspace 内（复用 workspace 安装的 @dsh-std/*）
+npm run test:standalone   # 独立检出时（强制 vendor/dsh-std 回退路径）
 ```
 
-`pnpm test` 会按 submodule 固定的 revision 安装并构建 dsh-std，然后运行 TUI admission suite。测试覆盖 manifest/Host Descriptor/event envelope/ledger/claim 的正反 fixture、registry hash 漂移检查、契约坐标解析（未知 group/kind 拒绝、未注册版本判 unknown）、required/optional 协商、授权等待、授权后通过、重复 command ID 拒绝、client/worker facet 拒绝和 ContentBlock payload 校验。
+在 dsh-TUI workspace 中，conformance suite 直接使用 workspace 安装的 `@dsh-std/*`。独立检出本仓库时（无 workspace 提供 `@dsh-std/*`），pnpm 会因 `workspace:*` peerDependencies 预检失败，请改用 `npm run test:standalone`（等价入口 `node scripts/conformance.mjs --standalone`）：它会初始化固定 revision 的 `vendor/dsh-std`，在非交互模式下安装、构建后，于仓库根 `node_modules` 建立指向构建产物的链接，再运行相同的 suite。`npm run test` 复用已安装或已构建的依赖，`npm run validate`（`--no-build`）只使用已经安装或构建的依赖。生成的 `lib` 不提交到本仓库。
+
+测试覆盖 manifest、Host Descriptor、event envelope、ledger 与 claim 的正反 fixture，以及 registry hash 漂移、契约坐标解析、required/optional 协商、授权状态、重复 command ID、保留 facet 和 ContentBlock payload 校验。
 
 生成的构建产物仅存在于 submodule 工作区，不提交到本仓库。
 

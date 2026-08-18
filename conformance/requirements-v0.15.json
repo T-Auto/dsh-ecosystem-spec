@@ -1,7 +1,7 @@
 {
   "profileVersion":"dsh-tui-admission-v0.15",
   "requirements":[
-    {"id":"BASE-STD-001","source":"vendor/dsh-std","test":"submodule build and imported definition availability","evidence":"automated"},
+    {"id":"BASE-STD-001","source":"@dsh-std/* or vendor/dsh-std","test":"installed package loading and pinned submodule fallback availability","evidence":"automated"},
     {"id":"TUI-PKG-001","source":"@dsh-std/manifest","fixtures":["valid-plugin.json","invalid-plugin-client-facet.json","invalid-plugin-worker-facet.json"],"test":"Community v0.15 parse and projection","evidence":"automated"},
     {"id":"TUI-PKG-002","source":"registry/registry-0.15.json","fixtures":["invalid-plugin-unknown-coordinate.json","invalid-plugin-optional-no-fallback.json"],"test":"profile definition closure and fallback policy","evidence":"automated"},
     {"id":"TUI-PRIVATE-001","source":"protocols/profile-definitions.js","fixtures":["valid-private-protocol-plugin.json"],"test":"private definition registration and rejection when the Host has no live support","evidence":"automated"},

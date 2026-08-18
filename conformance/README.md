@@ -5,11 +5,11 @@
 运行：
 
 ```sh
-git submodule update --init
-pnpm test
+pnpm test          # 在 dsh-TUI workspace 内（复用 workspace 安装的 @dsh-std/*）
+npm run test:standalone   # 独立检出时（强制 vendor/dsh-std 回退路径）
 ```
 
-测试会构建 `vendor/dsh-std`，随后：
+测试优先装载当前 workspace 已安装的 `@dsh-std/*`。独立检出本仓库时（无 workspace 提供 `@dsh-std/*`），pnpm 会因 `workspace:*` peerDependencies 预检失败，请使用 `npm run test:standalone`（等价于 `node scripts/conformance.mjs --standalone`）：runner 会初始化并构建 `vendor/dsh-std`，然后在仓库根 `node_modules` 建立指向构建产物的链接后运行同一组检查。`npm run test` 复用已安装或已构建的依赖，`npm run validate`（`--no-build`）只使用已经安装或构建的依赖。两种路径运行同一组检查：
 
 - 使用 `@dsh-std/manifest` 解析并投影 Community v0.15 Manifest；
 - 使用 `@dsh-std/command`、`@dsh-std/storage`、`@dsh-std/messages` 和 `@dsh-std/presentation` 注册 Community v0.15 公共 definitions；

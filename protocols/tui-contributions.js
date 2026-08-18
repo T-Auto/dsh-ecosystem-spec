@@ -17,36 +17,40 @@ export const settingsSectionExtensionDefinition = Object.freeze({
   validateMetadata(metadata) {
     contributionName(metadata?.name, 'SettingsSection metadata.name')
   },
-  validateSpec(value) {
-    const spec = exactRecord(value, ['namespace', 'title', 'titles', 'fields'], 'SettingsSection spec')
-    contributionName(spec.namespace, 'SettingsSection spec.namespace')
-    nonEmpty(spec.title, 'SettingsSection spec.title')
-    localized(spec.titles, 'SettingsSection spec.titles')
-    if (!Array.isArray(spec.fields)) throw new TypeError('SettingsSection spec.fields must be an array')
-    return Object.freeze({
-      namespace: spec.namespace,
-      title: spec.title,
-      ...(spec.titles === undefined ? {} : { titles: freezeRecord(spec.titles) }),
-      fields: Object.freeze(spec.fields.map((field, index) => validateSettingsField(field, index))),
-    })
-  },
+  validateSpec: validateSettingsSectionSpec,
 })
+
+export function validateSettingsSectionSpec(value) {
+  const spec = exactRecord(value, ['namespace', 'title', 'titles', 'fields'], 'SettingsSection content')
+  contributionName(spec.namespace, 'SettingsSection content.namespace')
+  nonEmpty(spec.title, 'SettingsSection content.title')
+  localized(spec.titles, 'SettingsSection content.titles')
+  if (!Array.isArray(spec.fields)) throw new TypeError('SettingsSection content.fields must be an array')
+  return Object.freeze({
+    namespace: spec.namespace,
+    title: spec.title,
+    ...(spec.titles === undefined ? {} : { titles: freezeRecord(spec.titles) }),
+    fields: Object.freeze(spec.fields.map((field, index) => validateSettingsField(field, index))),
+  })
+}
 
 export const sceneExtensionDefinition = Object.freeze({
   ...SCENE,
   validateMetadata(metadata) {
     contributionName(metadata?.name, 'Scene metadata.name')
   },
-  validateSpec(value) {
-    const spec = exactRecord(value, ['title', 'titles'], 'Scene spec')
-    if (spec.title !== undefined) nonEmpty(spec.title, 'Scene spec.title')
-    localized(spec.titles, 'Scene spec.titles')
-    return Object.freeze({
-      ...(spec.title === undefined ? {} : { title: spec.title }),
-      ...(spec.titles === undefined ? {} : { titles: freezeRecord(spec.titles) }),
-    })
-  },
+  validateSpec: validateSceneSpec,
 })
+
+export function validateSceneSpec(value) {
+  const spec = exactRecord(value, ['title', 'titles'], 'Scene content')
+  if (spec.title !== undefined) nonEmpty(spec.title, 'Scene content.title')
+  localized(spec.titles, 'Scene content.titles')
+  return Object.freeze({
+    ...(spec.title === undefined ? {} : { title: spec.title }),
+    ...(spec.titles === undefined ? {} : { titles: freezeRecord(spec.titles) }),
+  })
+}
 
 export const contributionExtensionDefinitions = Object.freeze([
   settingsSectionExtensionDefinition,

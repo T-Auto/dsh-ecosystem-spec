@@ -35,6 +35,8 @@ export interface SceneHandler<Props = unknown, Result = unknown> {
 export const settingsSectionExtensionDefinition: ManifestObjectDefinition
 export const sceneExtensionDefinition: ManifestObjectDefinition
 export const contributionExtensionDefinitions: readonly ManifestObjectDefinition[]
+export function validateSettingsSectionSpec(value: unknown): Readonly<SettingsSectionSpec>
+export function validateSceneSpec(value: unknown): Readonly<SceneSpec>
 export function registerTuiContributionExtensions(catalog: ManifestDefinitionCatalog): () => void
 export function assertSettingsSectionHandler(value: unknown): asserts value is SettingsSectionHandler
 export function assertSceneHandler(value: unknown): asserts value is SceneHandler
