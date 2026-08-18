@@ -3,6 +3,7 @@ import { pathToFileURL } from 'node:url'
 
 const packageNames = [
   'core',
+  'connection',
   'manifest',
   'command',
   'storage',
@@ -27,6 +28,10 @@ export const {
   ProtocolCatalog,
   defineProtocolDeclaration,
 } = modules.core
+
+export const {
+  defineCapabilityProtocol,
+} = modules.connection
 
 export const {
   ManifestDefinitionCatalog,

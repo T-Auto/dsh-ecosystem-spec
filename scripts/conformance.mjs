@@ -8,6 +8,7 @@ const vendoredStd = path.join(root, 'vendor', 'dsh-std')
 const runner = path.join(root, 'conformance', 'tests', 'run.js')
 const requiredPackages = [
   '@dsh-std/core',
+  '@dsh-std/connection',
   '@dsh-std/manifest',
   '@dsh-std/command',
   '@dsh-std/storage',
@@ -23,9 +24,9 @@ for (const option of options) {
   if (!knownOptions.has(option)) throw new Error(`unknown option: ${option}`)
 }
 
-function run(command, args, environment = process.env) {
+function run(command, args, environment = process.env, cwd = root) {
   const result = spawnSync(command, args, {
-    cwd: root,
+    cwd,
     env: environment,
     stdio: 'inherit',
   })
@@ -64,12 +65,24 @@ function prepareVendoredStd() {
     if (!fs.existsSync(corepackPnpm)) {
       throw new Error(`Corepack pnpm entry point is unavailable: ${corepackPnpm}`)
     }
-    run(process.execPath, [corepackPnpm, '--dir', 'vendor/dsh-std', 'install', '--frozen-lockfile'], environment)
-    run(process.execPath, [corepackPnpm, '--dir', 'vendor/dsh-std', 'build'], environment)
+    run(process.execPath, [corepackPnpm, 'install', '--frozen-lockfile'], environment, vendoredStd)
+    run(process.execPath, [corepackPnpm, 'build'], environment, vendoredStd)
     return
   }
-  run('pnpm', ['--dir', 'vendor/dsh-std', 'install', '--frozen-lockfile'], environment)
-  run('pnpm', ['--dir', 'vendor/dsh-std', 'build'], environment)
+  run('pnpm', ['install', '--frozen-lockfile'], environment, vendoredStd)
+  run('pnpm', ['build'], environment, vendoredStd)
+}
+
+function linkVendoredStdPackages() {
+  const linkRoot = path.join(root, 'node_modules', '@dsh-std')
+  fs.mkdirSync(linkRoot, { recursive: true })
+  for (const packageName of requiredPackages) {
+    const name = packageName.slice('@dsh-std/'.length)
+    const linkPath = path.join(linkRoot, name)
+    if (fs.existsSync(linkPath)) continue
+    const target = path.join(vendoredStd, 'packages', name)
+    fs.symlinkSync(target, linkPath, process.platform === 'win32' ? 'junction' : 'dir')
+  }
 }
 
 const prepareOnly = options.has('--prepare-standalone')
@@ -92,6 +105,8 @@ if (!vendoredStdBuilt()) {
 }
 
 if (prepareOnly) process.exit(0)
+
+linkVendoredStdPackages()
 
 console.log(`[conformance] using standalone dsh-std at ${vendoredStd}`)
 run(process.execPath, [runner], {

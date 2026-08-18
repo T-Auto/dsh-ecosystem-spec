@@ -7,7 +7,7 @@
 - RFC 0006 改为基于 `@dsh-std/ui` 的 TUI surface profile，只保留 `SettingsSection` 与 `Scene` 的 TUI 专属 descriptor、handler ABI、冲突和错误语义；
 - TUI-PROP-006 与 TUI-PROP-009 标记为 Superseded；通用 contribution ownership、content mode、registration 与 lifecycle 不再由 TUI 重复定义；
 - 明确 Scene 可执行 handler 不跨 endpoint，远端只投影协议允许的纯数据 identity 与 metadata。
-- conformance runner 改为优先装载宿主提供的 `@dsh-std/*`；独立检出时回退到固定的 `vendor/dsh-std`，不再写死单一构建目录或递归执行 pnpm script。
+- conformance runner 改为优先装载宿主提供的 `@dsh-std/*`；独立检出时通过 `npm run test:standalone` 回退到固定的 `vendor/dsh-std`，不再写死单一构建目录或递归执行 pnpm script。
 
 ## 2026-08-17（v0.15 对齐，社区 RFC v0.15）
 
