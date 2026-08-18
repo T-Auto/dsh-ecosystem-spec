@@ -38,7 +38,7 @@ dsh-tui-vscode 是 dsh-TUI 的 VS Code companion 扩展。它在 dsh 生态里�
 - 分支：`feat/dsh-ecosystem-spec`
 - `dsh-plugin.json`：该仓库根目录（试点声明）
 - 上游 conformance 核对：本仓库（HEAD，2026-08-18）+ 固定 `vendor/dsh-std` submodule；以 `conformance/tests/run.js` 同款逻辑对试点 manifest 重新执行校验 → **`compatible`**（结构校验 + 语义校验 + 协商全部通过）。
-- 注：完整 `pnpm test` 在独立 checkout 下暂因 PR #2（`protocols/tui-channel.js` 裸引用 `@dsh-std/connection`）导入失败，属已知开放问题，与试点 manifest 无关。
+- 注：`npm run test:standalone` 可在独立 checkout 下完整运行本仓库 conformance suite（standalone 回退路径）；`pnpm test` 仅限 dsh-TUI workspace 内使用。
 - 该仓库 CI：`npm test` / `npm run test:e2e` 覆盖 VS Code 扩展行为，不覆盖 v0.15 conformance。
 
 ## 收敛计划
