@@ -2,116 +2,25 @@ import assert from 'node:assert/strict'
 import crypto from 'node:crypto'
 import fs from 'node:fs'
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
-import {
-  ProtocolCatalog,
-  defineProtocolDeclaration,
-} from './std-modules.js'
-import {
-  ManifestDefinitionCatalog,
-  parseManifest,
-  projectManifest,
-} from './std-modules.js'
-import { registerCommand, registerStorage } from './std-modules.js'
-import {
-  registerMessages,
-  validateMessageEvent,
-} from './std-modules.js'
-import {
-  facetModuleActivationDefinition,
-  registerPresentation,
-  registerWorkspace,
-} from './std-modules.js'
-import { registerProfileProtocols, registerTuiContributionExtensions } from '../../protocols/profile-definitions.js'
+import { validateMessageEvent } from './std-modules.js'
 import {
   validateTuiChannelInput,
   validateTuiChannelRequirement,
   validateTuiChannelSnapshot,
   validateTuiChannelSupport,
 } from '../../protocols/tui-channel.js'
-
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..')
-const load = relative => JSON.parse(fs.readFileSync(path.join(root, relative), 'utf8'))
-const source = relative => fs.readFileSync(path.join(root, relative), 'utf8')
-const schemas = {
-  host: load('schemas/host-descriptor.schema.json'),
-  ledger: load('schemas/effect-ledger-record.schema.json'),
-  claim: load('schemas/conformance-claim.schema.json'),
-}
-const profile = load('registry/registry-0.15.json')
-const permissionRegistry = load('registry/permissions-0.1.json')
-const facetApiVersions = profile.facetApiVersions ?? []
-const profileEntries = [...profile.imports, ...profile.definitions]
-const coordinateKey = value => `${value.apiVersion ?? value.coordinates.apiVersion}#${value.kind ?? value.coordinates.kind}`
-const familyKey = value => `${(value.apiVersion ?? value.coordinates.apiVersion).split('/')[0]}#${value.kind ?? value.coordinates.kind}`
-const byCoordinate = new Map(profileEntries.map(entry => [coordinateKey(entry.coordinates), entry]))
-const byFamily = new Map(profileEntries.map(entry => [familyKey(entry.coordinates), entry]))
-const byName = new Map(profileEntries.filter(entry => entry.name !== undefined).map(entry => [entry.name, entry]))
-
-const protocols = new ProtocolCatalog({ name: 'dsh-tui-admission', version: '0.15' })
-const manifestDefinitions = new ManifestDefinitionCatalog({ name: 'dsh-tui-admission', version: '0.15' })
-manifestDefinitions.registerActivation(facetModuleActivationDefinition)
-registerCommand(protocols, manifestDefinitions)
-registerStorage(protocols)
-registerMessages(protocols)
-registerPresentation(protocols)
-registerWorkspace(protocols, manifestDefinitions)
-registerProfileProtocols(protocols)
-registerTuiContributionExtensions(manifestDefinitions)
-
-function resolveRef(rootSchema, ref) {
-  if (!ref.startsWith('#/')) throw new Error(`external ref is not supported by the profile runner: ${ref}`)
-  return ref.slice(2).split('/').reduce((value, key) => value[key.replace(/~1/g, '/').replace(/~0/g, '~')], rootSchema)
-}
-
-function check(value, schema, rootSchema, where = '$') {
-  if (schema.$ref) return check(value, resolveRef(rootSchema, schema.$ref), rootSchema, where)
-  if (schema.oneOf) {
-    let matches = 0
-    const errors = []
-    for (const variant of schema.oneOf) {
-      try { check(value, variant, rootSchema, where); matches += 1 } catch (error) { errors.push(error.message) }
-    }
-    if (matches !== 1) throw new Error(`${where}: expected exactly one oneOf match, got ${matches}: ${errors.join(' | ')}`)
-    return
-  }
-  if (schema.const !== undefined && value !== schema.const) throw new Error(`${where}: expected ${JSON.stringify(schema.const)}`)
-  if (schema.enum && !schema.enum.includes(value)) throw new Error(`${where}: value is not in enum`)
-  if (schema.type === 'object') {
-    if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(`${where}: expected object`)
-    for (const key of schema.required ?? []) if (!(key in value)) throw new Error(`${where}.${key}: required`)
-    if (schema.additionalProperties === false) {
-      for (const key of Object.keys(value)) {
-        const declared = Object.hasOwn(schema.properties ?? {}, key)
-        const patterned = Object.keys(schema.patternProperties ?? {}).some(pattern => new RegExp(pattern).test(key))
-        if (!declared && !patterned) throw new Error(`${where}.${key}: additional property`)
-      }
-    }
-    for (const [key, child] of Object.entries(schema.properties ?? {})) if (key in value) check(value[key], child, rootSchema, `${where}.${key}`)
-    for (const [pattern, child] of Object.entries(schema.patternProperties ?? {})) {
-      for (const key of Object.keys(value)) if (new RegExp(pattern).test(key)) check(value[key], child, rootSchema, `${where}.${key}`)
-    }
-  } else if (schema.type === 'array') {
-    if (!Array.isArray(value)) throw new Error(`${where}: expected array`)
-    if (schema.minItems !== undefined && value.length < schema.minItems) throw new Error(`${where}: too few items`)
-    if (schema.maxItems !== undefined && value.length > schema.maxItems) throw new Error(`${where}: too many items`)
-    for (const [index, item] of value.entries()) check(item, schema.items, rootSchema, `${where}[${index}]`)
-    if (schema.uniqueItems) {
-      const encoded = value.map(item => JSON.stringify(item))
-      if (new Set(encoded).size !== encoded.length) throw new Error(`${where}: duplicate items`)
-    }
-  } else if (schema.type === 'string') {
-    if (typeof value !== 'string') throw new Error(`${where}: expected string`)
-    if (schema.minLength !== undefined && value.length < schema.minLength) throw new Error(`${where}: too short`)
-    if (schema.maxLength !== undefined && value.length > schema.maxLength) throw new Error(`${where}: too long`)
-    if (schema.pattern && !new RegExp(schema.pattern).test(value)) throw new Error(`${where}: pattern mismatch`)
-    if (schema.format === 'uri') { try { new URL(value) } catch { throw new Error(`${where}: invalid URI`) } }
-    if (schema.format === 'date-time' && Number.isNaN(Date.parse(value))) throw new Error(`${where}: invalid date-time`)
-  } else if (schema.type === 'integer') {
-    if (!Number.isInteger(value)) throw new Error(`${where}: expected integer`)
-    if (schema.minimum !== undefined && value < schema.minimum) throw new Error(`${where}: below minimum`)
-  } else if (schema.type === 'boolean' && typeof value !== 'boolean') throw new Error(`${where}: expected boolean`)
-}
+import {
+  root,
+  load,
+  schemas,
+  profile,
+  protocols,
+  manifestDefinitions,
+  check,
+  parseAndValidateManifest,
+  validateHost,
+  admissionDecision,
+} from './admission-core.js'
 
 function validate(name, body, schema, semanticCheck) {
   try {
@@ -120,62 +29,6 @@ function validate(name, body, schema, semanticCheck) {
     return { name, pass: true }
   } catch (error) {
     return { name, pass: false, error: error instanceof Error ? error.message : String(error) }
-  }
-}
-
-function resolveProfileReference(reference) {
-  const exact = byCoordinate.get(coordinateKey(reference))
-  if (exact !== undefined) return { entry: exact, unknownVersion: false }
-  const family = byFamily.get(familyKey(reference))
-  if (family !== undefined) return { entry: family, unknownVersion: true }
-  throw new Error(`protocol definition is not admitted by this profile: ${coordinateKey(reference)}`)
-}
-
-function resolveSubscription(subscription) {
-  const entry = typeof subscription === 'string'
-    ? byName.get(subscription)
-    : byCoordinate.get(coordinateKey(subscription))
-  if (entry === undefined) throw new Error(`unknown subscription: ${typeof subscription === 'string' ? subscription : coordinateKey(subscription)}`)
-  if (entry.kind !== 'event') throw new Error(`subscription must reference an event: ${entry.name ?? coordinateKey(entry.coordinates)}`)
-  return entry
-}
-
-function parseAndValidateManifest(relative) {
-  const parsed = parseManifest(source(relative), { source: relative })
-  if (!facetApiVersions.includes(parsed.facets.host.apiVersion)) {
-    throw new Error(`facet apiVersion is not admitted: ${parsed.facets.host.apiVersion}`)
-  }
-  for (const requirement of parsed.requires.contracts) {
-    resolveProfileReference(requirement)
-    if (requirement.optional === true && !requirement.fallback) {
-      throw new Error(`optional protocol requires a TUI fallback: ${coordinateKey(requirement)}`)
-    }
-  }
-  for (const subscription of parsed.subscriptions) resolveSubscription(subscription)
-  const projected = projectManifest(parsed)
-  const report = manifestDefinitions.validate(projected, protocols, { source: relative })
-  const errors = report.issues.filter(issue => issue.severity === 'error')
-  if (errors.length > 0) throw new Error(errors.map(issue => issue.message).join('; '))
-  return { parsed, projected }
-}
-
-function validateHost(host) {
-  const seen = new Set()
-  const knownPermissions = new Set(permissionRegistry.permissions.map(permission => permission.name))
-  for (const contract of host.contracts) {
-    const key = coordinateKey(contract)
-    if (seen.has(key)) throw new Error(`host declares duplicate protocol: ${key}`)
-    seen.add(key)
-    const entry = byCoordinate.get(key)
-    if (entry === undefined || !protocols.understands(contract)) throw new Error(`host declares an unknown protocol: ${key}`)
-    if (contract.definition.source === 'dsh-std') {
-      if (entry.package !== contract.definition.package) throw new Error(`host std definition source mismatch: ${key}`)
-    } else if (entry.profileHash !== contract.definition.profileHash) {
-      throw new Error(`host profile definition hash mismatch: ${key}`)
-    }
-    for (const permission of contract.permissions) {
-      if (!knownPermissions.has(permission)) throw new Error(`host declares unknown permission: ${permission}`)
-    }
   }
 }
 
@@ -222,63 +75,6 @@ function verifyProfileDefinitions() {
   }
   for (const entry of profile.imports) {
     assert.equal(protocols.understands(entry.coordinates), true, `${entry.package}: imported dsh-std definition is unavailable`)
-  }
-}
-
-function admissionDecision(relative, host, grants = []) {
-  const raw = load(relative)
-  let parsed
-  try { parsed = parseManifest(JSON.stringify(raw), { source: relative }) } catch (error) {
-    return { decision: 'rejected', reasonCode: 'INVALID_MANIFEST', message: error.message }
-  }
-  const unknown = parsed.requires.contracts.filter(requirement => {
-    try { return resolveProfileReference(requirement).unknownVersion } catch { return false }
-  })
-  if (unknown.length > 0) return {
-    decision: 'unknown', reasonCode: 'UNKNOWN_PROTOCOL_VERSION',
-    unknownContracts: unknown.map(coordinateKey),
-  }
-  if (!host.facetApiVersions.includes(parsed.facets.host.apiVersion)) return {
-    decision: 'rejected', reasonCode: 'FACET_API_VERSION_UNAVAILABLE',
-    facetApiVersion: parsed.facets.host.apiVersion,
-  }
-  const projected = projectManifest(parsed)
-  const facet = projected.spec.facets[0]
-  const supportKeys = new Set(host.contracts.map(coordinateKey))
-  const requirements = facet.protocols?.requires ?? []
-  const missingRequired = requirements.filter(row => row.optional !== true && !supportKeys.has(coordinateKey(row)))
-  const missingOptional = requirements.filter(row => row.optional === true && !supportKeys.has(coordinateKey(row)))
-  if (missingRequired.length > 0) return {
-    decision: 'rejected', reasonCode: 'REQUIRED_PROTOCOL_UNAVAILABLE',
-    missingRequired: missingRequired.map(coordinateKey),
-  }
-  const declaration = defineProtocolDeclaration({ participant: { id: parsed.id }, requires: requirements })
-  const hostDeclaration = defineProtocolDeclaration({
-    participant: { id: host.hostId },
-    supports: host.contracts.map(contract => ({
-      apiVersion: contract.apiVersion,
-      kind: contract.kind,
-      ...(contract.spec === undefined ? {} : { spec: contract.spec }),
-    })),
-  })
-  const report = protocols.negotiate([declaration, hostDeclaration])
-  if (!report.compatible && missingOptional.length === 0) return {
-    decision: 'rejected', reasonCode: 'PROTOCOL_NEGOTIATION_FAILED', issues: report.issues,
-  }
-  const hostPermissions = new Set(host.contracts.flatMap(contract => contract.permissions))
-  const granted = new Set(grants)
-  const deniedPermissions = parsed.permissions.filter(request => {
-    if (!hostPermissions.has(request.name)) return true
-    const definition = permissionRegistry.permissions.find(permission => permission.name === request.name)
-    return definition === undefined || (definition.default === 'deny' && !granted.has(request.name))
-  })
-  if (deniedPermissions.length > 0) return {
-    decision: 'waiting_authorization', reasonCode: 'PERMISSION_NOT_GRANTED',
-    deniedPermissions: deniedPermissions.map(request => request.name),
-  }
-  return {
-    decision: missingOptional.length > 0 ? 'compatible_degraded' : 'compatible',
-    missingOptional: missingOptional.map(coordinateKey),
   }
 }
 

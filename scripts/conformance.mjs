@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url'
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const vendoredStd = path.join(root, 'vendor', 'dsh-std')
 const runner = path.join(root, 'conformance', 'tests', 'run.js')
+const validateManifest = path.join(root, 'scripts', 'validate-manifest.mjs')
 const requiredPackages = [
   '@dsh-std/core',
   '@dsh-std/connection',
@@ -18,14 +19,32 @@ const requiredPackages = [
   '@dsh-std/lifecycle',
 ]
 
-const options = new Set(process.argv.slice(2))
+const args = process.argv.slice(2)
+const valueOf = flag => {
+  const index = args.indexOf(flag)
+  return index >= 0 ? args[index + 1] : undefined
+}
+const collect = flag => args.reduce((all, value, index) => (value === flag ? [...all, args[index + 1]] : all), [])
+const manifest = valueOf('--manifest')
+const host = valueOf('--host')
+const grants = collect('--grant')
 const knownOptions = new Set(['--no-build', '--prepare-standalone', '--standalone'])
+const valueIndices = new Set()
+for (const flag of ['--manifest', '--host', '--grant']) {
+  let index = args.indexOf(flag)
+  while (index >= 0) {
+    valueIndices.add(index)
+    valueIndices.add(index + 1)
+    index = args.indexOf(flag, index + 1)
+  }
+}
+const options = new Set(args.filter((arg, index) => !valueIndices.has(index)))
 for (const option of options) {
   if (!knownOptions.has(option)) throw new Error(`unknown option: ${option}`)
 }
 
-function run(command, args, environment = process.env, cwd = root) {
-  const result = spawnSync(command, args, {
+function run(command, commandArgs, environment = process.env, cwd = root) {
+  const result = spawnSync(command, commandArgs, {
     cwd,
     env: environment,
     stdio: 'inherit',
@@ -33,6 +52,17 @@ function run(command, args, environment = process.env, cwd = root) {
   if (result.error !== undefined) throw result.error
   if (result.signal !== null) throw new Error(`${command} terminated by ${result.signal}`)
   if (result.status !== 0) process.exit(result.status ?? 1)
+}
+
+function executeTarget(environment) {
+  if (manifest !== undefined) {
+    const command = [validateManifest, '--manifest', manifest]
+    if (host !== undefined) command.push('--host', host)
+    for (const grant of grants) command.push('--grant', grant)
+    run(process.execPath, command, environment)
+    return
+  }
+  run(process.execPath, [runner], environment)
 }
 
 function installedStdAvailable() {
@@ -91,7 +121,7 @@ const noBuild = options.has('--no-build')
 
 if (!forceStandalone && installedStdAvailable()) {
   console.log('[conformance] using installed @dsh-std packages')
-  run(process.execPath, [runner])
+  executeTarget(process.env)
   process.exit(0)
 }
 
@@ -109,7 +139,4 @@ if (prepareOnly) process.exit(0)
 linkVendoredStdPackages()
 
 console.log(`[conformance] using standalone dsh-std at ${vendoredStd}`)
-run(process.execPath, [runner], {
-  ...process.env,
-  DSH_STD_ROOT: vendoredStd,
-})
+executeTarget({ ...process.env, DSH_STD_ROOT: vendoredStd })
