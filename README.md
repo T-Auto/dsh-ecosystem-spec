@@ -3,6 +3,11 @@
 > **DSH Community Ecosystem Interoperability Specification**  
 > 社区插件互操作规范实验库
 
+## 上游标准
+
+- 协议兼容标准（上游）：**[dsh-std](https://github.com/Yan-Zero/dsh-std)**
+- TUI 宿主（上游）：[dsh-TUI](https://github.com/ccch1mneyyy/dsh-TUI)
+
 ## 项目定位
 
 `dsh-ecosystem-spec` 是[dsh-TUI](https://github.com/ccch1mneyyy/dsh-TUI)子插件及兼容插件的生态准入 profile，使用[dsh-std](https://github.com/Yan-Zero/dsh-std)的协议兼容标准，承担社区RFC共识落地验证与实现作用。本仓库为 dsh-TUI 的插件生态建立强制遵守的规则，以及作为社区侧、实验性的 dsh 插件互操作规范与可执行测试资产库。
