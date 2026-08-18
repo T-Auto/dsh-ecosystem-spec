@@ -1,7 +1,7 @@
 import type { ApiReference } from '@dsh-std/core'
 import type { ManifestDefinitionCatalog, ManifestObjectDefinition } from '@dsh-std/manifest'
 
-export const API_VERSION: 'x-ccch1mneyyy.tui/v1alpha1'
+export const API_VERSION: 'tui.dsh/v1alpha1'
 export const SETTINGS_SECTION: Readonly<ApiReference & { kind: 'SettingsSection' }>
 export const SCENE: Readonly<ApiReference & { kind: 'Scene' }>
 

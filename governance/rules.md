@@ -16,7 +16,7 @@ dsh-std 固定 submodule 是公共协议基线；dsh-TUI Admission 是产品准�
 
 ## 4. TUI-owned definitions
 
-TUI 自有协议使用 `x-ccch1mneyyy.tui/*` namespace。新 definition 必须提供 `apiVersion + kind`、协议专属校验与协商器、contract profile、immutable digest 和 fixtures，并注册进 dsh-std `ProtocolCatalog`。目录或 package 的存在不等于 live support。
+TUI 自有协议使用 `tui.dsh/*` namespace。新 definition 必须提供 `apiVersion + kind`、协议专属校验与协商器、contract profile、immutable digest 和 fixtures，并注册进 dsh-std `ProtocolCatalog`。目录或 package 的存在不等于 live support。
 
 TUI-only 要求使用稳定的 `TUI-*` ID，并说明适用 profile、影响范围和兼容变化。
 

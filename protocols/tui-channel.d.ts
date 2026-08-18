@@ -3,7 +3,7 @@ import type { ApiReference, ProtocolDefinition } from '@dsh-std/core'
 export type JsonValue = null | boolean | number | string | readonly JsonValue[] | { readonly [key: string]: JsonValue }
 
 export const TUI_CHANNEL: Readonly<ApiReference & {
-  apiVersion: 'x-ccch1mneyyy.tui/v1alpha1'
+  apiVersion: 'tui.dsh/v1alpha1'
   kind: 'Channel'
 }>
 export const TUI_CHANNEL_WIRE_REVISION: 6

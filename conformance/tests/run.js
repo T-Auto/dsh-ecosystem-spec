@@ -202,7 +202,7 @@ function verifyProfileDefinitions() {
     assert.deepEqual(contract.coordinates, entry.coordinates, `${entry.name}: profile coordinates differ`)
     assert.deepEqual([...contract.permissions].sort(), [...entry.permissions].sort(), `${entry.name}: permissions differ`)
     assert.equal(entry.authority, 'dsh-tui', `${entry.name}: local definition must belong to dsh-TUI`)
-    assert.match(entry.coordinates.apiVersion, /^x-ccch1mneyyy\.tui\//u, `${entry.name}: private definition must use the TUI namespace`)
+    assert.match(entry.coordinates.apiVersion, /^tui\.dsh\//u, `${entry.name}: private definition must use the TUI namespace`)
   }
   for (const entry of profile.extensions ?? []) {
     if (entry.authority === 'dsh-std') {

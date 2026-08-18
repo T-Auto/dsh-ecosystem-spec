@@ -80,12 +80,12 @@
       "name": "tui.decision-events",
       "authority": "dsh-tui",
       "coordinates": {
-        "apiVersion": "x-ccch1mneyyy.tui/v1alpha1",
+        "apiVersion": "tui.dsh/v1alpha1",
         "kind": "DecisionEvents"
       },
       "kind": "capability",
       "profile": "registry/contracts/decision-events-v1alpha1.json",
-      "profileHash": "sha256:a9fe0a94efafa2e3890c4b1c36f7a6b902ab1f001b94647b5ce95c1e792d90cd",
+      "profileHash": "sha256:56440dde1b00c210b22761a0cba139ce0a20207330567777cebe1e48b494ceb0",
       "permissions": [
         "session.input.intercept",
         "session.rewind.intercept",
@@ -97,12 +97,12 @@
       "name": "tui.channel",
       "authority": "dsh-tui",
       "coordinates": {
-        "apiVersion": "x-ccch1mneyyy.tui/v1alpha1",
+        "apiVersion": "tui.dsh/v1alpha1",
         "kind": "Channel"
       },
       "kind": "capability",
       "profile": "registry/contracts/tui-channel-v1alpha1.json",
-      "profileHash": "sha256:b5e062bc8a5ed95c462e64524cc9692a16e3dd3b75cf8c1e4a0af40cc3c3df02",
+      "profileHash": "sha256:2d0668656d999a8cacd363cd3c76207f9392118be8a83e6dd5f81b54ae063fe6",
       "permissions": []
     }
   ],
@@ -122,24 +122,24 @@
       "name": "tui.settings-section",
       "authority": "dsh-tui",
       "coordinates": {
-        "apiVersion": "x-ccch1mneyyy.tui/v1alpha1",
+        "apiVersion": "tui.dsh/v1alpha1",
         "kind": "SettingsSection"
       },
       "kind": "extension",
       "profile": "registry/contracts/settings-section-v1alpha1.json",
-      "profileHash": "sha256:d2b1256c9a49404b0498165ed2adf5950b1e95c06deecb207e08ded209d8fa09",
+      "profileHash": "sha256:685b0f17fe489f458e9b799811f61c42b858330584e95ecb97e7216b5be100ac",
       "permissions": []
     },
     {
       "name": "tui.scene",
       "authority": "dsh-tui",
       "coordinates": {
-        "apiVersion": "x-ccch1mneyyy.tui/v1alpha1",
+        "apiVersion": "tui.dsh/v1alpha1",
         "kind": "Scene"
       },
       "kind": "extension",
       "profile": "registry/contracts/scene-v1alpha1.json",
-      "profileHash": "sha256:ddf4c4ca68bfc549ae723a2025e9fe9b067db0c0b2a76381a65b29dba7a9eb59",
+      "profileHash": "sha256:69ce3ae26d60dea2ed170376db8a1fb5860c94bd192c62681423c1d848ec2b26",
       "permissions": []
     }
   ],

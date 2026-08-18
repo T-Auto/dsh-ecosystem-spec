@@ -23,6 +23,6 @@ submodule revision 是本仓库 conformance suite 的规范依赖版本。更新
 - [`dsh-TUI Admission v0.15`](tui-admission-v0.15.md) 的产品准入要求；
 - Host Descriptor、验证声明与 effect ledger 的 TUI profile；
 - `registry/registry-0.15.json` 收录的 TUI 私有 protocol definitions；
-- `x-ccch1mneyyy.tui/*` 私有协议。
+- `tui.dsh/*` 私有协议。
 
 这些增量必须通过 dsh-std 的 `ProtocolCatalog`、Manifest projection、composition 与 lifecycle 机制参与协商和激活。私有命名空间不产生第二套协议系统，也不改变 dsh-std 公共协议的语义。

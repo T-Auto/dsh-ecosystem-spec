@@ -3,7 +3,7 @@ export { registerTuiContributionExtensions } from './tui-contributions.js'
 export * from './tui-channel.js'
 
 export const DECISION_EVENTS: Readonly<ApiReference & {
-  apiVersion: 'x-ccch1mneyyy.tui/v1alpha1'
+  apiVersion: 'tui.dsh/v1alpha1'
   kind: 'DecisionEvents'
 }>
 

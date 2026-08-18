@@ -1,7 +1,7 @@
 import { defineCapabilityProtocol } from '@dsh-std/connection'
 
 export const TUI_CHANNEL = Object.freeze({
-  apiVersion: 'x-ccch1mneyyy.tui/v1alpha1',
+  apiVersion: 'tui.dsh/v1alpha1',
   kind: 'Channel',
 })
 

@@ -16,6 +16,6 @@ npm run test:standalone   # 独立检出时（强制 vendor/dsh-std 回退路径
 - 将 Community v0.15 补充 definitions 与 TUI 私有 definitions 注册到同一个 `ProtocolCatalog`；
 - 校验 Host Descriptor、permission policy、私有 profile digest、event envelope、ledger 和 claim；
 - 验证 compatible、degraded、waiting authorization、rejected 与 unknown 的 TUI admission 投影；
-- 验证 `x-ccch1mneyyy.tui/v1alpha1` 私有 requirement 能与 Host support 正常协商。
+- 验证 `tui.dsh/v1alpha1` 私有 requirement 能与 Host support 正常协商。
 
 Evidence 必须区分声明、解析、协商、测试、观察与 attestation。任何层级都不得被展示为“安全插件”“无漏洞”“官方认证”或“兼容所有 DSH Host”。

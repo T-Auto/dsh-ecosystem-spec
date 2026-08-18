@@ -26,7 +26,7 @@ The descriptor response MUST use media type `application/json` and have this for
 
 ```json
 {
-  "apiVersion": "x-ccch1mneyyy.tui/v1alpha1",
+  "apiVersion": "tui.dsh/v1alpha1",
   "kind": "ChannelEndpoint",
   "origin": "http://127.0.0.1:10721",
   "connection": "/dsh-tui/v1/connection"

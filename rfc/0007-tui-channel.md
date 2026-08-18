@@ -1,7 +1,7 @@
 # RFC 0007 — TUI Channel Capability
 
 **Status:** Experimental  
-**Coordinates:** `x-ccch1mneyyy.tui/v1alpha1` `Channel`  
+**Coordinates:** `tui.dsh/v1alpha1` `Channel`
 **Reason for TUI-specific scope:** 本协议承载 dsh-TUI 的完整终端会话投影，尚无对应 community protocol。  
 **Community dependency:** dsh-std core negotiation、lifecycle 与 connection capability invocation。  
 **Experimental capability name:** `tui.channel`

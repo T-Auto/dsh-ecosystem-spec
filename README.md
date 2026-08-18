@@ -14,7 +14,7 @@
 - TUI 规范定义的是“进入 TUI 生态所需的额外约束”；
 - 考虑到 TUI 本身的应用场景，`dsh-ecosystem-spec` 要求比通用社区规范更严格的可验证性、可回滚性、远程运行确定性和溯源能力；
 - TUI 的额外要求必须明确标记为 `TUI-*`，不会倒灌进通用的 Community Consensus；
-- 私有协议使用标准的 `apiVersion + kind` 契约坐标，统一注册到 dsh-std 的 `ProtocolCatalog`。`x-ccch1mneyyy.tui/*` 命名空间仅表示其兼容性由 dsh-TUI 维护，不会获得另一套私有的发现、协商或生命周期机制。
+- 私有协议使用标准的 `apiVersion + kind` 契约坐标，统一注册到 dsh-std 的 `ProtocolCatalog`。`tui.dsh/*` 命名空间仅表示其兼容性由 dsh-TUI 维护，不会获得另一套私有的发现、协商或生命周期机制。
 
 ## 生态扩展
 

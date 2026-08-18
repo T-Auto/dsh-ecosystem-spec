@@ -2,7 +2,7 @@
 
 **Status:** Experimental
 
-**Coordinates:** `x-ccch1mneyyy.tui/v1alpha1` `SettingsSection`, `Scene`
+**Coordinates:** `tui.dsh/v1alpha1` `SettingsSection`, `Scene`
 
 **Base protocol:** [`@dsh-std/ui`](../vendor/dsh-std/docs/proposals/ui-contribution.zh.md)
 
