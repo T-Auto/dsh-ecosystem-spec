@@ -5,7 +5,7 @@
 
 ## 项目定位
 
-`dsh-ecosystem-spec` 是使用[dsh-std](https://github.com/Yan-Zero/dsh-std)的协议的插件标准，所有采用`dsh-ecosystem-spec`的插件均可使用自动dsh-std维护的dsh-adapter适配所有dsh本体旧版本。同时，`dsh-ecosystem-spec`规范了[dsh-TUI](https://github.com/ccch1mneyyy/dsh-TUI)子插件及兼容插件的生态准入 profile。
+`dsh-ecosystem-spec` 是使用[dsh-std](https://github.com/Yan-Zero/dsh-std)的协议的插件标准，所有采用`dsh-ecosystem-spec`的插件均可使用dsh-std维护的dsh-adapter，自动适配所有dsh本体旧版本以及未来的版本。同时，`dsh-ecosystem-spec`规范了[dsh-TUI](https://github.com/ccch1mneyyy/dsh-TUI)子插件及兼容插件的生态准入 profile。
 
 本仓库不是 dsh 官方标准，不代表 dsh 官方立场，也不授予官方认证，但会一直维护。当前规范与测试均为 Draft / Experimental；在 Candidate/Stable 条件满足前，使用者只能声明“实验适配”。
 
