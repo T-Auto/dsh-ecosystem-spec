@@ -7,9 +7,10 @@
 
 `dsh-ecosystem-spec` 是使用[dsh-std](https://github.com/Yan-Zero/dsh-std)的协议的插件标准，所有采用`dsh-ecosystem-spec`的插件均可使用dsh-std维护的dsh-adapter，自动适配所有dsh本体旧版本以及未来的版本。同时，`dsh-ecosystem-spec`规范了[dsh-TUI](https://github.com/ccch1mneyyy/dsh-TUI)子插件及兼容插件的生态准入 profile。
 
-本仓库不是 dsh 官方标准，不代表 dsh 官方立场，也不授予官方认证，但会一直维护。当前规范与测试均为 Draft / Experimental；在 Candidate/Stable 条件满足前，使用者只能声明“实验适配”。
+本仓库是[dsh-TUI](https://github.com/ccch1mneyyy/dsh-TUI)维护的社区标准。除了为插件提供与dsh上游接口的解耦性适配，同时希望所有进入 `dsh-TUI` 启动方式的插件、`dsh-TUI` 维护的插件市场与推荐列表，应满足 TUI 当前声明的准入版本与验证要求。
 
-本仓库在有关 `dsh-TUI` 适配与扩展插件的兼容上做了更强制的约束，希望进入 `dsh-TUI` 启动方式的插件、`dsh-TUI` 维护的插件市场与推荐列表，应满足 TUI 当前声明的准入版本与验证要求。
+当前规范与测试均为 Draft / Experimental；在 Candidate/Stable 条件满足前，使用者只能声明“实验适配”。
+
 
 ## 生态扩展
 
