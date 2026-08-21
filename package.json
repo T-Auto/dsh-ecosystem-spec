@@ -52,7 +52,9 @@
     "build:std": "node scripts/conformance.mjs --prepare-standalone",
     "test": "node scripts/conformance.mjs",
     "test:standalone": "node scripts/conformance.mjs --standalone",
-    "validate": "node scripts/conformance.mjs --no-build"
+    "validate": "node scripts/conformance.mjs --no-build",
+    "test:validate-manifest": "node conformance/tests/validate-manifest.cli.test.js",
+    "validate:manifest": "node scripts/conformance.mjs"
   },
   "engines": {
     "node": "^22.19 || >=24"
