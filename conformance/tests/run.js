@@ -367,4 +367,30 @@ assert.equal(negotiation.unknown.decision, 'unknown')
 assert.equal(negotiation.compoundUnknown.decision, 'unknown')
 assert.equal(negotiation.facetMismatch.reasonCode, 'FACET_API_VERSION_UNAVAILABLE')
 
+{
+  const retractions = load('registry/retractions-0.15.json')
+  assert.equal(retractions.profileVersion, 'tui-admission/0.15')
+  assert.ok(Array.isArray(retractions.retractions), 'retractions must be an array')
+  const retractionStates = new Set(['yanked', 'deleted'])
+  function validateRetractionRecord(record) {
+    if (!record.coordinates?.apiVersion || !record.coordinates?.kind) throw new Error('retraction requires coordinates')
+    const key = `${record.coordinates.apiVersion}#${record.coordinates.kind}`
+    if (!byCoordinate.has(key) && !byFamily.has(key)) throw new Error(`retraction targets unknown coordinate: ${key}`)
+    if (!Array.isArray(record.retractedVersions) || record.retractedVersions.length === 0) throw new Error('retraction requires non-empty retractedVersions')
+    if (!retractionStates.has(record.state)) throw new Error(`retraction state must be yanked or deleted: ${record.state}`)
+    if (typeof record.reason !== 'string' || record.reason.length === 0) throw new Error('retraction requires reason')
+    if (Number.isNaN(Date.parse(record.date))) throw new Error('retraction requires a valid date')
+    if (record.affectedDigest !== undefined && !/^sha256:[0-9a-f]{64}$/u.test(record.affectedDigest)) throw new Error('affectedDigest must be sha256:hex')
+  }
+  for (const record of retractions.retractions) validateRetractionRecord(record)
+  for (const [name, relative, expected] of [
+    ['valid retraction record', 'conformance/fixtures/valid-retraction.json', true],
+    ['retraction unknown coordinate rejected', 'conformance/fixtures/invalid-retraction-unknown-coordinate.json', false],
+  ]) {
+    const result = validate(name, load(relative), undefined, validateRetractionRecord)
+    assert.equal(result.pass, expected, `${name}: ${result.error ?? `expected pass=${expected}`}`)
+    cases.push(result)
+  }
+}
+
 console.log(JSON.stringify({ suite: 'dsh-tui-admission-v0.15', std: profile.std, cases, negotiation }, null, 2))

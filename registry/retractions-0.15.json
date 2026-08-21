@@ -1,0 +1,6 @@
+{
+  "profileVersion": "tui-admission/0.15",
+  "schemaVersion": "retraction-record/0.1",
+  "description": "TUI 生态版本撤回记录（RFC 0009）。yanked=不再进入准入候选与推荐，保留可下载、digest 不变；deleted=从分发渠道移除。记录只可追加，不可改写或删除。",
+  "retractions": []
+}

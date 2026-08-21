@@ -1,0 +1,7 @@
+{
+  "coordinates": { "apiVersion": "unknown.dsh/v1alpha1", "kind": "Mystery" },
+  "retractedVersions": ["1.0.0"],
+  "state": "yanked",
+  "reason": "supply-chain",
+  "date": "2026-08-21T00:00:00Z"
+}

@@ -16,6 +16,33 @@
 - TUI 的额外要求必须明确标记为 `TUI-*`，不会倒灌进通用的 Community Consensus；
 - 私有协议使用标准的 `apiVersion + kind` 契约坐标，统一注册到 dsh-std 的 `ProtocolCatalog`。`tui.dsh/*` 命名空间仅表示其兼容性由 dsh-TUI 维护，不会获得另一套私有的发现、协商或生命周期机制。
 
+## 愿景与优点
+
+### 分层愿景
+
+本仓库是 dsh-std 三层结构中的一层：
+
+```text
+元协议（dsh-std core）   只约定“如何声明与协商协议”，不预设领域概念
+    │
+独立领域协议（dsh-std）  connection / command / tool / session / presentation ... 独立版本化
+    │
+Profile（本仓库）        面向 TUI 产品形态的准入与互操作规范（TUI Admission）
+```
+
+本仓库**只约束 TUI 生态**（全部要求带 `TUI-*` 标记，不倒灌通用 Community Consensus），不干预其他社区对无界面设施、常驻 Agent、远程 Runtime 等激进 Agent 架构的探索。
+
+### 类似 pi 的开发体验
+
+在元协议之上，本 Profile 为开发者提供**类似 pi 的 “Host + Plugin + Manifest” 开发体验**（即现代开发者熟悉的 pi + pi 扩展形态）：写一份静态 manifest 声明“我是谁、需要什么能力”，由 TUI Host 协商、授权、按统一生命周期激活；插件作者获得清晰、可执行的准入规范与 conformance 保障，不需要自建宿主。
+
+### 优点
+
+- **自动向前兼容**：插件只要遵循本准入规范，使用已被 dsh-std 协议抽象覆盖、且能够在 adapter 层映射的上游变化的接口，即可无视 dsh 上游接口变动，达到免维护自动适配；
+- **依赖简单**：插件按需选择最小 `@dsh-std/*` 协议子集，只实现需要的部分，不绑定整个框架；
+- **自动维护上游接口变动与转译**：上游类型只出现在唯一适配层 `@dsh-std/adapter-dsh`，上游任何重命名、重构、替换内部面都只需修改这一个 adapter 的内部映射（转译），所有协议与插件契约不动；adapter 可由任何第三方作者重写，不依赖单个维护方；
+- **硬性证据链、可独立验证**：conformance suite（39 项断言、30+ fixtures、requirements 矩阵、profileHash sha256）允许社区独立复算与验证，evidence 五元组绑定 std revision / profile / Host / artifact / suite。
+
 ## 生态扩展
 
 使用dsh-ecosystem-spec规范的dsh-tui功能扩展插件已收录于https://github.com/oh-my-dsh/dsh-community-standard ，现已收录13个。由于当前协定还在试验，排障，debug阶段，收录有较大延迟

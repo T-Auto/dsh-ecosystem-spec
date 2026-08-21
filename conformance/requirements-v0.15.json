@@ -1,12 +1,21 @@
 {
-  "profileVersion":"dsh-tui-admission-v0.15",
-  "requirements":[
+  "profileVersion": "dsh-tui-admission-v0.15",
+  "requirements": [
     {"id":"BASE-STD-001","source":"@dsh-std/* or vendor/dsh-std","test":"installed package loading and pinned submodule fallback availability","evidence":"automated"},
     {"id":"TUI-PKG-001","source":"@dsh-std/manifest","fixtures":["valid-plugin.json","invalid-plugin-client-facet.json","invalid-plugin-worker-facet.json"],"test":"Community v0.15 parse and projection","evidence":"automated"},
     {"id":"TUI-PKG-002","source":"registry/registry-0.15.json","fixtures":["invalid-plugin-unknown-coordinate.json","invalid-plugin-optional-no-fallback.json"],"test":"profile definition closure and fallback policy","evidence":"automated"},
     {"id":"TUI-PRIVATE-001","source":"protocols/profile-definitions.js","fixtures":["valid-private-protocol-plugin.json"],"test":"private definition registration and rejection when the Host has no live support","evidence":"automated"},
     {"id":"TUI-HOST-001","source":"schemas/host-descriptor.schema.json","fixtures":["registry/host-descriptor.tui.example.json","invalid-host-unknown-contract.json","invalid-host-hash-mismatch.json"],"test":"Host protocol support and definition provenance","evidence":"automated"},
     {"id":"TUI-OBS-001","source":"schemas/effect-ledger-record.schema.json","fixtures":["valid-ledger-record.json"],"test":"effect ownership record shape","evidence":"automated"},
-    {"id":"TUI-TRUST-001","source":"spec/tui-admission-v0.15.md","fixtures":[],"test":"trusted-in-process disclosure review","evidence":"review"}
+    {"id":"TUI-OBS-002","source":"spec/tui-admission-v0.15.md","test":"cleanup observability and retryable cleanup-failed state","evidence":"review"},
+    {"id":"TUI-DEP-001","source":"spec/tui-admission-v0.15.md","test":"reproducible dependency closure with digest evidence (post-verification guidance per RFC 0009)","evidence":"review"},
+    {"id":"TUI-CLAIM-001","source":"schemas/conformance-claim.schema.json","fixtures":["valid-claim.json"],"test":"claim binds spec/host/artifact/suite/result","evidence":"automated"},
+    {"id":"TUI-RUN-001","source":"spec/tui-admission-v0.15.md","test":"headless and remote/local presentation boundary review","evidence":"review"},
+    {"id":"TUI-RUN-002","source":"spec/tui-admission-v0.15.md","test":"trusted-in-process and non-sandbox disclosure review","evidence":"review"},
+    {"id":"TUI-TRUST-001","source":"spec/tui-admission-v0.15.md","fixtures":[],"test":"trusted-in-process disclosure review","evidence":"review"},
+    {"id":"TUI-SC-001","source":"registry/retractions-0.15.json","fixtures":["valid-retraction.json","invalid-retraction-unknown-coordinate.json"],"test":"retraction record shape, immutable fields, and profile coordinate binding; same-version digest drift triggers response","evidence":"automated"},
+    {"id":"TUI-SC-002","source":"rfc/0009-supply-chain-incident-response.md","test":"dependency closure post-verification with affected-version list and user-side check instructions","evidence":"review"},
+    {"id":"TUI-SC-003","source":"registry/retractions-0.15.json","fixtures":["valid-retraction.json"],"test":"yanked/deleted versions excluded from admission candidates and recommendations; installed plugins show retraction warning","evidence":"automated"},
+    {"id":"TUI-SC-004","source":"rfc/0009-supply-chain-incident-response.md","test":"publisher compromise quarantine (author-level isolation) and trust recovery","evidence":"review"}
   ]
 }
