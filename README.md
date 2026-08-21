@@ -5,16 +5,11 @@
 
 ## 项目定位
 
-`dsh-ecosystem-spec` 是[dsh-TUI](https://github.com/ccch1mneyyy/dsh-TUI)子插件及兼容插件的生态准入 profile，使用[dsh-std](https://github.com/Yan-Zero/dsh-std)的协议兼容标准，承担社区RFC共识落地验证与实现作用。本仓库为 dsh-TUI 的插件生态建立强制遵守的规则，以及作为社区侧、实验性的 dsh 插件互操作规范与可执行测试资产库。
+`dsh-ecosystem-spec` 是使用[dsh-std](https://github.com/Yan-Zero/dsh-std)的协议的插件标准，所有采用`dsh-ecosystem-spec`的插件均可使用自动dsh-std维护的dsh-adapter适配所有dsh本体旧版本。同时，`dsh-ecosystem-spec`规范了[dsh-TUI](https://github.com/ccch1mneyyy/dsh-TUI)子插件及兼容插件的生态准入 profile。
 
-本仓库不是 dsh 官方标准，不代表 dsh 官方立场，不要求官方立即采纳，也不授予官方认证。当前规范与测试均为 Draft / Experimental；在 Candidate/Stable 条件满足前，使用者只能声明“实验适配”。
+本仓库不是 dsh 官方标准，不代表 dsh 官方立场，也不授予官方认证，但会一直维护。当前规范与测试均为 Draft / Experimental；在 Candidate/Stable 条件满足前，使用者只能声明“实验适配”。
 
 本仓库在有关 `dsh-TUI` 适配与扩展插件的兼容上做了更强制的约束，希望进入 `dsh-TUI` 启动方式的插件、`dsh-TUI` 维护的插件市场与推荐列表，应满足 TUI 当前声明的准入版本与验证要求。
-
-- TUI 规范定义的是“进入 TUI 生态所需的额外约束”；
-- 考虑到 TUI 本身的应用场景，`dsh-ecosystem-spec` 要求比通用社区规范更严格的可验证性、可回滚性、远程运行确定性和溯源能力；
-- TUI 的额外要求必须明确标记为 `TUI-*`，不会倒灌进通用的 Community Consensus；
-- 私有协议使用标准的 `apiVersion + kind` 契约坐标，统一注册到 dsh-std 的 `ProtocolCatalog`。`tui.dsh/*` 命名空间仅表示其兼容性由 dsh-TUI 维护，不会获得另一套私有的发现、协商或生命周期机制。
 
 ## 生态扩展
 
