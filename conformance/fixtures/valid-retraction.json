@@ -1,0 +1,8 @@
+{
+  "coordinates": { "apiVersion": "commands.dsh/v1alpha1", "kind": "Command" },
+  "retractedVersions": ["0.1.0"],
+  "state": "yanked",
+  "reason": "supply-chain",
+  "date": "2026-08-21T00:00:00Z",
+  "affectedDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+}
