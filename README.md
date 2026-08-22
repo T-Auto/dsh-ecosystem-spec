@@ -1,3 +1,14 @@
+<p align="center">
+  <img src="docs/assets/logo_f.svg" alt="dsh-ecosystem-spec - DSH Community Ecosystem Interoperability Specification" width="560">
+</p>
+
+<p align="center">
+  <img alt="Compliant Plugins" src="https://img.shields.io/badge/Compliant%20Plugins-23-4b6fff?style=flat-square">
+  <img alt="MIT License" src="https://img.shields.io/badge/license-MIT-2e8b57?style=flat-square">
+  <img alt="GitHub Stars" src="https://img.shields.io/github/stars/T-Auto/dsh-ecosystem-spec?style=flat-square&color=eab308">
+  <img alt="GitHub Forks" src="https://img.shields.io/github/forks/T-Auto/dsh-ecosystem-spec?style=flat-square&color=8b5cf6">
+</p>
+
 # dsh-ecosystem-spec
 
 > **DSH Community Ecosystem Interoperability Specification**  
@@ -17,7 +28,7 @@
 
 ## 生态扩展
 
-使用dsh-ecosystem-spec规范的dsh-tui功能扩展插件及遵循spec规范规范的社区插件已收录于[tui插件市场](https://dshtui.com/plugins/) ，现已收录22个。
+使用dsh-ecosystem-spec规范的dsh-tui功能扩展插件及遵循spec规范规范的社区插件已收录于[tui插件市场](https://dshtui.com/plugins/) ，现已收录23个。
 
 ## 边界
 
