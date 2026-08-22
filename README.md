@@ -20,7 +20,7 @@
 
 ## 生态扩展
 
-使用dsh-ecosystem-spec规范的dsh-tui功能扩展插件已收录于[tui插件市场](https://dshtui.com/plugins/) ，现已收录22个。
+使用dsh-ecosystem-spec规范的dsh-tui功能扩展插件及遵循spec规范规范的社区插件已收录于[tui插件市场](https://dshtui.com/plugins/) ，现已收录22个。
 
 ## 边界
 
