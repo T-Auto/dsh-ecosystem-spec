@@ -15,9 +15,6 @@
 
 本仓库是[dsh-TUI](https://github.com/ccch1mneyyy/dsh-TUI)维护的社区标准。除了为插件提供与dsh上游接口的解耦性适配，同时希望所有进入 `dsh-TUI` 启动方式的插件、`dsh-TUI` 维护的插件市场与推荐列表，应满足 TUI 当前声明的准入版本与验证要求。
 
-当前规范与测试均为 Draft / Experimental；在 Candidate/Stable 条件满足前，使用者只能声明“实验适配”。
-
-
 ## 生态扩展
 
 使用dsh-ecosystem-spec规范的dsh-tui功能扩展插件及遵循spec规范规范的社区插件已收录于[tui插件市场](https://dshtui.com/plugins/) ，现已收录22个。
@@ -31,6 +28,7 @@
 - `registry/registry-0.15.json`：本 profile 导入的 std 定义与自有定义注册表。
 - `conformance/`：测试 fixtures、requirement matrix 与准入测试 runner。
 - `rfc/`：TUI 增量协议提案及保留的历史 RFC 路径。
+- 当前规范与测试均为 Draft / Experimental；在 Candidate/Stable 条件满足前，使用者只能声明“实验适配”。
 
 参考实现、TUI 本身或任何单一宿主只能提供 evidence，不能因为实现存在就成为标准或自我认证。
 
