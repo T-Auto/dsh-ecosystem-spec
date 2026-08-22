@@ -3,10 +3,10 @@
 </p>
 
 <p align="center">
-  <img alt="Compliant Plugins" src="https://img.shields.io/badge/Compliant%20Plugins-23-4b6fff?style=flat-square">
-  <img alt="MIT License" src="https://img.shields.io/badge/license-MIT-2e8b57?style=flat-square">
-  <img alt="GitHub Stars" src="https://img.shields.io/github/stars/T-Auto/dsh-ecosystem-spec?style=flat-square&color=eab308">
-  <img alt="GitHub Forks" src="https://img.shields.io/github/forks/T-Auto/dsh-ecosystem-spec?style=flat-square&color=8b5cf6">
+  <img alt="Compliant Plugins" src="https://img.shields.io/badge/Compliant%20Plugins-23-4b6fff?style=flat">
+  <img alt="MIT License" src="https://img.shields.io/badge/license-MIT-2e8b57?style=flat">
+  <img alt="GitHub Stars" src="https://img.shields.io/github/stars/T-Auto/dsh-ecosystem-spec?style=flat&color=eab308">
+  <img alt="GitHub Forks" src="https://img.shields.io/github/forks/T-Auto/dsh-ecosystem-spec?style=flat&color=8b5cf6">
 </p>
 
 # dsh-ecosystem-spec
