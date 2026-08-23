@@ -8,6 +8,13 @@ Adapter Note 记录**某一宿主/运行时版本**与公共 contract 的适配�
 - Adapter Note 只约束其所描述的宿主版本，**其他宿主不被要求遵守**；
 - 实现细节（内部函数名、私有 service id、框架内部 API）可以出现在 Adapter Note 中——这正是它与公共 contract 的分工（SPEC-WRITING-RULES §6）。
 
+## 已收录 Notes
+
+| Note | 宿主 | 状态 |
+| --- | --- | --- |
+| [dsh-tui-v0.15.md](dsh-tui-v0.15.md) | dsh-tui 本体（参考 TUI 宿主） | Current |
+| [dsh-tui-vscode-v0.15.md](dsh-tui-vscode-v0.15.md) | dsh-tui-vscode（VS Code companion） | Draft / Experimental |
+
 ## 模板
 
 ```text
