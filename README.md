@@ -16,13 +16,13 @@
 
 ## 使用此协议有什么好处？
 
-[dsh-std](https://github.com/Yan-Zero/dsh-std)维护了一套adapter，如果你的dsh采用该adapter和dsh本体通信，那即可自动适配所有dsh本体旧版本以及未来的版本，无需顾虑多版本兼容性。若你的插件想使用[dsh-std](https://github.com/Yan-Zero/dsh-std)维护的adapter达到dsh版本更新时免维护的便利性，请阅读并遵循此规范。
+[dsh-TUI](https://github.com/ccch1mneyyy/dsh-TUI)团队维护了一套adapter，如果你的dsh采用该adapter和dsh本体通信，那即可自动适配所有dsh本体旧版本以及未来的版本，无需顾虑多版本兼容性。若你的插件想使用[dsh-TUI](https://github.com/ccch1mneyyy/dsh-TUI)团队维护的adapter达到dsh版本更新时免维护的便利性，请阅读并遵循此规范。
 
 `dsh-ecosystem-spec`还提供依赖链溯源，以及可选的正在实验中的插件热更新功能。这些提供功能性的额外协定都是可选项，无论是否选择遵守，都不会与其他遵守情况的插件产生冲突。
 
 ## 项目定位
 
-`dsh-ecosystem-spec` 存放了[dsh-std](https://github.com/Yan-Zero/dsh-std)团队维护的adapter的映射表，同时是使用[dsh-std](https://github.com/Yan-Zero/dsh-std)的协议的插件标准。所有进入 `dsh-TUI` 启动方式的插件、`dsh-TUI` 维护的插件市场与推荐列表，应满足 TUI 当前声明的准入版本与验证要求。
+`dsh-ecosystem-spec` 存放了[dsh-TUI](https://github.com/ccch1mneyyy/dsh-TUI)团队维护的adapter的映射表，同时是使用[dsh-std](https://github.com/Yan-Zero/dsh-std)的协议的插件标准。所有进入 `dsh-TUI` 启动方式的插件、`dsh-TUI` 维护的插件市场与推荐列表，应满足 TUI 当前声明的准入版本与验证要求。
 
 使用非本adapter覆盖的接口范围无法保证后续dsh更新的的免维护性。本adapter覆盖的接口范围会逐渐增加，如果您想把您所需的dsh上游api加入本adapter的覆盖范围，可以在本仓库提issue，tui团队在评估后会考虑是否将其纳入后续adapter映射维护。
 
