@@ -52,3 +52,11 @@
 - [ ] compatibility decision、verification level、restrictions 分开显示
 - [ ] 明确显示 capability、permission、依赖和 TUI-only limitation
 - [ ] 不使用“官方认证”“安全插件”等未授权措辞
+
+## H. 供应链完整性（RFC 0009）
+
+- [ ] `TUI-SC-001`：历史版本完整性复查——同版本号 digest 变化即触发事件响应，暂停该版本推荐
+- [ ] `TUI-SC-002`：依赖闭包事后复验——受影响插件发布可执行核查指令与受影响版本清单
+- [ ] `TUI-SC-003`：消费端处理——yanked/deleted 版本不进入准入候选与推荐；已安装插件显示“该版本已撤回”警告
+- [ ] `TUI-SC-004`：发布者账号失陷——作者级隔离与信任恢复流程（隔离期间该作者全部发行物从推荐移除）
+- [ ] retraction 记录只可追加、不可改写（绑定 artifact digest）；对外部平台动作只作请求/配合
