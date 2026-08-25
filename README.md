@@ -72,6 +72,7 @@ npm run validate:manifest -- --manifest ./path/to/dsh-plugin.json   # 可选 --h
 | [`spec/community-consensus-v0.15.md`](spec/community-consensus-v0.15.md) | dsh-std 公共基线的稳定引用入口 |
 | [`spec/tui-admission-v0.15.md`](spec/tui-admission-v0.15.md) | dsh-TUI 产品准入 profile（市场准入要求） |
 | [`adapters/`](adapters) | 宿主 Adapter 映射表与适配 Note（[`dsh-tui-v0.15.md`](adapters/dsh-tui-v0.15.md) 映射表、[`dsh-tui-vscode-v0.15.md`](adapters/dsh-tui-vscode-v0.15.md)） |
+| [`docs/plugins.md`](docs/plugins.md) | dsh-TUI 插件开发指南（从 dsh-TUI 仓库同步合并） |
 | [`vendor/dsh-std/`](vendor/dsh-std) | 固定引用的 dsh-std 公共核心协议基线 (submodule) |
 | [`registry/registry-0.15.json`](registry/registry-0.15.json) | 本 profile 导入的 std 定义与自有定义注册表 |
 | [`protocols/profile-definitions.js`](protocols/profile-definitions.js) | 可由 dsh-std core 装载的 TUI 私有定义 |

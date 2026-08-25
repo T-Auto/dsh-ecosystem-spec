@@ -2,7 +2,7 @@
 
 **Status:** Current
 **Spec version:** community-v0.15 + tui-admission/0.15（`registry/registry-0.15.json`）
-**Host:** dsh-TUI 0.8.x（`@deepseek-harness-tui/dsh-tui`）/ Cordis 4.x profile；上游 `@deepseek-ai/*` 校验线 `0.1.0-rc.7`
+**Host:** dsh-TUI 0.9.x（`@deepseek-harness-tui/dsh-tui`）/ Cordis 4.x profile；上游 `@deepseek-ai/*` 主校验线 `0.1.1-rc.2`（兼容 `0.1.0-rc.6/7/8`、`0.1.1-rc.1`）
 **仓库:** https://github.com/ccch1mneyyy/dsh-TUI（`src/dsh-adapter/`、`src/plugin-spec/`）
 
 ## 定位
@@ -24,9 +24,8 @@ dsh-tui 维护的 adapter 中介面（Cordis service id / 宿主 API），记录
 
 ## Contract 映射
 
-坐标以 dsh-tui **实际实现**为准（私有坐标 `x-ccch1mneyyy.tui/v1alpha1`）；本仓库
-`registry/registry-0.15.json` 对私有 definition 暂记 `tui.dsh/v1alpha1`，该差异及
-统一方向见 D-1（完整说明留档于 spec 仓库之外）。dsh-std 导入条目与 dsh-TUI 私有
+私有坐标统一为 `tui.dsh/v1alpha1`，与 dsh-tui 实际实现及本仓库
+`registry/registry-0.15.json` 一致（原 D-1 已收口）。dsh-std 导入条目与 dsh-TUI 私有
 definition 统一注册进 dsh-std `ProtocolCatalog`；权限与 protocol support 分开判断，
 安装 definition 不自动授权操作。
 
@@ -37,10 +36,10 @@ definition 统一注册进 dsh-std `ProtocolCatalog`；权限与 protocol suppor
 | `messages.dsh/v1alpha1#MessageObserver`（import, event） | `messages.observe.read`（deny） | `ctx.tuiMessageObserver.subscribe(pluginCtx, scope, cb)`；scope=`session:<id>`，事件按 scope 隔离；投递 at-most-once、无 replay；**窄映射**见 D-2 | `message-observer.ts` |
 | `presentation.dsh/v1alpha1#OpenExternal` / `UserInteraction` / `ExternalRedirect`（import） | — | 进程内 seam：`userQuestions` 服务 + `ask_user_question` 工具（questionStore）；`approval/request` 瀑布 → `ApprovalStore`（仅归属本 TUI 的 agent）；ExternalRedirect 为 TUI 侧补注册 provider 语义（见 D-3） | `plugin.ts` / `questions.ts` / `approvals.ts` / `tui-extension.ts` |
 | `workspace.dsh/v1alpha1#WorkspaceProvider`（extension, dsh-std） | — | `ctx.tuiWorkspaces`（`dsh-tui-workspaces` 行）；缺失时回退本地 workspace runtime（#183） | `workspaces.ts` |
-| `x-ccch1mneyyy.tui/v1alpha1#DecisionEvents`（私有 definition；**本仓库 registry 暂记 `tui.dsh/v1alpha1`，见 D-1**） | `session.input.intercept` / `session.rewind.intercept` / `session.switch.intercept` / `session.compact.intercept`（deny） | `ctx.tuiPluginHost.subscribeDecision(pluginCtx, event, listener)` —— D-7 中介决策门禁（身份/静态 requirement/scope/grant 全查）；事件名 `tui/input` `tui/rewind-prompt` `tui/rewind-done` `tui/session-switch` `tui/session-switched` `tui/compact`；无 grant 返回 no-op disposer 而非异常 | `decision-guard.ts` / `tui-extension.ts` / `component-identity.ts` |
-| `x-ccch1mneyyy.tui/v1alpha1#Channel`（私有 definition；**本仓库 registry 暂记 `tui.dsh/v1alpha1`，见 D-1**） | — | Channel wire 协议：`wireRevision` 6、19 个 features（commands/credentials/diagnostics/files/models/modes/presets/presentation/provider-setup/scenes/session-history/session-input/session-lifecycle/session-state/settings/skills/subagents/trace/workspaces）；open/subscribe/invoke/close 各校验入参与快照形状 | `tui-channel.ts`（`@dsh-std/connection` defineCapabilityProtocol） |
-| `x-ccch1mneyyy.tui/v1alpha1#SettingsSection`（私有 extension） | — | `ctx.tuiSettingsSections.register(...)`（/settings 屏区块） | `settings-sections.ts` |
-| `x-ccch1mneyyy.tui/v1alpha1#Scene`（私有 extension） | — | `ctx.tuiScenes`（`dsh-tui-scenes` 行；全屏场景渲染） | `scenes.ts` |
+| `tui.dsh/v1alpha1#DecisionEvents`（私有 definition） | `session.input.intercept` / `session.rewind.intercept` / `session.switch.intercept` / `session.compact.intercept`（deny） | `ctx.tuiPluginHost.subscribeDecision(pluginCtx, event, listener)` —— D-7 中介决策门禁（身份/静态 requirement/scope/grant 全查）；事件名 `tui/input` `tui/rewind-prompt` `tui/rewind-done` `tui/session-switch` `tui/session-switched` `tui/compact`；无 grant 返回 no-op disposer 而非异常 | `decision-guard.ts` / `tui-extension.ts` / `component-identity.ts` |
+| `tui.dsh/v1alpha1#Channel`（私有 definition） | — | Channel wire 协议：`wireRevision` 6、19 个 features（commands/credentials/diagnostics/files/models/modes/presets/presentation/provider-setup/scenes/session-history/session-input/session-lifecycle/session-state/settings/skills/subagents/trace/workspaces）；open/subscribe/invoke/close 各校验入参与快照形状 | `tui-channel.ts`（`@dsh-std/connection` defineCapabilityProtocol） |
+| `tui.dsh/v1alpha1#SettingsSection`（私有 extension） | — | `ctx.tuiSettingsSections.register(...)`（/settings 屏区块） | `settings-sections.ts` |
+| `tui.dsh/v1alpha1#Scene`（私有 extension） | — | `ctx.tuiScenes`（`dsh-tui-scenes` 行；全屏场景渲染） | `scenes.ts` |
 | （无契约坐标的宿主 UI seam，`dsh-tui-extensions` 行） | — | `ctx.tuiDialogs` / `ctx.tuiStatus` / `ctx.tuiShortcuts` / `ctx.tuiRenderers` / `ctx.tuiCommandTrees`；软消费（`ctx.get`），缺行时降级为空 store | `dialogs.ts` / `status.ts` / `shortcuts.ts` / `renderers.ts` / `command-trees.ts` / `extensions.ts` |
 
 跨契约的宿主机制：
@@ -83,24 +82,22 @@ boot 不因漂移数据死亡。
 
 `contract.ts` 是官方上游的唯一校验点：
 
-- 校验线 `UPSTREAM_VALIDATED_VERSION = '0.1.0-rc.7'`；25 个 blessed 包按 rc 号一致校验。
-- 框架包按 MAJOR 校验：`@deepseek-ai/cordis` 4、`@deepseek-ai/schemastery` 3。
+- 主校验线 `UPSTREAM_VALIDATED_VERSION = '0.1.1-rc.2'`；兼容线
+  `0.1.0-rc.6 / 0.1.0-rc.7 / 0.1.0-rc.8 / 0.1.1-rc.1`
+  （`UPSTREAM_VALIDATED_VERSIONS`）；特性门控用 `installedMeetsVersion` 跨家族比较，
+  老安装优雅降级。
+- peer 范围：`^0.1.0-rc.6 || ^0.1.1-rc.1`；blessed 包中 harness 包按完整版本号校验，
+  框架包按 MAJOR 校验（`@deepseek-ai/cordis` 4、`@deepseek-ai/schemastery` 3）。
 - drift → boot warning（开发可见）；CI `verify:contract` 直接失败（用户机器上炸之前先炸 CI）。
 - Patch surface：`cordis.patch.yml` 干预已快照 `patch-surface.snapshot.json`
-  （disables 23 行 / config overrides 6 行 / inserts 8 行，后 6 个 insert 与官方 web-app 共用）；
-  上游发版后 patch 面变化时 CI `verify:patch-surface` 先爆。
+  （disables 23 行 / config overrides 6 行 / inserts 14 行；后 6 个 insert 对应官方
+  web-app 的 host-plane 服务，使用 dsh-tui 作用域 id，检测到官方行时自行 disabled，
+  可安全共存）；CI `verify:patch-surface` 与 `verify:web-coexistence` 分别检查快照与共存。
 - 升级流程：`pnpm add` 新 rc → `build`（typecheck + 门禁）→ 契约/快照差异落入
   `src/dsh-adapter/` 内解决，业务 UI 零修改。
 
 ## 已知偏差
 
-- **D-1 私有命名空间（按实际实现书写）**：本 Note 的私有坐标一律按 dsh-tui 实际实现
-  书写（`x-ccch1mneyyy.tui/v1alpha1`，见 `tui-extension.ts` / `tui-channel.ts` /
-  `host-descriptor.ts` 及其 vendored 子模块 registry）。本仓库
-  `registry/registry-0.15.json` 与部分 conformance 资产（fixtures /
-  `validate-manifest.cli.test.js`）仍使用 `tui.dsh/v1alpha1`；两者不一致时以实际实现
-  为准。规范侧要求的完整说明、影响面与统一方案留档于统管容器
-  `Workplace_dsh/ADAPTER-NAMESPACE-DIFF.md`（spec 仓库之外，不随本仓库提交）。
 - **D-2 消息观察是窄映射**：只投递 `user/message → message.received`、
   `assistant/message → message.sent` 两类；streaming/chunk、`tool/*`、`turn/*`、mode
   事件一律不产生 envelope（保守起步）。`privacyClass` 恒为 `sensitive`；summary 截断
@@ -115,8 +112,6 @@ boot 不因漂移数据死亡。
   Command 挂载诚实规则影响。示例不是真实 descriptor 的镜像。
 - **D-5 上游校验粒度**：harness 包要求 rc 号**一致**（不同 rc 混装即 drift），框架包
   只查 major——`cordis`/`schemastery` 的 minor/patch 差异不在校验面内。
-- **D-6 版本线文档滞后**：dsh-tui `ADAPTER.md` 仍写校验线 `0.1.0-rc.6`，代码
-  `contract.ts` 已是 `0.1.0-rc.7`；引用时以 `contract.ts` 为准。
 
 ## 证据
 
@@ -124,7 +119,8 @@ boot 不因漂移数据死亡。
   `verify:contract`（上游 rc 线）、`verify:patch-surface`（快照对比）、`verify:manifest-deps`，
   以及 plugin 系列 `verify:plugin-spec` / `verify:plugin-grants` / `verify:plugin-storage` /
   `verify:plugin-messages` / `verify:plugin-ledger` / `verify:plugin-commands` /
-  `verify:plugin-negotiation`。
+  `verify:plugin-negotiation` / `verify:plugin-lifecycle`，以及扩展边界回归
+  `verify:extension-events` / `verify:extension-ui` / `verify:plugin-scene-boundary`。
 - 本仓库 conformance：独立检出 `npm run test:standalone`（固定 `vendor/dsh-std`
   submodule 初始化 + 构建 + 全套校验，含私有协议协商 fixture）；dsh-tui workspace
   内 `pnpm test` 复用 workspace 安装的 `@dsh-std/*`。
@@ -138,14 +134,11 @@ boot 不因漂移数据死亡。
 
 ## 收敛计划
 
-1. **统一私有命名空间**：`tui.dsh/*` 与 `x-ccch1mneyyy.tui/*` 的统一方向已留档于
-   统管容器 `ADAPTER-NAMESPACE-DIFF.md`；决策后一次性同步本仓库
-   `registry-0.15.json` + conformance fixtures/tests + dsh-tui 代码与 vendored
-   子模块，重跑 conformance（D-1）。
+1. **私有命名空间已统一**：`tui.dsh/*` 已在 dsh-tui 代码、本仓库 registry、
+   conformance 与本文档同步（原 D-1 关闭）。
 2. 消息观察事件面随 dsh-std messages 演进扩宽（有 RFC 支撑时），privacyClass 细化
    逐步文档化（D-2）。
 3. `ExternalRedirect` 上游化：等 `@dsh-std/presentation` 携带该 kind 后撤销 TUI 补注册
    （D-3）。
 4. 发布运行时生成的"真实"Host Descriptor 作为 reference 资产，与官方示例并列
    （D-4）。
-5. dsh-tui `ADAPTER.md` 版本线文本与 `contract.ts` 对齐（D-6）。

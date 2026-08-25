@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-08-25（私有命名空间统一与插件文档合并）
+
+### Changed
+
+- dsh-tui 私有坐标统一为 `tui.dsh/v1alpha1`，Adapter Note 中 D-1 已关闭；
+- 将 dsh-TUI `docs/plugins.md` / `plugins.en.md` 合并到本仓库 `docs/`，并在 README 文档地图中挂链。
+
 ## 2026-08-18（UI surface 分层）
 
 ### Changed

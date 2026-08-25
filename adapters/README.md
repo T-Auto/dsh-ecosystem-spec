@@ -15,6 +15,8 @@ Adapter Note 记录**某一宿主/运行时版本**与公共 contract 的适配�
 | [dsh-tui-v0.15.md](dsh-tui-v0.15.md) | dsh-tui 本体（参考 TUI 宿主） | Current |
 | [dsh-tui-vscode-v0.15.md](dsh-tui-vscode-v0.15.md) | dsh-tui-vscode（VS Code companion） | Draft / Experimental |
 
+插件开发者的操作指南见 [版本内的 dsh-TUI 插件开发指南](../docs/plugins.md)（与 dsh-TUI 仓库同步）。
+
 ## 模板
 
 ```text
