@@ -34,7 +34,6 @@
     "registry",
     "rfc",
     "schemas",
-    "spec",
     "CHANGELOG.md",
     "PLUGIN-ADMISSION-CHECKLIST.md"
   ],

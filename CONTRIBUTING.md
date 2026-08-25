@@ -2,7 +2,7 @@
 
 ## 1. 你应该把什么提交到哪里？
 
-如果你是在修改跨宿主公共 contract：提交 `rfc/`，经过治理后再进入 `spec/`。
+如果你是在修改跨宿主公共 contract：提交 `rfc/`，经过治理后写入统一指南 `docs/plugin-admission-and-development.md` 的正式准入章节。
 
 如果只是 TUI 市场准入要求：提交 `proposals/` 或 TUI admission 文档修改，并使用 `TUI-*` 标识。
 

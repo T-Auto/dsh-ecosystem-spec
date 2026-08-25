@@ -16,9 +16,9 @@ Community Consensus 与 TUI Admission 使用以下术语：
 
 ## 2. 文档分区规则
 
-### `spec/`
+### `docs/plugin-admission-and-development.md`
 
-只能放已经形成版本化 contract 的文本。
+唯一整合文档：版本化 Community 基线、TUI Admission、接口与兼容性协定、插件开发指南与准入检查清单都汇总在这里。
 
 ### `rfc/`
 
@@ -131,4 +131,4 @@ Exit criteria
 Rollback plan
 ```
 
-未完成退出条件前，不得移动到 `spec/community-consensus-*`。
+未完成退出条件前，不得写入统一指南的正式准入/版本化章节。

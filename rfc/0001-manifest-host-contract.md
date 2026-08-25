@@ -14,7 +14,7 @@ dsh-TUI admission 使用 `vendor/dsh-std` 固定 revision 所定义的：
 - `storage.dsh/v1alpha1` `LocalStorage`；
 - `messages.dsh/v1alpha1` `MessageObserver`。
 
-对应规范与机器资产从 [`spec/community-consensus-v0.15.md`](../spec/community-consensus-v0.15.md) 进入。本 RFC 不重新规定这些对象。
+对应规范与机器资产从 [统一指南](../docs/plugin-admission-and-development.md) 的 Community v0.15 基线进入。本 RFC 不重新规定这些对象。
 
 ## TUI profile
 

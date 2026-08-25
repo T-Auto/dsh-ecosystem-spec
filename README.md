@@ -33,8 +33,7 @@
 ## 边界
 
 - `vendor/dsh-std/`：通过 git submodule 固定的 dsh-std 公共契约基线与核心资产。
-- `spec/community-consensus-v0.15.md`：dsh-std 公共基线的稳定引用入口。
-- `spec/tui-admission-v0.15.md`：TUI 市场准入 profile；只约束 TUI 生态，不倒灌通用公共契约。
+- [`docs/plugin-admission-and-development.md`](docs/plugin-admission-and-development.md)：**唯一整合入口**，包含 Community v0.15 基线、TUI Admission v0.15、接口与兼容性协定、插件开发指南与准入检查清单。
 - `protocols/profile-definitions.js`：可由 dsh-std core 装载的 TUI 私有协议定义。
 - `registry/registry-0.15.json`：本 profile 导入的 std 定义与自有定义注册表。
 - `conformance/`：测试 fixtures、requirement matrix 与准入测试 runner。
@@ -69,10 +68,8 @@ npm run validate:manifest -- --manifest ./path/to/dsh-plugin.json   # 可选 --h
 
 | 文档 / 路径 | 作用 |
 | --- | --- |
-| [`spec/community-consensus-v0.15.md`](spec/community-consensus-v0.15.md) | dsh-std 公共基线的稳定引用入口 |
-| [`spec/tui-admission-v0.15.md`](spec/tui-admission-v0.15.md) | dsh-TUI 产品准入 profile（市场准入要求） |
+| [`docs/plugin-admission-and-development.md`](docs/plugin-admission-and-development.md) | **唯一整合文档**：Community v0.15 基线、TUI Admission v0.15、接口与兼容性协定、插件开发指南与准入检查清单 |
 | [`adapters/`](adapters) | 宿主 Adapter 映射表与适配 Note（[`dsh-tui-v0.15.md`](adapters/dsh-tui-v0.15.md) 映射表、[`dsh-tui-vscode-v0.15.md`](adapters/dsh-tui-vscode-v0.15.md)） |
-| [`docs/plugins.md`](docs/plugins.md) | dsh-TUI 插件开发指南（从 dsh-TUI 仓库同步合并） |
 | [`vendor/dsh-std/`](vendor/dsh-std) | 固定引用的 dsh-std 公共核心协议基线 (submodule) |
 | [`registry/registry-0.15.json`](registry/registry-0.15.json) | 本 profile 导入的 std 定义与自有定义注册表 |
 | [`protocols/profile-definitions.js`](protocols/profile-definitions.js) | 可由 dsh-std core 装载的 TUI 私有定义 |
