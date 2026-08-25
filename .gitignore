@@ -103,8 +103,8 @@ credentials/
 local.properties
 config.local.*
 
-# ===== GitHub Actions（按项目约定禁用云端 workflow 消耗）=====
-.github/workflows/
+# ===== GitHub Actions =====
+# CI 工作流已启用；如需重新禁用，可恢复 .github/workflows/ 忽略规则
 
 # ===== 其他 =====
 .directory
