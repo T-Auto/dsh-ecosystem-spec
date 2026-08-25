@@ -3,6 +3,9 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/T-Auto/dsh-ecosystem-spec/actions/workflows/ci.yml">
+    <img alt="CI" src="https://img.shields.io/github/actions/workflow/status/T-Auto/dsh-ecosystem-spec/ci.yml?branch=main&style=flat">
+  </a>
   <img alt="Compliant Plugins" src="https://img.shields.io/badge/Compliant%20Plugins-23-4b6fff?style=flat">
   <img alt="MIT License" src="https://img.shields.io/badge/license-MIT-2e8b57?style=flat">
   <img alt="GitHub Stars" src="https://img.shields.io/github/stars/T-Auto/dsh-ecosystem-spec?style=flat&color=eab308">
