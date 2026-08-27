@@ -472,9 +472,10 @@ registry?.register({
 })
 ```
 
-参考主包 `src/dsh-adapter/packaged-skills.ts`：单行标量 frontmatter（`name`、`description`），
-重复或无效条目跳过，**绝不让技能注册失败拖垮 TUI 启动**。注册成功后技能即可
-通过 DSH 的 `/skill` 面使用。
+注册条目提供单行标量 frontmatter（`name`、`description`），重复或无效条目跳过，
+**绝不让技能注册失败拖垮宿主启动**。注册成功后技能即可通过 DSH 的 `/skills`
+面使用。不需要随包注册时，也可把 `SKILL.md` 放进项目 `.agents/skills/<名字>/`
+由 DSH 文件系统 provider 直接发现（零代码，dsh-TUI 主包即采用此方式）。
 
 ## 接缝四：主题（静态资产，零代码）
 
