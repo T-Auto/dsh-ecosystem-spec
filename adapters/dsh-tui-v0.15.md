@@ -2,7 +2,7 @@
 
 **Status:** Current
 **Spec version:** community-v0.15 + tui-admission/0.15（`registry/registry-0.15.json`）
-**Host:** dsh-TUI 0.9.x（`@deepseek-harness-tui/dsh-tui`）/ Cordis 4.x profile；上游 `@deepseek-ai/*` 主校验线 `0.1.1-rc.2`（兼容 `0.1.0-rc.6/7/8`、`0.1.1-rc.1`）
+**Host:** dsh-TUI 0.9.x（`@deepseek-harness-tui/dsh-tui`）/ Cordis 4.x profile；上游 `@deepseek-ai/*` 主校验线 `0.1.2-alpha.1`（兼容 `0.1.0-rc.6/7/8`、`0.1.1-rc.1/2`）
 **仓库:** https://github.com/ccch1mneyyy/dsh-TUI（`src/dsh-adapter/`、`src/plugin-spec/`）
 
 ## 定位
@@ -82,11 +82,11 @@ boot 不因漂移数据死亡。
 
 `contract.ts` 是官方上游的唯一校验点：
 
-- 主校验线 `UPSTREAM_VALIDATED_VERSION = '0.1.1-rc.2'`；兼容线
-  `0.1.0-rc.6 / 0.1.0-rc.7 / 0.1.0-rc.8 / 0.1.1-rc.1`
+- 主校验线 `UPSTREAM_VALIDATED_VERSION = '0.1.2-alpha.1'`；兼容线
+  `0.1.0-rc.6 / 0.1.0-rc.7 / 0.1.0-rc.8 / 0.1.1-rc.1 / 0.1.1-rc.2`
   （`UPSTREAM_VALIDATED_VERSIONS`）；特性门控用 `installedMeetsVersion` 跨家族比较，
   老安装优雅降级。
-- peer 范围：`^0.1.0-rc.6 || ^0.1.1-rc.1`；blessed 包中 harness 包按完整版本号校验，
+- peer 范围：`^0.1.0-rc.6 || ^0.1.1-rc.1 || ^0.1.2-alpha.1`；blessed 包中 harness 包按完整版本号校验，
   框架包按 MAJOR 校验（`@deepseek-ai/cordis` 4、`@deepseek-ai/schemastery` 3）。
 - drift → boot warning（开发可见）；CI `verify:contract` 直接失败（用户机器上炸之前先炸 CI）。
 - Patch surface：`cordis.patch.yml` 干预已快照 `patch-surface.snapshot.json`
