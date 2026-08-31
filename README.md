@@ -14,37 +14,67 @@
 
 # dsh-ecosystem-spec
 
-> **DSH Community Ecosystem Interoperability Specification**  
-> 社区插件互操作规范实验库
+> **DSH 社区生态互操作、conformance、registry 与治理的规范入口。**
+> **公共协议语义以 dsh-std 的固定 revision 为 normative source。**
+> **本仓库不声称 DeepSeek 官方认证或官方采用，也不声称自己是唯一标准。**
 
-## 使用此协议有什么好处？
+## 这是什么？
 
-[dsh-TUI](https://github.com/ccch1mneyyy/dsh-TUI)团队维护了一套adapter，如果你的dsh采用该adapter和dsh本体通信，那即可自动适配所有dsh本体旧版本以及未来的版本，无需顾虑多版本兼容性。若你的插件想使用[dsh-TUI](https://github.com/ccch1mneyyy/dsh-TUI)团队维护的adapter达到dsh版本更新时免维护的便利性，请阅读并遵循此规范。
+- 社区生态事实层：记录生态里有哪些协议、实现、Profile、兼容声明；
+- 公共协议由 [dsh-std](https://github.com/Yan-Zero/dsh-std) 定义，本仓库通过 `vendor/dsh-std` 固定引用；
+- 具体产品形态由 Profile 定义，当前已有完整示例：dsh-tui；
+- 提供 conformance、registry、adapter、governance 等生态基础设施。
 
-`dsh-ecosystem-spec`还提供依赖链溯源，以及可选的正在实验中的插件热更新功能。这些提供功能性的额外协定都是可选项，无论是否选择遵守，都不会与其他遵守情况的插件产生冲突。
+## 协定是干什么的？
 
-## 项目定位
+1. 公共协议（dsh-std）：让插件、宿主、工具、市场用同一套坐标声明、发现和协商；
+2. Profile（本仓库）：面向某个产品形态的准入、权限、验证与展示规则；
+3. Adapter Note：记录某宿主/运行时与公共契约的映射，不改变标准语义。
 
-`dsh-ecosystem-spec` 存放了[dsh-TUI](https://github.com/ccch1mneyyy/dsh-TUI)团队维护的adapter的映射表，同时是使用[dsh-std](https://github.com/Yan-Zero/dsh-std)的协议的插件标准。所有进入 `dsh-TUI` 启动方式的插件、`dsh-TUI` 维护的插件市场与推荐列表，应满足 TUI 当前声明的准入版本与验证要求。
+## 为什么是去中心化的？
 
-使用非本adapter覆盖的接口范围无法保证后续dsh更新的的免维护性。本adapter覆盖的接口范围会逐渐增加，如果您想把您所需的dsh上游api加入本adapter的覆盖范围，可以在本仓库提issue，tui团队在评估后会考虑是否将其纳入后续adapter映射维护。
+- 不设唯一官方市场、不设特权宿主；
+- 多个实现、多个市场、多个社区仓库可以并存；
+- 官方可以自由演进，社区通过 adapter、协议版本和 Profile 演进吸收变化；
+- 权威跟随资产：谁拥有协议、仓库、市场，谁对自己的资产有决定权。
 
-## 生态扩展
+## 仓库四区
 
-使用dsh-ecosystem-spec规范的dsh-tui功能扩展插件及遵循spec规范规范的社区插件已收录于[tui插件市场](https://dshtui.com/plugins/) ，现已收录23个。
+```text
+这是入口          → README / docs/
+这是提案与讨论    → rfc/ proposals/ decisions/
+这是稳定的协议    → dsh-std/（vendor submodule）
+这是具体 Profile  → profiles/dsh-tui/（渐进迁移中；当前 TUI 内容仍在根级 registry/、conformance/、adapters/）
 
-## 边界
+横切区：
+治理            → governance/ + GOVERNANCE.md
+生态事实         → registry/ + conformance/
+历史与信用       → decisions/ + credits/
+```
 
-- `vendor/dsh-std/`：通过 git submodule 固定的 dsh-std 公共契约基线与核心资产。
-- [`docs/plugin-admission-and-development.md`](docs/plugin-admission-and-development.md)：**唯一整合入口**，包含 Community v0.15 基线、TUI Admission v0.15、接口与兼容性协定、插件开发指南与准入检查清单。
-- `protocols/profile-definitions.js`：可由 dsh-std core 装载的 TUI 私有协议定义。
-- `registry/registry-0.15.json`：本 profile 导入的 std 定义与自有定义注册表。
-- `conformance/`：测试 fixtures、requirement matrix 与准入测试 runner。
-- `adapters/`：宿主/运行时版本与公共 contract 的适配映射表（Adapter Note），不改变标准语义。
-- `rfc/`：TUI 增量协议提案及保留的历史 RFC 路径。
-- 当前规范与测试均为 Draft / Experimental；在 Candidate/Stable 条件满足前，使用者只能声明“实验适配”。
+## 从哪开始？
 
-参考实现、TUI 本身或任何单一宿主只能提供 evidence，不能因为实现存在就成为标准或自我认证。
+| 我想做什么 | 去这里 |
+| --- | --- |
+| 快速理解生态 | [docs/overview.md](docs/overview.md) |
+| 了解目录与文档导航 | [docs/README.md](docs/README.md) |
+| 写一个 TUI 插件 / 查准入 | [docs/plugin-admission-and-development.md](docs/plugin-admission-and-development.md) |
+| 做一个宿主 / Adapter | [adapters/README.md](adapters/README.md) |
+| 提一个公共协议 | [vendor/dsh-std/docs/proposals/](vendor/dsh-std/docs/proposals/) + [rfc/README.md](rfc/README.md) |
+| 提一个 Profile / TUI 准入 | [proposals/tui-proposals.md](proposals/tui-proposals.md) |
+| 查上游 dsh 变化影响 | [docs/upstream-analysis/](docs/upstream-analysis/README.md) |
+| 查实现 / claim / registry | [registry/README.md](registry/README.md) |
+| 参与治理与决策 | [GOVERNANCE.md](GOVERNANCE.md) / [decisions/README.md](decisions/README.md) |
+
+## 当前 Profile 与边界
+
+- 当前第一个完整 Profile 示例是 **dsh-tui**；
+- 使用 dsh-tui 维护的 adapter 可自动适配其所覆盖的 dsh 旧版本与未来版本；未覆盖接口不承诺免维护；
+- 遵循本规范的 dsh-tui 插件/扩展已收录于 [tui 插件市场](https://dshtui.com/plugins/)（当前 23 个）；
+- 当前根级 `registry/`、`conformance/`、`adapters/`、`protocols/` 仍以 TUI 为主，正在按阶段下沉到 `profiles/dsh-tui/`（渐进迁移，见 [docs/overview.md](docs/overview.md)）；
+- 当前规范与测试均为 Draft / Experimental；在 Candidate/Stable 条件满足前，使用者只能声明“实验适配”；
+- 参考实现、TUI 本身或任何单一宿主只能提供 evidence，不能因为实现存在就成为标准或自我认证；
+- capability / permission 不是安全边界；任何 evidence 都不是“安全插件”或“官方认证”的证明。
 
 ## 快速验证
 
@@ -71,15 +101,21 @@ npm run validate:manifest -- --manifest ./path/to/dsh-plugin.json   # 可选 --h
 
 | 文档 / 路径 | 作用 |
 | --- | --- |
+| [`docs/README.md`](docs/README.md) | 文档导航总页 |
+| [`docs/overview.md`](docs/overview.md) | 生态总览与读者导引 |
 | [`docs/plugin-admission-and-development.md`](docs/plugin-admission-and-development.md) | **唯一整合文档**：Community v0.15 基线、TUI Admission v0.15、接口与兼容性协定、插件开发指南与准入检查清单 |
+| [`docs/upstream-analysis/`](docs/upstream-analysis/README.md) | DSH 核心版本变动分析（含模板与首批条目） |
 | [`adapters/`](adapters) | 宿主 Adapter 映射表与适配 Note（[`dsh-tui-v0.15.md`](adapters/dsh-tui-v0.15.md) 映射表、[`dsh-tui-vscode-v0.15.md`](adapters/dsh-tui-vscode-v0.15.md)） |
 | [`vendor/dsh-std/`](vendor/dsh-std) | 固定引用的 dsh-std 公共核心协议基线 (submodule) |
-| [`registry/registry-0.15.json`](registry/registry-0.15.json) | 本 profile 导入的 std 定义与自有定义注册表 |
+| [`registry/registry-0.15.json`](registry/registry-0.15.json) | 当前 TUI profile 导入的 std 定义与自有定义注册表 |
 | [`protocols/profile-definitions.js`](protocols/profile-definitions.js) | 可由 dsh-std core 装载的 TUI 私有定义 |
 | [`conformance/`](conformance) | evidence、requirement matrix、fixtures 与测试 runner |
-| [`rfc/`](rfc) | TUI 增量协议及保留的历史 RFC 路径 |
+| [`rfc/README.md`](rfc/README.md) | RFC / 跨仓库提案索引与流程 |
+| [`rfc/0000-governance.md`](rfc/0000-governance.md) | RFC 状态和生态治理基础 |
 | [`governance/rules.md`](governance/rules.md) | 权威边界和变更约束 |
-| [`rfc/0000-governance.md`](rfc/0000-governance.md) | RFC 状态和决策要求 |
+| [`GOVERNANCE.md`](GOVERNANCE.md) | 治理总纲：角色、决策、异议与申诉 |
+| [`decisions/README.md`](decisions/README.md) | 讨论反馈处置记录 |
+| [`credits.md`](credits.md) | 规范作者、实现作者与早期采用者矩阵 |
 
 ## 状态词
 

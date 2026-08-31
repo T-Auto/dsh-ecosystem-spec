@@ -1,8 +1,15 @@
 # Governance Boundary
 
+> 治理总纲见 [../GOVERNANCE.md](../GOVERNANCE.md)；提案流程与索引见
+> [../rfc/README.md](../rfc/README.md)；讨论处置见
+> [../decisions/README.md](../decisions/README.md)。
+
 ## 1. Sources
 
-dsh-std 固定 submodule 是公共协议基线；dsh-TUI Admission 是产品准入 profile；本仓库 RFC 只定义 TUI 增量或保留历史引用路径。TUI policy 不修改 dsh-std 的协议含义，也不要求其他 Host 采用。
+`dsh-ecosystem-spec` 是 DSH 社区生态互操作、conformance、registry 与治理的规范入口。
+dsh-std 固定 submodule 是公共协议基线；dsh-TUI Admission 是第一个产品准入 Profile；
+本仓库 RFC 既承载生态级提案，也保留 TUI 增量与历史引用路径。TUI policy 不修改
+dsh-std 的协议含义，也不要求其他 Host 采用。
 
 当前所有内容均为 Draft/Experimental，不代表 dsh 官方接受、认证或背书。
 

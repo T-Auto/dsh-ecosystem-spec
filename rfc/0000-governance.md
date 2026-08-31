@@ -2,9 +2,13 @@
 
 **Status:** Experimental
 
+> 总索引与流程见 [README.md](README.md)；治理总纲见 [GOVERNANCE.md](../GOVERNANCE.md)；
+> 讨论反馈与决策记录见 [decisions/](../decisions/README.md)。
+
 ## 定位
 
-本 RFC 只用于社区规范演进，不要求 dsh 官方立即采纳。
+本 RFC 只用于社区规范演进，不要求 dsh 官方立即采纳。本仓库是社区生态入口，
+不声明官方认证、官方采用或唯一标准。
 
 ## 提案类型
 
