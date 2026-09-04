@@ -1,0 +1,2 @@
+registry/contracts/*.json text eol=lf
+schemas/*.json text eol=lf
