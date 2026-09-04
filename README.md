@@ -25,8 +25,6 @@
 
 dsh-ecosystem-spec 收录了插件元协议[dsh-std](https://github.com/Yan-Zero/dsh-std)、运行环境元协议[dsh-distribution](https://github.com/T-Auto/dsh-distribution)及相关子协议，前者面向插件作者，后者面向dsh发行版/整合包开发者。在元协议的框架下，**“协议本身”也变成了可拔插的插件——这和dsh本体的理念不谋而合。**
 
-dsh-ecosystem-spec 相关协议旨在减小对dsh上游变更的适配压力，降低维护成本，增加多插件多版本运行时的兼容性，稳定性和可回退性，提供更好的开发体验。
-
 dsh-ecosystem-spec 相关协议干扰任何dsh插件的复杂功能实现，不影响dsh本体演进，鼓励对新形态插件和应用的探索。
 
 dsh-ecosystem-spec 相关协议欢迎任何dsh开发者发起issue讨论或pr。对dsh-ecosystem-spec相关生态可以在本仓库讨论，对本仓库收录的具体协议可以到对应仓库留言或发起pr。
