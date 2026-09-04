@@ -21,22 +21,25 @@
 
 ## 这是什么项目？
 
-这是由[dsh-TUI](https://github.com/ccch1mneyyy/dsh-TUI)团队和[DSH-Desktop-EAC](https://github.com/zouyuxuan122/DSH-Desktop-EAC)团队联合发起的社区协议，提供一套可选、可验证的互操作共识。有详细文档、验证自动化流程及**全套的skill**。
+这是由[dsh-TUI](https://github.com/ccch1mneyyy/dsh-TUI)团队和[DSH-Desktop-EAC](https://github.com/zouyuxuan122/DSH-Desktop-EAC)团队联合发起的社区协议，提供一套可选、可验证的互操作共识。有详细文档、验证自动化流程及**开包即用的skill**。当不同的 DSH 项目希望互相理解、发现、协作或被共同管理时，本项目将提供一套稳定的共同语言，同时带来全方位的工程解耦红利：让上游演进更自由，让生态插件更稳定，让跨端运行零成本，让开发体验更舒适，让激进的想法都可以不受制约的落地。本规范并非官方标准，但我们希望通过此尝试，为碎片化的dsh生态，接起插件对话的桥梁。
 
-本协议旨在减小对dsh上游变更的适配压力，降低维护成本，增加多插件多版本运行时的兼容性，稳定性和可回退性。本协议不对社区开发者作任何功能性约束，不影响dsh本体演进，鼓励对新形态插件和应用的探索。
+dsh-ecosystem-spec 收录了插件元协议[dsh-std](https://github.com/Yan-Zero/dsh-std)、运行环境元协议[dsh-distribution](https://github.com/T-Auto/dsh-distribution)及相关子协议，前者面向插件作者，后者面向dsh发行版/整合包开发者。在元协议的框架下，**“协议本身”也变成了可拔插的插件——这和dsh本体的理念不谋而合。**
 
-本项目欢迎任何dsh开发者发起issue讨论或pr。
+dsh-ecosystem-spec 相关协议旨在减小对dsh上游变更的适配压力，降低维护成本，增加多插件多版本运行时的兼容性，稳定性和可回退性，提供更好的开发体验。
+
+dsh-ecosystem-spec 相关协议干扰任何dsh插件的复杂功能实现，不影响dsh本体演进，鼓励对新形态插件和应用的探索。
+
+dsh-ecosystem-spec 相关协议欢迎任何dsh开发者发起issue讨论或pr。对dsh-ecosystem-spec相关生态可以在本仓库讨论，对本仓库收录的具体协议可以到对应仓库留言或发起pr。
 
 ## 目录
 
-- [这是什么项目？](#这是什么项目)
-- [如果你是插件开发者，请看 → dsh-std](#如果你是插件开发者请看--dsh-std)
+- [dsh-std：deepseek-harnessc插件规范](#dsh-std)
   - [dsh-std是什么？](#dsh-std是什么)
   - [采取dsh-std有什么好处？](#采取dsh-std有什么好处)
-- [如果你是整合包作者，请看 → dsh-distribution](#如果你是整合包作者请看--dsh-distribution)
+- [dsh-distribution：deepseek harness整合包规范](#dsh-distribution)
 - [想让AI更好的开发dsh？](#想让ai更好的开发dsh)
 
-## 如果你是插件开发者，请看 → [dsh-std](https://github.com/Yan-Zero/dsh-std)
+## dsh-std
 
 ### dsh-std是什么？
 
@@ -60,9 +63,26 @@
 
 
 
-## 如果你是整合包作者，请看 → [dsh-distribution](https://github.com/T-Auto/dsh-distribution)
+## dsh-distribution
 
+### dsh-distribution 是什么？
 
+[dsh-distribution](https://github.com/T-Auto/dsh-distribution) 是一套用于描述和管理 DSH 运行环境 / 发行物 的最小元协议，他关注一个可运行的 DSH 环境如何被外部世界识别、发现和管理。当一个项目希望把自己声明为一个可发现、可验证、可管理、可迁移的 DSH 环境时，dsh-distribution提供了一套可以使用的共同语言。
+
+对于目前dsh官方的基于profile + bundle 组合、seam 可替换、agent-loop 可替换架构，开发者可以像拼积木一样组合出完全不同的产品：
+
+- **dsh + TUI**：打造类似 Claude Code 的极客终端编码工具；
+- **dsh + WebUI**：封装成类似 Codex App 的现代网页/桌面应用，并且 WebUI 与 TUI 可以无缝互通、共享同一套运行时状态
+- **dsh + 消息接入插件**：蜕变成为一个无界面的、事件驱动的后台常驻 QQ 机器人（参考Nanobot）
+- **dsh + 周期心跳插件**：演化成Neuro这样的一个 24 小时自主运行、有自己心跳和思考周期的 AI 伴侣
+- **dsh + 未来未知架构**：衍生出某种我们今天尚无法定义的全新 AGI 交互形态。
+
+这些产品形态，很多需要独立封装，独立运行，而[dsh-distribution](https://github.com/T-Auto/dsh-distribution)提出了，当一个项目成为一个“完整、可运行的 dsh 环境”之后，它应该如何向外部世界描述自己，使得多个dsh发型版本共存；插件、用户文件与配置迁移成为可能。
+
+### 采取dsh-distribution 有什么好处？
+
+- 不对具体产品的封装形式做约束，开发者可以发行任意形态的dsh产品
+- 提供多dsh版本与插件环境隔离的可能性，使得不同的dsh产品可以在同一台电脑上共存，开发者也可以隔离多种dsh版本拆件环境便于做兼容性测试
 
 
 
