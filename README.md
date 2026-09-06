@@ -66,6 +66,8 @@ dsh-ecosystem-spec 相关协议欢迎任何dsh开发者发起issue讨论或pr。
 
 [dsh-distribution](https://github.com/T-Auto/dsh-distribution) 是一套用于描述和管理 DSH 运行环境 / 发行物 的最小元协议，他关注一个可运行的 DSH 环境如何被外部世界识别、发现和管理。当一个项目希望把自己声明为一个可发现、可验证、可管理、可迁移的 DSH 环境时，dsh-distribution提供了一套可以使用的共同语言。
 
+> 或者有个更简单易懂的理解：大家安装python的时候都知道可以勾选“add to path”，而本协议提供了dsh整合包“add to path”的格式，以及一些扩展格式，方便跨整合包/跨dsh版本运行的包管理和路径管理
+
 对于目前dsh官方的基于profile + bundle 组合、seam 可替换、agent-loop 可替换架构，开发者可以像拼积木一样组合出完全不同的产品：
 
 - **dsh + TUI**：打造类似 Claude Code 的极客终端编码工具；
