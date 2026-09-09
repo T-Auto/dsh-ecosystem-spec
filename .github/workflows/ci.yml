@@ -1,0 +1,76 @@
+name: CI
+
+# 本仓库自己的 CI：校验“目录规范 ↔ registry 索引 ↔ git submodule 挂载 ↔ 文档链接”
+# 四者一致。协议与实现正文的构建/测试由各自上游仓库负责，不在这里跑。
+# 规则清单见 docs/directory-guide.md §6。
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  structure:
+    name: structure (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: false
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: 结构 / 索引 / 挂载元数据 / 文档链接校验
+        run: node scripts/verify-structure.mjs
+
+      - name: 打印挂载 revision（信息性）
+        run: git submodule status
+
+  mounts:
+    name: mounts (pinned revisions fetchable)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: false
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # 固定 revision 必须对所有人可克隆：只取 pin 的那一个提交。
+      - name: 初始化现行挂载
+        run: |
+          git submodule update --init --depth 1 vendor/meta-protocols/dsh-std
+          git submodule update --init --depth 1 vendor/meta-protocols/dsh-distribution
+          git submodule update --init --depth 1 vendor/examples/dsh-dpx
+
+      - name: 深校验（含挂载内规范入口）
+        run: node scripts/verify-structure.mjs
+
+      - name: 校验挂载内规范入口存在
+        run: |
+          test -f vendor/meta-protocols/dsh-std/README.md
+          test -f vendor/meta-protocols/dsh-distribution/docs/getting-started.md
+          test -f vendor/examples/dsh-dpx/README.md

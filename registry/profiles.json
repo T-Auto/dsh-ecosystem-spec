@@ -1,0 +1,8 @@
+{
+  "$schema": "./schema/index.schema.json",
+  "document": "profiles",
+  "version": 1,
+  "updated": "2026-09-09",
+  "scope": "产品准入 Profile 索引。Profile 在公共协议之上约束某个具体产品形态的准入与展示规则，只约束自己声明的生态范围，不倒灌成所有 DSH 生态的强制要求。",
+  "entries": []
+}

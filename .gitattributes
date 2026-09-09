@@ -1,2 +1,7 @@
-registry/contracts/*.json text eol=lf
-schemas/*.json text eol=lf
+# registry 索引与 schema 统一 LF，保证跨平台 diff 干净
+registry/*.json text eol=lf
+registry/schema/*.json text eol=lf
+
+# 归档区（old/）沿用重构前的换行规则
+old/schemas/*.json text eol=lf
+old/registry/contracts/*.json text eol=lf

@@ -1,0 +1,37 @@
+{
+  "$schema": "./schema/index.schema.json",
+  "document": "protocols",
+  "version": 1,
+  "updated": "2026-09-09",
+  "scope": "本仓库收录的协议索引。索引只登记事实：谁拥有、挂在哪里、上游自称什么状态；不授予状态、不认证实现、不构成安全保证。",
+  "entries": [
+    {
+      "id": "dsh-std",
+      "displayName": "dsh-std",
+      "category": "meta-protocol",
+      "scope": "插件、宿主与运行时之间的协议声明、发现与协商，即“关于协议的协议”。",
+      "status": "Draft",
+      "statusSource": "upstream",
+      "upstream": "https://github.com/Yan-Zero/dsh-std.git",
+      "maintainer": "Yan-Zero",
+      "mount": "vendor/meta-protocols/dsh-std",
+      "specEntry": "README.md",
+      "doc": "docs/overview.md",
+      "notes": "上游 README 自称“early drafts”，本索引照录为 Draft。"
+    },
+    {
+      "id": "dsh-distribution",
+      "displayName": "dsh-distribution",
+      "category": "meta-protocol",
+      "scope": "一个可运行的 DSH 环境如何被外部世界识别、发现、管理与迁移。",
+      "status": "Draft",
+      "statusSource": "upstream",
+      "upstream": "https://github.com/T-Auto/dsh-distribution.git",
+      "maintainer": "T-Auto",
+      "mount": "vendor/meta-protocols/dsh-distribution",
+      "specEntry": "docs/getting-started.md",
+      "doc": "docs/overview.md",
+      "notes": "上游 README 自称 Draft（草案），本索引照录为 Draft。"
+    }
+  ]
+}

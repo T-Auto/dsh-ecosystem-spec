@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/T-Auto/dsh-ecosystem-spec/registry/schema/index.schema.json",
+  "title": "dsh-ecosystem-spec registry index documents",
+  "description": "registry/ 下索引文档的形状。索引只登记事实：谁拥有、挂在哪里、上游自称什么状态。索引不授予状态、不认证实现、不构成安全保证。",
+  "$defs": {
+    "status": {
+      "description": "与治理层一致的状态词。索引中的取值必须来自上游仓库自己的声明。",
+      "enum": ["Draft", "Experimental", "Candidate", "Stable", "Deprecated"]
+    },
+    "category": {
+      "description": "收录类别。类别决定挂载路径前缀（见 docs/directory-guide.md）。",
+      "enum": ["meta-protocol", "sub-protocol", "example", "profile"]
+    },
+    "protocolEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "displayName", "category", "scope", "status", "upstream", "maintainer", "mount"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+        "displayName": { "type": "string", "minLength": 1 },
+        "category": { "$ref": "#/$defs/category" },
+        "scope": { "type": "string", "minLength": 1 },
+        "status": { "$ref": "#/$defs/status" },
+        "statusSource": {
+          "description": "状态出处。固定为 upstream 表示状态由上游仓库自己声明，本索引只登记。",
+          "const": "upstream"
+        },
+        "upstream": { "type": "string", "pattern": "^https://github\\.com/[^/]+/[^/]+\\.git$" },
+        "maintainer": { "type": "string", "minLength": 1 },
+        "mount": { "type": "string", "pattern": "^vendor/" },
+        "specEntry": {
+          "description": "挂载仓库内的规范入口，相对于该挂载根目录。",
+          "type": "string"
+        },
+        "buildsOn": {
+          "description": "子协议所依托的元协议 id；元协议自身省略。",
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "doc": {
+          "description": "本仓库内的说明文档路径，相对于仓库根目录。",
+          "type": "string"
+        },
+        "notes": { "type": "string" }
+      }
+    },
+    "implementationEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "displayName", "category", "role", "implements", "status", "upstream", "maintainer", "mount", "doc"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+        "displayName": { "type": "string", "minLength": 1 },
+        "category": { "const": "example" },
+        "role": {
+          "description": "范例在生态中的角色。standard-management-example 表示按某协议给出的标准管理范例。",
+          "enum": ["standard-management-example", "reference-implementation", "integration-example"]
+        },
+        "implements": {
+          "description": "该范例实现所遵循的协议 id。",
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" }
+        },
+        "status": { "$ref": "#/$defs/status" },
+        "statusSource": { "const": "upstream" },
+        "upstream": { "type": "string", "pattern": "^https://github\\.com/[^/]+/[^/]+\\.git$" },
+        "maintainer": { "type": "string", "minLength": 1 },
+        "mount": { "type": "string", "pattern": "^vendor/examples/" },
+        "doc": { "type": "string" },
+        "summary": { "type": "string", "minLength": 1 },
+        "notes": { "type": "string" }
+      }
+    },
+    "profileEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "displayName", "category", "scope", "status", "owner", "doc"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+        "displayName": { "type": "string", "minLength": 1 },
+        "category": { "const": "profile" },
+        "scope": { "type": "string", "minLength": 1 },
+        "status": { "$ref": "#/$defs/status" },
+        "owner": {
+          "description": "Profile 归属方。Profile 只约束自己声明的生态范围。",
+          "type": "string",
+          "minLength": 1
+        },
+        "doc": { "type": "string" }
+      }
+    },
+    "documentBase": {
+      "type": "object",
+      "required": ["$schema", "document", "version", "updated", "scope", "entries"],
+      "properties": {
+        "$schema": { "const": "./schema/index.schema.json" },
+        "version": { "const": 1 },
+        "updated": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" },
+        "scope": { "type": "string", "minLength": 1 }
+      }
+    },
+    "protocolsDocument": {
+      "allOf": [
+        { "$ref": "#/$defs/documentBase" },
+        {
+          "properties": {
+            "document": { "const": "protocols" },
+            "entries": { "type": "array", "items": { "$ref": "#/$defs/protocolEntry" } }
+          }
+        }
+      ]
+    },
+    "implementationsDocument": {
+      "allOf": [
+        { "$ref": "#/$defs/documentBase" },
+        {
+          "properties": {
+            "document": { "const": "implementations" },
+            "entries": { "type": "array", "items": { "$ref": "#/$defs/implementationEntry" } }
+          }
+        }
+      ]
+    },
+    "profilesDocument": {
+      "allOf": [
+        { "$ref": "#/$defs/documentBase" },
+        {
+          "properties": {
+            "document": { "const": "profiles" },
+            "entries": { "type": "array", "items": { "$ref": "#/$defs/profileEntry" } }
+          }
+        }
+      ]
+    }
+  }
+}

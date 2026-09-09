@@ -2,24 +2,34 @@
 
 ## 1. 你应该把什么提交到哪里？
 
-如果你是在修改跨宿主公共 contract：提交 `rfc/`，经过治理后写入统一指南 `docs/plugin-admission-and-development.md` 的正式准入章节。
+先看这张表；更细的规则（含“新增一个挂载要改哪些文件”）见
+[`docs/directory-guide.md`](docs/directory-guide.md)。
 
-如果只是 TUI 市场准入要求：提交 `proposals/` 或 TUI admission 文档修改，并使用 `TUI-*` 标识。
+| 你要改的东西 | 提交到 | 注意 |
+| --- | --- | --- |
+| 公共协议语义（dsh-std / dsh-distribution / 子协议） | **对应上游仓库** | 本仓库只挂载引用，不改语义 |
+| 生态收录（新增协议 / 范例 / Profile） | `registry/` + `vendor/` + `docs/` | 一次 PR 只加一类 |
+| 本仓库说明文档 | `docs/` | 不重复协议正文 |
+| 目录规范与校验规则 | `docs/directory-guide.md` + `scripts/verify-structure.mjs` | 规则与脚本必须同步改 |
+| 治理规则 | `governance/` | 结构性决策另补 `decisions/` |
+| 产品准入要求 | `profiles/<profile>/` | 用稳定的 `<PROFILE>-*` 编号 |
+| 上游 DSH 版本影响分析 | `docs/upstream-analysis/` | 一版一文件 |
+| 挂载 revision 升级 | 改动 gitlink | 独立 PR，附升级理由与证据 |
+| 范例实现说明 | `docs/examples/<id>.md` | 一例一文件 |
 
-如果是 dsh / Cordis 某版本怎么适配：提交 Adapter note，不修改公共 contract。
-
-如果是如何测试：提交 `conformance/`。
+本仓库**不接受**直接提交协议正文、实现代码或 conformance suite——那些属于上游仓库。
 
 ## 2. PR 标题
 
 推荐：
 
 ```text
-RFC: clarify required capability semantics
-TUI: add remote admission requirement
-Conformance: add cleanup fixture
-Registry: add messages.observe 0.1
-Governance: define proposal graduation
+Registry: add dsh-skin entry
+Mount: pin dsh-distribution to <revision>
+Docs: add skin protocol example
+Governance: clarify mount upgrade discipline
+CI: check registry against gitlinks
+Profile: add TUI admission section
 ```
 
 ## 3. PR 必须说明
@@ -38,15 +48,18 @@ Migration:
 Rollback:
 ```
 
+新增挂载或范例的 PR 至少写：收录理由、类别判定、状态出处（上游声明）、
+需要同步修改的索引与文档、以及 `node scripts/verify-structure.mjs` 的本地结果。
+
 ## 4. 禁止“顺手规范化”
 
 一次 PR 不应同时：
 
-- 修改 community contract；
-- 加入 TUI 专有要求；
-- 改 registry；
-- 修改市场文案；
-- 修改 reference implementation。
+- 新增或改动挂载（`.gitmodules` / gitlink）；
+- 修改 `registry/` 索引；
+- 改写 `docs/` 说明文档；
+- 升级挂载 revision；
+- 修改治理规则或 CI 校验规则。
 
 除非每个变更之间存在明确依赖，并分别列出影响。
 
@@ -57,9 +70,9 @@ Rollback:
 ```text
 Idea
  ↓
-TUI Proposal / RFC
+Upstream proposal / RFC（在对应协议仓库）
  ↓
-Experimental implementation
+Experimental implementation（范例实现仓库）
  ↓
 Fixture
  ↓
@@ -72,7 +85,8 @@ Candidate
 Stable
 ```
 
-只有 Stable contract 才能被其他实现当作默认长期依赖。
+只有 Stable contract 才能被其他实现当作默认长期依赖。本仓库只登记上游结论，
+不代替上游做晋级判断。
 
 ## 6. 对 dsh 官方的态度
 

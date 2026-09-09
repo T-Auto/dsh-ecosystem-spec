@@ -1,3 +1,12 @@
 [submodule "vendor/dsh-std"]
 	path = old/vendor/dsh-std
 	url = https://github.com/Yan-Zero/dsh-std.git
+[submodule "dsh-std"]
+	path = vendor/meta-protocols/dsh-std
+	url = https://github.com/Yan-Zero/dsh-std.git
+[submodule "dsh-distribution"]
+	path = vendor/meta-protocols/dsh-distribution
+	url = https://github.com/T-Auto/dsh-distribution.git
+[submodule "dsh-dpx"]
+	path = vendor/examples/dsh-dpx
+	url = https://github.com/T-Auto/dsh-dpx.git

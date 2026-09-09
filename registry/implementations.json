@@ -1,0 +1,24 @@
+{
+  "$schema": "./schema/index.schema.json",
+  "document": "implementations",
+  "version": 1,
+  "updated": "2026-09-09",
+  "scope": "本仓库收录的范例实现索引。范例用来证明协议可以被真实产品按同一套说法描述与管理；范例不是标准，也不是任何协议的唯一管理器。",
+  "entries": [
+    {
+      "id": "dsh-dpx",
+      "displayName": "dsh-dpx",
+      "category": "example",
+      "role": "standard-management-example",
+      "implements": ["dsh-distribution"],
+      "status": "Experimental",
+      "statusSource": "upstream",
+      "upstream": "https://github.com/T-Auto/dsh-dpx.git",
+      "maintainer": "T-Auto",
+      "mount": "vendor/examples/dsh-dpx",
+      "doc": "docs/examples/dsh-dpx.md",
+      "summary": "按 dsh-distribution 创建、注册、发现与启动多个相互隔离的 DSH 环境的包管理器，作为该协议的标准管理范例。",
+      "notes": "上游 README 自称“实验性、Windows 优先”，本索引照录为 Experimental；桌面端启动器只在 Windows 默认创建。"
+    }
+  ]
+}

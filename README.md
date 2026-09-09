@@ -38,13 +38,52 @@ dsh-ecosystem-spec 相关协议干扰任何dsh插件的复杂功能实现，不�
 
 dsh-ecosystem-spec 相关协议欢迎任何dsh开发者发起issue讨论或pr。对dsh-ecosystem-spec相关生态可以在本仓库讨论，对本仓库收录的具体协议可以到对应仓库留言或发起pr。
 
+## 仓库结构：生态入口
+
+本仓库是生态**入口**，不是协议正文的副本：协议与范例实现都用 git submodule
+**挂载**在 [`vendor/`](vendor/README.md) 下并固定到具体 revision，本仓库只负责
+索引、说明、校验与治理。
+
+```text
+dsh-ecosystem-spec/
+├── README.md / CONTRIBUTING.md / SECURITY.md / LICENSE
+├── docs/            说明文档：总览、目录规范、范例说明
+├── governance/      治理：权威归属、状态词、挂载纪律
+├── decisions/       决策记录（ADR）
+├── registry/        机器可读索引：协议 / 范例 / Profile
+├── profiles/        产品准入 Profile（只约束自己声明的生态范围）
+├── vendor/          挂载区（git submodule）
+│   ├── meta-protocols/   dsh-std、dsh-distribution
+│   ├── sub-protocols/    子协议（预留：皮肤 / UI 插件协议等）
+│   └── examples/         范例实现（dsh-dpx）
+├── scripts/         本仓库自己的校验脚本
+├── .github/         本仓库自己的 CI
+└── old/             重构前的全量归档（只读）
+```
+
+| 类别 | 条目 | 状态（照录上游） | 挂载 | 说明 |
+| --- | --- | --- | --- | --- |
+| 元协议 | dsh-std | Draft | [`vendor/meta-protocols/dsh-std`](vendor/meta-protocols/dsh-std) | 插件 / 宿主 / 运行时互操作 |
+| 元协议 | dsh-distribution | Draft | [`vendor/meta-protocols/dsh-distribution`](vendor/meta-protocols/dsh-distribution) | DSH 环境的身份与可迁移性 |
+| 范例实现 | dsh-dpx | Experimental | [`vendor/examples/dsh-dpx`](vendor/examples/dsh-dpx) | dsh-distribution 的标准管理范例 |
+
+- 想知道**以后新协议 / 新范例该放哪**：[`docs/directory-guide.md`](docs/directory-guide.md)
+- 想看**机器可读索引**：[`registry/README.md`](registry/README.md)
+- 想理解**四层模型**：[`docs/overview.md`](docs/overview.md)
+
+每次提交，本仓库自己的 CI 都会校验“目录规范 ↔ 索引 ↔ 挂载 ↔ 文档链接”四者一致
+（[`.github/workflows/ci.yml`](.github/workflows/ci.yml)）。
+
 ## 目录
 
+- [仓库结构：生态入口](#仓库结构生态入口)
 - [dsh-std：deepseek-harnessc插件规范](#dsh-std)
   - [dsh-std是什么？](#dsh-std是什么)
   - [采取dsh-std有什么好处？](#采取dsh-std有什么好处)
 - [dsh-distribution：deepseek harness整合包规范](#dsh-distribution)
+  - [dsh-dpx：dsh-distribution 的标准管理范例](#dsh-dpxdsh-distribution-的标准管理范例)
 - [想让AI更好的开发dsh？](#想让ai更好的开发dsh)
+- [想参与生态标准的讨论与建设？](#想参与生态标准的讨论与建设)
 
 ## dsh-std
 
@@ -58,7 +97,7 @@ dsh-ecosystem-spec 相关协议欢迎任何dsh开发者发起issue讨论或pr。
 
 此外，dsh-std要求采用 Adapter 解耦。官方 DSH 内核与生态插件各自的核心诉求是不同的。官方 DSH 希望高频迭代模型调度、上下文管理和内部架构，内核不应该被外部各式各样的 UI 协议和前端标准绑死手脚；而社区插件作者希望 DSH上游接口稳定，不希望上游每次升级自己就得通宵修兼容。
 
-**Adapter 在这里充当了“减震器”**。它把上游内核与通用协议隔开。官方内核可以自由重构、快速演进，所有可能引发破坏的变化只要在 [`@dsh-std/adapter-dsh`](packages/adapter-dsh/README.zh.md) 这一个适配层里消化掉，生态里成千上万的插件就完全不需要改动一行代码。任何独立的 TUI、Web 前端、远程云端 Runner 也能通过各自的 Adapter 平等接入这套标准；不同项目的 Adapter 可以自动进行兼容。
+**Adapter 在这里充当了“减震器”**。它把上游内核与通用协议隔开。官方内核可以自由重构、快速演进，所有可能引发破坏的变化只要在 [`@dsh-std/adapter-dsh`](vendor/meta-protocols/dsh-std/packages/adapter-dsh/README.zh.md) 这一个适配层里消化掉，生态里成千上万的插件就完全不需要改动一行代码。任何独立的 TUI、Web 前端、远程云端 Runner 也能通过各自的 Adapter 平等接入这套标准；不同项目的 Adapter 可以自动进行兼容。
 
 ### 采取dsh-std有什么好处？
 
@@ -93,6 +132,21 @@ dsh-ecosystem-spec 相关协议欢迎任何dsh开发者发起issue讨论或pr。
 - 不对具体产品的封装形式做约束，开发者可以发行任意形态的dsh产品
 - 提供多dsh版本与插件环境隔离的可能性，使得不同的dsh产品可以在同一台电脑上共存，开发者也可以隔离多种dsh版本拆件环境便于做兼容性测试
 
+### dsh-dpx：dsh-distribution 的标准管理范例
+
+[dsh-dpx](https://github.com/T-Auto/dsh-dpx) 是 `dsh-distribution` 的一个真实使用者，
+本仓库把它收录为**标准管理范例**：它按协议创建、注册、发现并启动多个相互隔离的
+DSH 环境，把“一个 DSH 环境如何向外部世界说明自己”完整走通了一遍。
+
+它示范了协议的三块能力：**环境身份**（每个环境根一份 `dsh-distribution.json`）、
+**安装实例身份**（每次安装一个独立 `urn:uuid:`，`test` 与 `stable` 绝不混同）、
+**发现**（自己的 registry，加上 Windows 上无执行权限的 discovery pointer）。
+它同时示范了**不越界**：不写别的管理器的注册位置、不扫盘猜测、不把目录隔离
+说成安全沙箱，也不要求别人照抄它的目录布局。
+
+范例不是标准，也不是唯一的管理器。完整说明（含真实用法、复算验证与照抄清单）见
+[`docs/examples/dsh-dpx.md`](docs/examples/dsh-dpx.md)。
+
 
 
 ## 想让AI更好的开发dsh？
@@ -102,4 +156,9 @@ dsh-ecosystem-spec 相关协议欢迎任何dsh开发者发起issue讨论或pr。
 
 
 ## 想参与生态标准的讨论与建设？
+
+- 提交前先读 [`CONTRIBUTING.md`](CONTRIBUTING.md)（分区纪律、PR 要件、禁止顺手规范化）；
+- 东西该放哪、新协议怎么挂：[`docs/directory-guide.md`](docs/directory-guide.md)；
+- 治理与权威归属：[`governance/README.md`](governance/README.md)；
+- 具体协议的语义讨论请到对应上游仓库（见 [`registry/protocols.json`](registry/protocols.json) 的 `upstream`）。
 
