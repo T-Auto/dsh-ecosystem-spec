@@ -28,7 +28,7 @@ Supersedes / Superseded by: 关联记录
 
 | 编号 | 标题 | 状态 |
 | --- | --- | --- |
-| （暂无） | —— | —— |
+| [0001](0001-remove-legacy-archive.md) | 移出重构前的 TUI 时代归档（删除 `old/`） | Accepted |
 
 ## 3. 什么时候需要写
 

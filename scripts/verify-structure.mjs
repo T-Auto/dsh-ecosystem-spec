@@ -51,7 +51,6 @@ const ALLOWED_TOP_LEVEL = new Set([
   'decisions',
   'docs',
   'governance',
-  'old',
   'profiles',
   'registry',
   'scripts',
@@ -115,12 +114,8 @@ let gitmodules = [];
   }
 }
 
-// 归档区（old/）的挂载是历史遗留，只读保留，不参与现行索引。
-const archivedMounts = gitmodules.filter((s) => s.path?.startsWith('old/'));
-const liveMounts = gitmodules.filter((s) => !s.path?.startsWith('old/'));
-if (archivedMounts.length) {
-  note(`归档区挂载（不参与索引校验）：${archivedMounts.map((s) => s.path).join(', ')}`);
-}
+// .gitmodules 里的每个挂载都必须出现在 registry 索引中。
+const liveMounts = gitmodules.filter((s) => s.path);
 
 /* ------------------------------------------------------------ 3. registry */
 
@@ -314,7 +309,7 @@ function mountInitialized(mount) {
 
 section('5. Markdown 相对链接');
 {
-  const skipDirs = ['old', '.git', 'node_modules'];
+  const skipDirs = ['.git', 'node_modules'];
   const mdFiles = [];
 
   const walk = (dir) => {

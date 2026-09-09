@@ -30,10 +30,10 @@
 | `vendor/` | **挂载区**：外部仓库 submodule | 上游各自维护 | 本仓库自己写的代码 |
 | `scripts/` | 本仓库自己的校验脚本（零依赖） | 本仓库 | 上游构建脚本 |
 | `.github/workflows/` | 本仓库自己的 CI | 本仓库 | 上游 CI |
-| `old/` | 重构前的全量归档，只读 | 冻结 | 任何新内容 |
 
-> `old/` 是历史归档：它保留重构前的规范、conformance、registry、adapters 等正文，
-> 在内容迁移完成前仍然是那些内容的权威副本。**新内容一律不进 `old/`。**
+> 本仓库**不设归档目录**：过时内容直接删除，需要时从 git 历史取回
+> （见 [`../decisions/0001-remove-legacy-archive.md`](../decisions/0001-remove-legacy-archive.md)）。
+> 这样顶层目录永远等于“当前有效的层”，不会出现新旧两套并存。
 
 ## 3. 四层内容模型
 

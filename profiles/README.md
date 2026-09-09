@@ -20,8 +20,9 @@ profiles/
 
 ## 2. 当前状态
 
-尚未收录 Profile。重构前 TUI 准入相关内容暂存于
-[`../old/`](../old/README.md)（`old/docs/`、`old/spec/`、`old/conformance/`），
+尚未收录 Profile。重构前的 TUI 准入内容（原 `docs/plugin-admission-and-development.md`、
+`conformance/`、`registry/`）已移出工作树，需要时从 git 历史取回
+（[`decisions/0001-remove-legacy-archive.md`](../decisions/0001-remove-legacy-archive.md)），
 迁移时应：
 
 1. 在 `profiles/dsh-tui/` 下重建为独立 Profile 文档；

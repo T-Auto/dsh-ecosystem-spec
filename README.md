@@ -16,7 +16,9 @@
 > **DSH Community Ecosystem Interoperability Specification**  
 > 社区插件互操作规范实验库
 
-※本文档正在修订中，在这句话被删除之前，请以/old的全量备份为准
+※本文档正在修订中：协议正文以 [`vendor/`](vendor/README.md) 挂载的上游仓库为准；
+重构前的 TUI 时代内容（准入规范、conformance、registry contracts、adapters、RFC 等）
+已移出工作树，恢复路径见 [`decisions/0001-remove-legacy-archive.md`](decisions/0001-remove-legacy-archive.md)。
 
 ## 这是什么项目？
 
@@ -57,8 +59,7 @@ dsh-ecosystem-spec/
 │   ├── sub-protocols/    子协议（预留：皮肤 / UI 插件协议等）
 │   └── examples/         范例实现（dsh-dpx）
 ├── scripts/         本仓库自己的校验脚本
-├── .github/         本仓库自己的 CI
-└── old/             重构前的全量归档（只读）
+└── .github/         本仓库自己的 CI
 ```
 
 | 类别 | 条目 | 状态（照录上游） | 挂载 | 说明 |

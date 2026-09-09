@@ -81,8 +81,9 @@ DSH 生态天然是“多种宿主 / 多种终端 / 多种市场 / 多种实现 
 ## 7. 当前状态与边界
 
 - 两个元协议均处于上游自称的 **Draft** 阶段，`dsh-dpx` 为 **Experimental**；
-- 重构前的内容（规范正文、conformance、registry、adapters 等）暂存于
-  [`old/`](../old/README.md)，在迁移完成前仍是那些内容的权威副本；
+- 重构前的 TUI 时代内容（准入规范、conformance、registry contracts、adapters、RFC 等）
+  已移出工作树，需要时从 git 历史取回，见
+  [`decisions/0001-remove-legacy-archive.md`](../decisions/0001-remove-legacy-archive.md)；
 - **capability / permission 不是安全边界**；任何证据都不是“安全插件”或“官方认证”；
 - **参考实现不是标准**；实现存在不能自我认证。
 

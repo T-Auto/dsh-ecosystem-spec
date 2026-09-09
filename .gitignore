@@ -119,9 +119,7 @@ htmlcov/
 # ===== subagent artifacts =====
 .pi-subagents/
 
-# ===== old/ 备份区卫生 =====
-/old/node_modules/
-/old/.pi/
-/old/.pi-subagents/
-/old/vendor/dsh-std/lib/
-/old/vendor/dsh-std/node_modules/
+# ===== 挂载区（submodule）内部构建产物不入父仓库索引 =====
+/vendor/**/node_modules/
+/vendor/**/lib/
+/vendor/**/dist/

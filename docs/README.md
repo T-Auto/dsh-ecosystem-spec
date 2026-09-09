@@ -19,7 +19,7 @@
 | [`../governance/README.md`](../governance/README.md) | 治理：权威归属、状态词、基线升级、命名空间、证据 |
 | [`../decisions/README.md`](../decisions/README.md) | 决策记录（ADR）索引与模板 |
 | [`../CONTRIBUTING.md`](../CONTRIBUTING.md) | 贡献规则：分区纪律、PR 要件、禁止顺手规范化 |
-| [`../old/README.md`](../old/README.md) | 重构前的全量归档（只读，迁移期权威副本） |
+| [`../decisions/0001-remove-legacy-archive.md`](../decisions/0001-remove-legacy-archive.md) | 重构前的 TUI 时代内容为何移出工作树、如何取回 |
 
 ## 维护约定
 
