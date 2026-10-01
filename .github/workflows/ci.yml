@@ -64,6 +64,7 @@ jobs:
         run: |
           git submodule update --init --depth 1 vendor/meta-protocols/dsh-std
           git submodule update --init --depth 1 vendor/meta-protocols/dsh-distribution
+          git submodule update --init --depth 1 vendor/sub-protocols/dsh-skin
           git submodule update --init --depth 1 vendor/examples/dsh-dpx
 
       - name: 深校验（含挂载内规范入口）
@@ -73,4 +74,5 @@ jobs:
         run: |
           test -f vendor/meta-protocols/dsh-std/README.md
           test -f vendor/meta-protocols/dsh-distribution/docs/getting-started.md
+          test -f vendor/sub-protocols/dsh-skin/convention.md
           test -f vendor/examples/dsh-dpx/README.md

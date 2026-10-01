@@ -101,7 +101,6 @@ Profile 在协议之上约束自己的生态。任何一层都不得修改上一
 
 | 方向 | 归属层 | 落位 |
 | --- | --- | --- |
-| 皮肤 / UI 插件协议（基于 dsh-std） | 子协议 | `vendor/sub-protocols/dsh-skin` + `registry/protocols.json` |
 | 皮肤管理器（统一启停、回退） | 范例实现 | `vendor/examples/dsh-skin-manager` + `docs/examples/dsh-skin-manager.md` |
 | 插件市场 / 推荐列表 | 范例实现 | `vendor/examples/<market id>` + `docs/examples/<market id>.md` |
 | TUI 等产品准入 Profile | 产品准入 | `profiles/<profile>/` + `registry/profiles.json` |

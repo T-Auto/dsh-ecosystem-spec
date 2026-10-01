@@ -7,3 +7,6 @@
 [submodule "dsh-dpx"]
 	path = vendor/examples/dsh-dpx
 	url = https://github.com/T-Auto/dsh-dpx.git
+[submodule "dsh-skin"]
+	path = vendor/sub-protocols/dsh-skin
+	url = https://github.com/DSH-EAC/dsh-ui-skin-loader-convention.git

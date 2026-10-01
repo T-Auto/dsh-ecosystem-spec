@@ -64,7 +64,7 @@ dsh-ecosystem-spec/
 ├── profiles/        产品准入 Profile（只约束自己声明的生态范围）
 ├── vendor/          挂载区（git submodule）
 │   ├── meta-protocols/   dsh-std、dsh-distribution
-│   ├── sub-protocols/    子协议（预留：皮肤 / UI 插件协议等）
+│   ├── sub-protocols/    子协议（dsh-skin：DSH UI 皮肤加载公约）
 │   └── examples/         范例实现（dsh-dpx）
 ├── scripts/         本仓库自己的校验脚本
 └── .github/         本仓库自己的 CI
@@ -74,6 +74,7 @@ dsh-ecosystem-spec/
 | --- | --- | --- | --- | --- |
 | 元协议 | dsh-std | Draft | [`vendor/meta-protocols/dsh-std`](vendor/meta-protocols/dsh-std) | 插件 / 宿主 / 运行时互操作 |
 | 元协议 | dsh-distribution | Draft | [`vendor/meta-protocols/dsh-distribution`](vendor/meta-protocols/dsh-distribution) | DSH 环境的身份与可迁移性 |
+| 子协议 | dsh-skin | Experimental | [`vendor/sub-protocols/dsh-skin`](vendor/sub-protocols/dsh-skin) | 皮肤插件与加载器之间的加载启停接缝 |
 | 范例实现 | dsh-dpx | Experimental | [`vendor/examples/dsh-dpx`](vendor/examples/dsh-dpx) | dsh-distribution 的标准管理范例 |
 
 - 想知道**以后新协议 / 新范例该放哪**：[`docs/directory-guide.md`](docs/directory-guide.md)

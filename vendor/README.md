@@ -14,7 +14,7 @@ vendor/
 │   ├── dsh-std/             → Yan-Zero/dsh-std
 │   └── dsh-distribution/    → T-Auto/dsh-distribution
 ├── sub-protocols/           # 子协议：在元协议之上定义具体领域行为
-│   └── (预留)
+│   └── dsh-skin/            → DSH-EAC/dsh-ui-skin-loader-convention
 └── examples/                # 范例实现：证明协议可被真实产品按同一套说法管理
     └── dsh-dpx/             → T-Auto/dsh-dpx
 ```
@@ -28,6 +28,7 @@ vendor/
 | --- | --- | --- | --- | --- |
 | [`meta-protocols/dsh-std`](meta-protocols/dsh-std) | 元协议 | [Yan-Zero/dsh-std](https://github.com/Yan-Zero/dsh-std) | [`registry/protocols.json`](../registry/protocols.json) | [`docs/overview.md`](../docs/overview.md) |
 | [`meta-protocols/dsh-distribution`](meta-protocols/dsh-distribution) | 元协议 | [T-Auto/dsh-distribution](https://github.com/T-Auto/dsh-distribution) | [`registry/protocols.json`](../registry/protocols.json) | [`docs/overview.md`](../docs/overview.md) |
+| [`sub-protocols/dsh-skin`](sub-protocols/dsh-skin) | 子协议 | [DSH-EAC/dsh-ui-skin-loader-convention](https://github.com/DSH-EAC/dsh-ui-skin-loader-convention) | [`registry/protocols.json`](../registry/protocols.json) | [`docs/overview.md`](../docs/overview.md) |
 | [`examples/dsh-dpx`](examples/dsh-dpx) | 范例实现 | [T-Auto/dsh-dpx](https://github.com/T-Auto/dsh-dpx) | [`registry/implementations.json`](../registry/implementations.json) | [`docs/examples/dsh-dpx.md`](../docs/examples/dsh-dpx.md) |
 
 挂载固定到具体 revision（gitlink 就是唯一事实来源）。本仓库**不复制**上游正文，

@@ -2,7 +2,7 @@
   "$schema": "./schema/index.schema.json",
   "document": "protocols",
   "version": 1,
-  "updated": "2026-09-09",
+  "updated": "2026-09-25",
   "scope": "本仓库收录的协议索引。索引只登记事实：谁拥有、挂在哪里、上游自称什么状态；不授予状态、不认证实现、不构成安全保证。",
   "entries": [
     {
@@ -32,6 +32,21 @@
       "specEntry": "docs/getting-started.md",
       "doc": "docs/overview.md",
       "notes": "上游 README 自称 Draft（草案），本索引照录为 Draft。"
+    },
+    {
+      "id": "dsh-skin",
+      "displayName": "DSH UI 皮肤加载公约",
+      "category": "sub-protocol",
+      "scope": "皮肤插件与加载器之间的最小接缝：皮肤不占用什么、何时被启用、收到什么、何时必须彻底关闭；不定义包格式，不约束皮肤内部实现，不做宿主特化。",
+      "status": "Experimental",
+      "statusSource": "upstream",
+      "upstream": "https://github.com/DSH-EAC/dsh-ui-skin-loader-convention.git",
+      "maintainer": "DSH-EAC",
+      "mount": "vendor/sub-protocols/dsh-skin",
+      "specEntry": "convention.md",
+      "buildsOn": ["dsh-std"],
+      "doc": "docs/overview.md",
+      "notes": "弱约束公约：只定义加载启停接缝，包格式、事务与故障隔离留给 dsh-ui-skin-manager 的强契约体系，宿主特化留给 DSH-Desktop-EAC-UI-Skin-Authoring-Convention。上游 convention.md 头表自称 Experimental，本索引照录。"
     }
   ]
 }

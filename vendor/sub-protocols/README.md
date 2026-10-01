@@ -1,6 +1,6 @@
-# vendor/sub-protocols —— 子协议挂载区（当前为空）
+# vendor/sub-protocols —— 子协议挂载区
 
-本目录预留给**子协议**：在元协议之上定义具体领域行为的协议仓库。
+本目录存放**子协议**挂载：在元协议之上定义具体领域行为的协议仓库。
 
 元协议只回答“如何声明、发现、协商”；子协议回答“某类东西具体怎么协作”。
 子协议不修改元协议语义，独立版本化、独立挂载、独立演进。
@@ -12,19 +12,19 @@
 - 它有自己的上游仓库、自己的维护方、自己的版本与状态；
 - 它**不**把某个产品的实现细节变成对所有生态的强制要求。
 
-## 2. 已经可以预期的一个例子：皮肤 / UI 插件协议
+## 2. 当前子协议：dsh-skin（DSH UI 皮肤加载公约）
 
-生态正在酝酿一类“皮肤 / UI 插件”协议：基于 `dsh-std` 的呈现（Presentation）与
-清单（manifest）机制，让皮肤、主题、界面插件用统一坐标声明自己，从而可以被
-一个**皮肤管理器**统一发现、安装、启停与回退——而**不约束**任何皮肤的实现自由度：
-皮肤仍然可以自己决定用什么渲染技术、什么资源格式、是否依赖某个宿主。
-
-它落地时，位置是确定的：
+生态收录的第一个子协议已落地：[`dsh-skin/`](dsh-skin)（上游
+[DSH-EAC/dsh-ui-skin-loader-convention](https://github.com/DSH-EAC/dsh-ui-skin-loader-convention)，
+协议 id `dsh.ecosystem.ui-skin-loader/v1`）。它是一份**弱约束**公约：只定义皮肤
+插件与加载器之间的最小接缝——皮肤不占用什么、何时被启用、收到什么、何时必须
+彻底关闭；不定义包格式，不约束皮肤内部实现，不做宿主特化。它基于 `dsh-std`
+（索引条目 `buildsOn`），落位即本目录预留的位置：
 
 ```text
-vendor/sub-protocols/<子协议 id>/          # 协议本体（submodule，固定 revision）
+vendor/sub-protocols/dsh-skin/             # 协议本体（submodule，固定 revision）
 registry/protocols.json                    # category = "sub-protocol" 的索引条目
-docs/overview.md                           # 在生态总览里补一节
+docs/overview.md                           # 在生态总览里分节说明
 ```
 
 对应的管理器属于**范例实现**，挂到 `vendor/examples/`，并配
@@ -42,5 +42,5 @@ docs/overview.md                           # 在生态总览里补一节
    [`../../docs/directory-guide.md`](../../docs/directory-guide.md) 的清单里同步；
 5. `node scripts/verify-structure.mjs` 全绿。
 
-本目录当前没有挂载，因此只有本说明文件；一旦有第一个子协议，请把它的入口链接补到
-[`../README.md`](../README.md) 的挂载表。
+当前唯一挂载 `dsh-skin` 的入口链接已补入 [`../README.md`](../README.md) 的挂载表；
+以后每个新子协议照此办理。

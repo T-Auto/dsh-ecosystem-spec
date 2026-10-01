@@ -27,8 +27,8 @@
 
 - **元协议**（`@dsh-std/core`、`dsh-distribution`）本身不含领域业务字段，它是
   “关于协议的协议”与环境身份协议；
-- **子协议**建立在元协议之上，独立版本化、独立演进（例如正在酝酿的皮肤 / UI
-  插件协议）；
+- **子协议**建立在元协议之上，独立版本化、独立演进（例如皮肤 / UI 插件子协议
+  `dsh-skin`）；
 - **范例实现**用来证明协议可被真实产品按同一套说法描述与管理，它不是标准；
 - **Profile** 在协议之上加产品准入规则，必须标注适用范围，不倒灌成所有生态的强制要求。
 
@@ -42,11 +42,42 @@
 | 元协议 | `dsh-std` | Draft | [`vendor/meta-protocols/dsh-std`](../vendor/meta-protocols/dsh-std) |
 | 元协议 | `dsh-distribution` | Draft | [`vendor/meta-protocols/dsh-distribution`](../vendor/meta-protocols/dsh-distribution) |
 | 范例实现 | `dsh-dpx` | Experimental | [`vendor/examples/dsh-dpx`](../vendor/examples/dsh-dpx) |
-| 子协议 | —— 尚未收录 | —— | `vendor/sub-protocols/` |
+| 子协议 | `dsh-skin` | Experimental | [`vendor/sub-protocols/dsh-skin`](../vendor/sub-protocols/dsh-skin) |
 | Profile | —— 尚未收录 | —— | `profiles/` |
 
 机器可读版本见 [`registry/protocols.json`](../registry/protocols.json) 与
 [`registry/implementations.json`](../registry/implementations.json)。
+
+### 3.1 子协议 `dsh-skin`：DSH UI 皮肤加载公约
+
+> 本节只是索引性摘要；规范正文以挂载的
+> [`vendor/sub-protocols/dsh-skin/convention.md`](../vendor/sub-protocols/dsh-skin/convention.md)
+> 为准，本仓库不复制、不改写。
+
+[`dsh-skin`](https://github.com/DSH-EAC/dsh-ui-skin-loader-convention)
+（协议 id `dsh.ecosystem.ui-skin-loader/v1`，维护者 DSH-EAC）是生态收录的第一个
+子协议：一份**弱约束**公约，只定义“皮肤插件”（Skin）与“加载器”（Loader）之间的
+最小接缝——皮肤不占用什么、何时被启用、收到什么、何时必须彻底关闭。它建立在
+`dsh-std` 之上（`buildsOn: dsh-std`），落位即目录规范为皮肤 / UI 插件协议预留的
+`vendor/sub-protocols/dsh-skin`。
+
+公约的全部强制内容只有三节（公约 §3–§5）：
+
+- **唯一声明**（§3）：皮肤在 `package.json` 的 `dsh.skin` 字段声明 `apiVersion` /
+  `id` 等——这是公约对皮肤唯一的“占用”；声明不等于激活；
+- **生命周期**（§4）：`skin/activate` / `skin/deactivate` 两个语义事件，同一宿主
+  实例内至多一个皮肤激活，“退出后不可观测”才算彻底关闭；
+- **不占用清单**（§5）：八条红线 R1–R8——未激活零副作用、不碰加载器保留面、
+  不碰其他皮肤、不碰宿主恢复面、不依赖非 ABI、不自启、不启停他人、退出即净。
+
+§6 扩展槽位是纯可选的新增机制（槽位集只增、不改、不删；初始槽位表照录公约），
+皮肤可以只声明 `dsh.skin` 而不贡献任何槽位。
+
+它刻意不做（公约 §7），并与相邻体系分工：**强契约**的包格式、事务与故障隔离
+（ADR 0001–0003）属于 `dsh-ui-skin-manager`，公约不碰；**EAC 桌面宿主**的槽位
+拓扑与能力边界由 `DSH-Desktop-EAC-UI-Skin-Authoring-Convention` 规定，它是本公约
+之下的一种宿主实现约定。三者互不重叠、不竞争；公约本身是跨宿主、实现无关的
+加载启停弱约束。
 
 ## 4. 生态角色与边界
 
@@ -54,6 +85,7 @@
 | --- | --- | --- |
 | `dsh-std` | 公共协议定义、声明/发现/协商机制、参考包 | 不定义产品准入；不自我认证 |
 | `dsh-distribution` | 环境身份、受控布局、发现与可迁移性协议 | 不是安装器、不是运行时、不是指定管理器 |
+| `dsh-skin` | 皮肤插件与加载器之间的加载启停接缝：唯一声明、生命周期、不占用清单 | 不定义包格式；不规定故障隔离细则；不约束皮肤内部实现；不做宿主特化 |
 | `dsh-ecosystem-spec` | 入口、索引、说明、治理、本仓库 CI | 不重新定义协议语义；不认证实现；不替官方表态 |
 | 各实现 / 范例 | 实现、conformance 证据、使用经验 | 不能自称官方实现，不能自我认证 |
 
@@ -80,7 +112,7 @@ DSH 生态天然是“多种宿主 / 多种终端 / 多种市场 / 多种实现 
 
 ## 7. 当前状态与边界
 
-- 两个元协议均处于上游自称的 **Draft** 阶段，`dsh-dpx` 为 **Experimental**；
+- 两个元协议均处于上游自称的 **Draft** 阶段，`dsh-dpx` 与 `dsh-skin` 为 **Experimental**；
 - 重构前的 TUI 时代内容（准入规范、conformance、registry contracts、adapters、RFC 等）
   已移出工作树，需要时从 git 历史取回，见
   [`decisions/0001-remove-legacy-archive.md`](../decisions/0001-remove-legacy-archive.md)；
