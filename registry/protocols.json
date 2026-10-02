@@ -2,7 +2,7 @@
   "$schema": "./schema/index.schema.json",
   "document": "protocols",
   "version": 1,
-  "updated": "2026-09-25",
+  "updated": "2026-10-02",
   "scope": "本仓库收录的协议索引。索引只登记事实：谁拥有、挂在哪里、上游自称什么状态；不授予状态、不认证实现、不构成安全保证。",
   "entries": [
     {
@@ -12,8 +12,8 @@
       "scope": "插件、宿主与运行时之间的协议声明、发现与协商，即“关于协议的协议”。",
       "status": "Draft",
       "statusSource": "upstream",
-      "upstream": "https://github.com/Yan-Zero/dsh-std.git",
-      "maintainer": "Yan-Zero",
+      "upstream": "https://github.com/T-Auto/dsh-std.git",
+      "maintainer": "T-Auto",
       "mount": "vendor/meta-protocols/dsh-std",
       "specEntry": "README.md",
       "doc": "docs/overview.md",

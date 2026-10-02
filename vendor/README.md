@@ -11,7 +11,7 @@
 ```text
 vendor/
 ├── meta-protocols/          # 元协议：定义“如何声明、发现、协商”
-│   ├── dsh-std/             → Yan-Zero/dsh-std
+│   ├── dsh-std/             → T-Auto/dsh-std
 │   └── dsh-distribution/    → T-Auto/dsh-distribution
 ├── sub-protocols/           # 子协议：在元协议之上定义具体领域行为
 │   └── dsh-skin/            → DSH-EAC/dsh-ui-skin-loader-convention
@@ -26,7 +26,7 @@ vendor/
 
 | 挂载路径 | 类别 | 上游 | 索引条目 | 说明文档 |
 | --- | --- | --- | --- | --- |
-| [`meta-protocols/dsh-std`](meta-protocols/dsh-std) | 元协议 | [Yan-Zero/dsh-std](https://github.com/Yan-Zero/dsh-std) | [`registry/protocols.json`](../registry/protocols.json) | [`docs/overview.md`](../docs/overview.md) |
+| [`meta-protocols/dsh-std`](meta-protocols/dsh-std) | 元协议 | [T-Auto/dsh-std](https://github.com/T-Auto/dsh-std) | [`registry/protocols.json`](../registry/protocols.json) | [`docs/overview.md`](../docs/overview.md) |
 | [`meta-protocols/dsh-distribution`](meta-protocols/dsh-distribution) | 元协议 | [T-Auto/dsh-distribution](https://github.com/T-Auto/dsh-distribution) | [`registry/protocols.json`](../registry/protocols.json) | [`docs/overview.md`](../docs/overview.md) |
 | [`sub-protocols/dsh-skin`](sub-protocols/dsh-skin) | 子协议 | [DSH-EAC/dsh-ui-skin-loader-convention](https://github.com/DSH-EAC/dsh-ui-skin-loader-convention) | [`registry/protocols.json`](../registry/protocols.json) | [`docs/overview.md`](../docs/overview.md) |
 | [`examples/dsh-dpx`](examples/dsh-dpx) | 范例实现 | [T-Auto/dsh-dpx](https://github.com/T-Auto/dsh-dpx) | [`registry/implementations.json`](../registry/implementations.json) | [`docs/examples/dsh-dpx.md`](../docs/examples/dsh-dpx.md) |

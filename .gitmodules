@@ -1,6 +1,6 @@
 [submodule "dsh-std"]
 	path = vendor/meta-protocols/dsh-std
-	url = https://github.com/Yan-Zero/dsh-std.git
+	url = https://github.com/T-Auto/dsh-std.git
 [submodule "dsh-distribution"]
 	path = vendor/meta-protocols/dsh-distribution
 	url = https://github.com/T-Auto/dsh-distribution.git

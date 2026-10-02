@@ -26,7 +26,7 @@
 - 插件之间可以更好的互相对话
 - 多个整合包/独立dsh运行时可以统一管理、互相通讯并相互隔离
 
-dsh-ecosystem-spec 收录了插件元协议[dsh-std](https://github.com/Yan-Zero/dsh-std)、运行环境元协议[dsh-distribution](https://github.com/T-Auto/dsh-distribution)及相关子协议，前者面向插件作者，后者面向dsh发行版/整合包开发者。在元协议的框架下，**“协议本身”也变成了可拔插的插件——这和dsh本体的理念不谋而合。**
+dsh-ecosystem-spec 收录了插件元协议[dsh-std](https://github.com/T-Auto/dsh-std)、运行环境元协议[dsh-distribution](https://github.com/T-Auto/dsh-distribution)及相关子协议，前者面向插件作者，后者面向dsh发行版/整合包开发者。在元协议的框架下，**“协议本身”也变成了可拔插的插件——这和dsh本体的理念不谋而合。**
 
 本规范并非官方标准，但我们希望为碎片化的dsh生态，接起插件对话的桥梁。
 
@@ -95,7 +95,7 @@ dsh-ecosystem-spec/
 
 ### dsh-std是什么？
 
-[dsh-std](https://github.com/Yan-Zero/dsh-std) 是一套通用的互操作协议。它希望 DSH 的插件、后台运行时以及各种界面能够解耦并顺畅协作。
+[dsh-std](https://github.com/T-Auto/dsh-std) 是一套通用的互操作协议。它希望 DSH 的插件、后台运行时以及各种界面能够解耦并顺畅协作。
 
 `@dsh-std/core` 是一个“元协定”。命令（Command）、工具（Tool）、模型（Model）、界面交互（Presentation）这些具体的业务协议，都在元协定底座上进行发现和协商，各自独立演进。不同的宿主和程序只需要挑选自己需要的部分来实现。
 
