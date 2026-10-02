@@ -16,10 +16,6 @@
 > **DSH Community Ecosystem Interoperability Specification**  
 > 社区插件互操作规范实验库
 
-※本文档正在修订中：协议正文以 [`vendor/`](vendor/README.md) 挂载的上游仓库为准；
-重构前的 TUI 时代内容（准入规范、conformance、registry contracts、adapters、RFC 等）
-已移出工作树，恢复路径见 [`decisions/0001-remove-legacy-archive.md`](decisions/0001-remove-legacy-archive.md)。
-
 ## 这是什么项目？
 
 这是由[dsh-TUI](https://github.com/ccch1mneyyy/dsh-TUI)团队和[DSH-Desktop-EAC](https://github.com/zouyuxuan122/DSH-Desktop-EAC)团队联合发起的社区协议，提供一套可选、可验证的互操作共识。有详细文档、验证自动化流程及**开包即用的skill**，力求：
