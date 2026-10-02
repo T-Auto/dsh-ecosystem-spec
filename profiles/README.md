@@ -18,17 +18,27 @@ profiles/
 要求条目使用稳定编号（例如 TUI 生态使用 `TUI-*`），并说明适用 profile、
 影响范围与兼容变化。索引登记在 [`../registry/profiles.json`](../registry/profiles.json)。
 
+Profile 正文归**归属方**所有：它可以在本仓库收录（按上面的目录约定落位），
+也可以留在归属方自己的仓库里随产品代码分发。留在归属方仓库时，本仓库只在
+索引与说明里照录“归属方 + 正文位置”，不复制正文。
+
 ## 2. 当前状态
 
-尚未收录 Profile。重构前的 TUI 准入内容（原 `docs/plugin-admission-and-development.md`、
-`conformance/`、`registry/`）已移出工作树，需要时从 git 历史取回
-（[`decisions/0001-remove-legacy-archive.md`](../decisions/0001-remove-legacy-archive.md)），
-迁移时应：
+本仓库**不承载任何 Profile 正文**（`registry/profiles.json` 的 `entries` 为空）。
+Profile 由归属方在自己的仓库里维护；需要收录进来时，按 §1 建目录并在索引登记。
 
-1. 在 `profiles/dsh-tui/` 下重建为独立 Profile 文档；
-2. 在 `registry/profiles.json` 登记条目（状态照录归属方声明）；
-3. 保持 `TUI-*` 编号稳定，不把 TUI 要求写成全生态要求；
-4. 一次 PR 只做迁移，不顺带改语义。
+已声明的 Profile：
+
+| Profile | 归属方 | 正文位置 |
+| --- | --- | --- |
+| TUI Profile（终端交互生态的准入与子插件接口） | [ccch1mneyyy/dsh-TUI](https://github.com/ccch1mneyyy/dsh-TUI) | 随该仓库代码分发：`tui-profile/`（纯文件，无 submodule 挂载） |
+
+TUI Profile **不是本仓库的社区 RFC**：它随 dsh-TUI 的代码现状随时修订，作为该产品
+子插件的参考标注；本仓库不复制它的正文，也不为它发明规范状态。重构前的 TUI 时代
+内容（原 `docs/plugin-admission-and-development.md`、`conformance/`、`registry/`、
+`rfc/`）仍可从 git 历史取回
+（[`decisions/0001-remove-legacy-archive.md`](../decisions/0001-remove-legacy-archive.md)），
+但不再计划迁入本仓库。
 
 ## 3. 与其它层的关系
 
