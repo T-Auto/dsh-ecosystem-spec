@@ -74,22 +74,86 @@
       }
     },
     "profileEntry": {
+      "description": "Profile may use the legacy upstream maturity status or an explicit owner-declared policy. External sources are immutable file references, not mounts.",
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "displayName", "category", "scope", "status", "owner", "doc"],
+      "required": ["id", "displayName", "category", "scope", "owner", "doc"],
       "properties": {
         "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
         "displayName": { "type": "string", "minLength": 1 },
         "category": { "const": "profile" },
         "scope": { "type": "string", "minLength": 1 },
         "status": { "$ref": "#/$defs/status" },
+        "statusSource": { "const": "upstream" },
         "owner": {
           "description": "Profile 归属方。Profile 只约束自己声明的生态范围。",
           "type": "string",
           "minLength": 1
         },
-        "doc": { "type": "string" }
-      }
+        "doc": { "type": "string" },
+        "maturityPolicy": {
+          "description": "The owner's original maturity policy. not-applicable is explicit and is not a maturity status.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "source"],
+          "properties": {
+            "kind": { "const": "not-applicable" },
+            "source": { "type": "string", "minLength": 1 },
+            "rationale": { "type": "string", "minLength": 1 }
+          }
+        },
+        "source": {
+          "description": "Fixed external Profile document reference; it is not a submodule mount.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["repository", "revision", "path", "contentDigest", "productVersions", "imports", "suite"],
+          "properties": {
+            "repository": {
+              "type": "string",
+              "pattern": "^https://github\\.com/[^/]+/[^/]+\\.git$"
+            },
+            "revision": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+            "path": {
+              "type": "string",
+              "pattern": "^(?!.*(?:^|/)\\.{1,2}(?:/|$))[A-Za-z0-9._-]+(?:/[A-Za-z0-9._-]+)*$"
+            },
+            "contentDigest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+            "productVersions": {
+              "type": "array",
+              "minItems": 1,
+              "items": { "type": "string", "minLength": 1 }
+            },
+            "imports": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 }
+            },
+            "suite": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["id", "version"],
+              "properties": {
+                "id": { "type": "string", "minLength": 1 },
+                "version": { "type": "string", "minLength": 1 }
+              }
+            }
+          }
+        }
+      },
+      "oneOf": [
+        {
+          "required": ["status"],
+          "not": {
+            "anyOf": [
+              { "required": ["maturityPolicy"] },
+              { "required": ["source"] }
+            ]
+          }
+        },
+        {
+          "required": ["maturityPolicy", "source"],
+          "not": { "required": ["status"] }
+        }
+      ]
     },
     "documentBase": {
       "type": "object",

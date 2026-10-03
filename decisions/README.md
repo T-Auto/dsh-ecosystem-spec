@@ -29,6 +29,7 @@ Supersedes / Superseded by: 关联记录
 | 编号 | 标题 | 状态 |
 | --- | --- | --- |
 | [0001](0001-remove-legacy-archive.md) | 移出重构前的 TUI 时代归档（删除 `old/`） | Accepted |
+| [0002](0002-external-profile-source-identity.md) | 外部 Profile 的固定来源与成熟度分支 | Accepted |
 
 ## 3. 什么时候需要写
 

@@ -12,6 +12,7 @@ import { readFileSync, existsSync, statSync, readdirSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { dirname, join, resolve, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { validateProfileEntry } from './profile-validation.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -143,7 +144,7 @@ const REQUIRED = {
     'mount',
     'doc',
   ],
-  profiles: ['id', 'displayName', 'category', 'scope', 'status', 'owner', 'doc'],
+  profiles: ['id', 'displayName', 'category', 'scope', 'owner', 'doc'],
 };
 
 const docs = {};
@@ -186,15 +187,18 @@ for (const name of ['protocols', 'implementations', 'profiles']) {
     for (const field of REQUIRED[name]) {
       if (entry[field] === undefined) fail(`${where} 缺少字段 ${field}`);
     }
+    if (name === 'profiles') {
+      for (const error of validateProfileEntry(entry, where)) fail(error);
+    }
     if (entry.id !== undefined) {
       if (!ID_PATTERN.test(entry.id)) fail(`${where} id "${entry.id}" 必须匹配 ${ID_PATTERN}`);
       if (seen.has(entry.id)) fail(`${where} id "${entry.id}" 重复`);
       seen.add(entry.id);
     }
-    if (entry.status !== undefined && !STATUS.includes(entry.status)) {
+    if (name !== 'profiles' && entry.status !== undefined && !STATUS.includes(entry.status)) {
       fail(`${where} status "${entry.status}" 不在状态词表内`);
     }
-    if (entry.statusSource !== undefined && entry.statusSource !== 'upstream') {
+    if (name !== 'profiles' && entry.statusSource !== undefined && entry.statusSource !== 'upstream') {
       fail(`${where} statusSource 必须是 "upstream"（索引不发明状态）`);
     }
     if (entry.upstream !== undefined && !UPSTREAM_PATTERN.test(entry.upstream)) {

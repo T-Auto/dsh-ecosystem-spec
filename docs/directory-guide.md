@@ -77,8 +77,14 @@ Profile 在协议之上约束自己的生态。任何一层都不得修改上一
 - **索引文件**：`registry/protocols.json`、`registry/implementations.json`、
   `registry/profiles.json`，形状见 [`../registry/schema/index.schema.json`](../registry/schema/index.schema.json)；
 - **说明文档**：协议进 `docs/overview.md`（分节），范例进 `docs/examples/<id>.md`（一例一文件）；
-- **状态词**：只有 `Draft`、`Experimental`、`Candidate`、`Stable`、`Deprecated`，
-  且必须照录上游仓库自己的声明，本仓库不发明状态；
+- **状态词**：协议与范例只有 `Draft`、`Experimental`、`Candidate`、`Stable`、`Deprecated`，
+  且必须照录上游仓库自己的声明，本仓库不发明状态。Profile 条目必须明确选择
+  传统 `status` 分支，或 owner 的 `maturityPolicy.kind: "not-applicable"` 分支；
+  后者不是第五档之外的新状态，也不得推断成熟度。
+- **外部 Profile 来源**：不在本仓库挂载的 Profile 可登记 `source`，但必须固定
+  `repository`、完整 40 位 `revision`、无路径逃逸的相对 `path`、`sha256:` 内容摘要、
+  适用 `productVersions`、`imports` 与 `suite`。这类 source 是不可变文件引用，不是
+  submodule；缺字段、路径逃逸、非法摘要或重复 id 都会失败。
 - **路径引用**：文档里引用挂载内容一律用相对路径（`../vendor/...`），不写绝对路径。
 
 ## 6. CI 强制的规则
@@ -93,7 +99,9 @@ Profile 在协议之上约束自己的生态。任何一层都不得修改上一
 5. `category` 与挂载路径前缀必须匹配（§3 的映射）；
 6. `vendor/` 下除挂载点与各层 `README.md` 外，不得有本仓库跟踪的文件；
 7. 索引与文档里引用的相对路径必须真实存在；
-8. 仓库内 Markdown 的相对链接必须能解析到真实文件。
+8. 外部 Profile 的 maturity policy 与固定 source 引用必须满足明确的 discriminated branch；
+9. 重复 Profile id、缺 revision/path/contentDigest、路径逃逸和非法 owner policy 必须失败；
+10. 仓库内 Markdown 的相对链接必须能解析到真实文件。
 
 ## 7. 预留的扩展点
 

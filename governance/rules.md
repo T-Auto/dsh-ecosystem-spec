@@ -12,11 +12,22 @@
 
 ## 2. 状态（Status）
 
-正式状态为 `Draft`、`Experimental`、`Candidate`、`Stable`、`Deprecated`。
+协议与范例的正式状态为 `Draft`、`Experimental`、`Candidate`、`Stable`、`Deprecated`。
 
 - 索引中的状态必须与上游仓库的声明一致，且标注 `statusSource: "upstream"`；
 - 本仓库不自行晋级任何条目；
 - 上游把状态改为 `Stable` 后，本仓库以**独立 PR** 更新索引并记录依据。
+- Profile 可以使用同一 `status` 分支，也可以使用明确的 owner policy 分支：
+  `maturityPolicy.kind: "not-applicable"`。这表示 owner 不采用该五档晋级模型，
+  不是一个可由本仓库解释的新成熟度状态；不得用 npm package 的 `Experimental` 或
+  其它实现标签替 Profile 伪造状态。
+
+### 2.1 外部 Profile 固定来源
+
+外部 Profile 不要求伪造 submodule。登记时必须同时固定 owner 的
+`source.repository`、完整 commit `revision`、仓库内相对 `path`、`sha256:`
+`contentDigest`、适用 `productVersions`、`imports` 与 `suite`。校验器拒绝缺失字段、
+路径逃逸、重复 id 与非法 policy；固定引用只说明来源，不说明 Profile 已测试、兼容或 Stable。
 
 ## 3. 挂载与索引（Mounts）
 

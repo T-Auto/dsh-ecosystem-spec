@@ -1,0 +1,12 @@
+{
+  "entries": [
+    {
+      "id": "duplicate-profile", "displayName": "One", "category": "profile", "scope": "fixture",
+      "status": "Draft", "statusSource": "upstream", "owner": "example/owner", "doc": "docs/profiles/tui-admission-015.md"
+    },
+    {
+      "id": "duplicate-profile", "displayName": "Two", "category": "profile", "scope": "fixture",
+      "status": "Draft", "statusSource": "upstream", "owner": "example/owner", "doc": "docs/profiles/tui-admission-015.md"
+    }
+  ]
+}

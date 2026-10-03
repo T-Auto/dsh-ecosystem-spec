@@ -1,0 +1,10 @@
+{
+  "id": "legacy-profile",
+  "displayName": "Legacy profile",
+  "category": "profile",
+  "scope": "legacy fixture",
+  "status": "Experimental",
+  "statusSource": "upstream",
+  "owner": "example/owner",
+  "doc": "docs/profiles/tui-admission-015.md"
+}

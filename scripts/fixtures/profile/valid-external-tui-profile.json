@@ -1,0 +1,25 @@
+{
+  "id": "tui-admission-015",
+  "displayName": "DSH TUI admission Profile 0.15",
+  "category": "profile",
+  "scope": "DSH TUI product admission and extension contracts",
+  "owner": "ccch1mneyyy/dsh-TUI",
+  "doc": "docs/profiles/tui-admission-015.md",
+  "maturityPolicy": {
+    "kind": "not-applicable",
+    "source": "owner",
+    "rationale": "The TUI owner maintains a product policy, not the ecosystem's five-status protocol maturity ladder."
+  },
+  "source": {
+    "repository": "https://github.com/ccch1mneyyy/dsh-TUI.git",
+    "revision": "e1beaa12d25813be5f328e66dc12685f7eea2d06",
+    "path": "tui-profile/registry/registry-0.15.json",
+    "contentDigest": "sha256:c3090dd129aadb06f87b56ad148dfbcec2ce4eed2404dda5eed9cf1dbae51f54",
+    "productVersions": ["tui-admission/0.15"],
+    "imports": ["@dsh-std/command", "@dsh-std/storage", "@dsh-std/messages", "@dsh-std/presentation"],
+    "suite": {
+      "id": "tui-admission",
+      "version": "0.15"
+    }
+  }
+}
