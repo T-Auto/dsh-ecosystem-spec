@@ -22,7 +22,7 @@
 第 1 层  元协议      vendor/meta-protocols/<id>    定义“如何声明、发现、协商”
 第 2 层  子协议      vendor/sub-protocols/<id>     在元协议之上定义具体领域行为
 第 3 层  范例实现    vendor/examples/<id>          按协议真实做出来的产品
-第 4 层  产品准入    profiles/<profile>/           只约束某个产品形态的生态
+第 4 层  产品准入    profiles/ 或归属方仓库         只约束某个产品形态的生态
 ```
 
 - **元协议**（`@dsh-std/core`、`dsh-distribution`）本身不含领域业务字段，它是
@@ -37,16 +37,21 @@
 
 ## 3. 当前收录
 
-| 类别 | 条目 | 状态（照录上游） | 挂载 |
+| 类别 | 条目 | 状态 / 成熟度口径（照录归属方） | 挂载 / 正文来源 |
 | --- | --- | --- | --- |
 | 元协议 | `dsh-std` | Draft | [`vendor/meta-protocols/dsh-std`](../vendor/meta-protocols/dsh-std) |
 | 元协议 | `dsh-distribution` | Draft | [`vendor/meta-protocols/dsh-distribution`](../vendor/meta-protocols/dsh-distribution) |
 | 范例实现 | `dsh-dpx` | Experimental | [`vendor/examples/dsh-dpx`](../vendor/examples/dsh-dpx) |
 | 子协议 | `dsh-skin` | Experimental | [`vendor/sub-protocols/dsh-skin`](../vendor/sub-protocols/dsh-skin) |
-| Profile | —— 尚未收录 | —— | `profiles/` |
+| Profile | [`tui-admission/0.15`](profiles/tui-admission-015.md) | 不适用（owner policy） | 外部固定 `source`（无 submodule） |
 
-机器可读版本见 [`registry/protocols.json`](../registry/protocols.json) 与
-[`registry/implementations.json`](../registry/implementations.json)。
+机器可读版本见 [`registry/protocols.json`](../registry/protocols.json)、
+[`registry/implementations.json`](../registry/implementations.json) 与
+[`registry/profiles.json`](../registry/profiles.json)。
+
+外部 TUI Profile 仅以固定文件来源收录，不挂载也不复制正文；
+`maturityPolicy.kind: "not-applicable"` 表示归属方不采用协议成熟度晋级模型，
+不是额外的成熟度状态，也不是已测试或兼容性认证。
 
 ### 3.1 子协议 `dsh-skin`：DSH UI 皮肤加载公约
 
