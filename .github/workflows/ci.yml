@@ -37,6 +37,9 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Profile 索引校验 fixtures（离线）
+        run: node scripts/test-profile-validation.mjs
+
       - name: 结构 / 索引 / 挂载元数据 / 文档链接校验
         run: node scripts/verify-structure.mjs
 
