@@ -20,21 +20,25 @@ profiles/
 
 Profile 正文归**归属方**所有：它可以在本仓库收录（按上面的目录约定落位），
 也可以留在归属方自己的仓库里随产品代码分发。留在归属方仓库时，本仓库只在
-索引与说明里照录“归属方 + 正文位置”，不复制正文。
+索引与说明里登记“归属方 + 固定正文来源”（`source`），不复制正文。
 
 ## 2. 当前状态
 
-本仓库**不承载任何 Profile 正文**（`registry/profiles.json` 的 `entries` 为空）。
-Profile 由归属方在自己的仓库里维护；需要收录进来时，按 §1 建目录并在索引登记。
+本仓库**不承载任何 Profile 正文**，但已在
+[`registry/profiles.json`](../registry/profiles.json) 登记外部 Profile 来源；
+“索引收录”不等于“把正文迁入本仓库”。本地正文按 §1 落位，外部正文由归属方
+在自己的仓库里维护并登记固定 `source`，不需要在本目录建正文目录。
 
-已声明的 Profile：
+当前收录的外部 Profile：
 
-| Profile | 归属方 | 正文位置 |
+| Profile | 归属方 | 固定正文来源 |
 | --- | --- | --- |
-| TUI Profile（终端交互生态的准入与子插件接口） | [ccch1mneyyy/dsh-TUI](https://github.com/ccch1mneyyy/dsh-TUI) | 随该仓库代码分发：`tui-profile/`（纯文件，无 submodule 挂载） |
+| [`tui-admission-015`](../docs/profiles/tui-admission-015.md)（`tui-admission/0.15`，终端交互生态的准入与子插件接口） | [ccch1mneyyy/dsh-TUI](https://github.com/ccch1mneyyy/dsh-TUI) | 固定 revision 的 [`tui-profile/registry/registry-0.15.json`](https://github.com/ccch1mneyyy/dsh-TUI/blob/e1beaa12d25813be5f328e66dc12685f7eea2d06/tui-profile/registry/registry-0.15.json)（随产品代码分发，无 submodule 挂载） |
 
-TUI Profile **不是本仓库的社区 RFC**：它随 dsh-TUI 的代码现状随时修订，作为该产品
-子插件的参考标注；本仓库不复制它的正文，也不为它发明规范状态。重构前的 TUI 时代
+TUI Profile **不是本仓库的社区 RFC**：它由 dsh-TUI 随代码维护，本仓库只登记
+固定来源，不复制正文。归属方不采用公共协议的五档成熟度晋级模型，故登记
+`maturityPolicy.kind: "not-applicable"`；这不是新状态，也不表示 `Stable`、
+`Experimental`、已测试或兼容性认证。重构前的 TUI 时代
 内容（原 `docs/plugin-admission-and-development.md`、`conformance/`、`registry/`、
 `rfc/`）仍可从 git 历史取回
 （[`decisions/0001-remove-legacy-archive.md`](../decisions/0001-remove-legacy-archive.md)），
@@ -45,7 +49,7 @@ TUI Profile **不是本仓库的社区 RFC**：它随 dsh-TUI 的代码现状随
 ```text
 元协议 / 子协议       定义通用语义（vendor/ 下挂载）
         ↓
-Profile               在通用语义之上加产品准入（本目录）
+Profile               在通用语义之上加产品准入（本目录或归属方仓库）
         ↓
 实现与证据            由各产品与范例提供（vendor/examples/ 等）
 ```
